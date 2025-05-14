@@ -13,7 +13,7 @@ use App\Http\Controllers\ProductListController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\PaymentController;
 
-
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProductController;
 
 
@@ -85,6 +85,9 @@ Route::get('/sanpham/{id}', [ProductListController::class, 'showByCategory'])->n
 // Trang chi tiết sản phẩm
 Route::get('/chitietsanpham/{id}', [ChiTietSanPhamController::class, 'show'])->name('chitietsanpham.show');
 
+//roite LOGIN
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/', function () {
     return view('welcome');
