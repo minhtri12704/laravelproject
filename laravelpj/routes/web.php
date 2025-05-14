@@ -91,6 +91,7 @@ Route::get('/khachhang', [KhachHangController::class, 'index'])->name('khachhang
 Route::get('/khachhang/create', [KhachHangController::class, 'create'])->name('khachhang.create');
 Route::post('/khachhang', [KhachHangController::class, 'store'])->name('khachhang.store');
 Route::get('/khachhang/{id}/edit', [KhachHangController::class, 'edit'])->name('khachhang.edit');
+Route::delete('/khachhang/{id}', [KhachHangController::class, 'destroy'])->name('khachhang.destroy');
 
 
 
