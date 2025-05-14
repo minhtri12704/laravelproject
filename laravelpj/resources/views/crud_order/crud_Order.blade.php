@@ -204,7 +204,7 @@ body {
                             style="color:#ff69b4;">VNĐ</span></strong></td>
                 <td>{{ $donHang->phuong_thuc_thanh_toan }}</td>
                 <td>
-                    <a href="#">
+                    <a href="{{ route('orders.show', $donHang->id) }}">
                         <button class="btn-edit">Xem</button>
                     </a>
                 </td>

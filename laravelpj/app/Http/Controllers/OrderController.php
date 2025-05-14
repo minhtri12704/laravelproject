@@ -76,4 +76,15 @@ class OrderController extends Controller
         }
         return redirect()->back();
     }
+    // hiện chi tiết đơn hàng
+    public function show($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'Không tìm thấy đơn hàng.');
+        }
+
+        return view('crud_order.show_order', compact('order'));
+    }
 }
