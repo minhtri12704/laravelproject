@@ -125,13 +125,21 @@
         <div class="error-message">{{ $message }}</div>
       @enderror
 
-      <input type="password" name="password_confirmation" placeholder="Nhập lại mật khẩu" required>
+      <input type="text" name="phone" placeholder="Số điện thoại" value="{{ old('phone') }}" required>
+      @error('phone')
+        <div class="error-message">{{ $message }}</div>
+      @enderror
+
+      <input type="text" name="address" placeholder="Địa chỉ" value="{{ old('address') }}" required>
+      @error('address')
+        <div class="error-message">{{ $message }}</div>
+      @enderror
 
       <button type="submit">Đăng ký</button>
     </form>
 
     <p>Đã có tài khoản?
-      <a href="{{ route('login') }}">Đăng nhập</a>
+      <a href="#">Đăng nhập</a>
     </p>
   </div>
 
