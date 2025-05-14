@@ -294,15 +294,9 @@ body {
                 ♥
             </button>
         </form>
-
         <img src="{{ asset('images/' . ($product->image ?? 'default.jpg')) }}" alt="{{ $product->ten_san_pham }}">
         <div class="product-name">{{ $product->ten_san_pham }}</div>
         <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</div>
-
-        <p style="font-size: 14px; color: #777;">
-            Đã yêu thích {{ $wishlist[$product->id] ?? 1 }} lần
-        </p>
-
         <button class="btn-cart">Thêm vào giỏ</button>
     </div>
     @empty
