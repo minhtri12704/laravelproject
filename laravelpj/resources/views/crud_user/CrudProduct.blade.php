@@ -137,7 +137,7 @@
                 </td>
                 <td>
                     <!-- Nút Sửa -->
-                    <form action="#" method="GET" style="display: inline-block;">
+                    <form action="{{ route('products.edit', $sp->id) }}" method="GET" style="display: inline-block;">
                         <button type="submit" class="action-button btn-edit">Sửa</button>
                     </form>
 
