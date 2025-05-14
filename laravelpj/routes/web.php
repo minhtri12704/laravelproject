@@ -17,6 +17,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomePageController;
 
+use App\Http\Controllers\WishlistController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +102,12 @@ Route::get('/chitietsanpham/{id}', [ChiTietSanPhamController::class, 'show'])->n
 
 //home page
 Route::get('/home', [HomePageController::class, 'index'])->name('home');
+
+//Whislist
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.show_wishlist');
+Route::post('/wishlist/add/{id}', [WishlistController::class, 'add'])->name('wishlist.add');
+Route::post('/wishlist/decrease/{id}', [WishlistController::class, 'decrease'])->name('wishlist.decrease');
+Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
 Route::get('/', function () {
     return view('welcome');
