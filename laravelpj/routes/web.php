@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\CrudAdminUserController;
 use App\Http\Controllers\OrderController;
+
+use App\Http\Controllers\CrudCategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,11 @@ use App\Http\Controllers\OrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//route category xem va them
+Route::get('/categories', [CrudCategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/create', [CrudCategoryController::class, 'create'])->name('categories.create');
+Route::post('/categories', [CrudCategoryController::class, 'store'])->name('categories.store');
+
 
 
 //user:route hiển thị danh sách người dùng mẫu

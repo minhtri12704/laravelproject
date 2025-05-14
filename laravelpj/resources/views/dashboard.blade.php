@@ -65,11 +65,13 @@
         <div class="sidebar p-3" style="width: 250px;">
             <h4>Quản trị</h4>
             <ul class="nav flex-column">
+
                 <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Người dùng</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Quản lý khách hàng</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Quản lý sản phẩm</a></li>
                 <li class="nav-item"><a href="{{ route('orders.index') }}" class="nav-link">Quản lý đơn hàng</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Quản lý danh mục</a></li>
+                <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Quản lý danh mục</a></li>
+
             </ul>
         </div>
         <div class="content flex-grow-1">
