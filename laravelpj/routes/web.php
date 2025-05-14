@@ -9,11 +9,9 @@ use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\CrudProductController;
 use App\Http\Controllers\CrudUserController;
 use App\Http\Controllers\ProductListController;
-
+use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentController;
 
-use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\ProductController;
 
 
@@ -36,9 +34,6 @@ Route::get('/categories/{id}/edit', [CrudCategoryController::class, 'editCategor
 Route::put('/categories/{id}', [CrudCategoryController::class, 'update'])->name('categories.update');
 //Route Delete
 Route::delete('/categories/{id}', [CrudCategoryController::class, 'deleteCategory'])->name('categories.deleteCategory');
-
-
-Route::get('/products/category/{id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
 
 //user:route hiển thị danh sách người dùng mẫu
 Route::get('/users', [CrudAdminUserController::class, 'index'])->name('users.index');
@@ -82,7 +77,8 @@ Route::post('/payment/process', [PaymentController::class, 'process'])->name('pa
 Route::get('/sanpham', [ProductListController::class, 'index'])->name('sanpham.index');
 //route lấy danh mục tại HomePage
 Route::get('/sanpham/{id}', [ProductListController::class, 'showByCategory'])->name('products.byCategory');
-
+// Trang chi tiết sản phẩm
+Route::get('/chitietsanpham/{id}', [ChiTietSanPhamController::class, 'show'])->name('chitietsanpham.show');
 
 
 Route::get('/', function () {
