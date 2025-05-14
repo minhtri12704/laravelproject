@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudAdminUserController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use App\Http\Controllers\CrudAdminUserController;
 |
 */
 
+
 //user:route hiển thị danh sách người dùng mẫu
 Route::get('/users', [CrudAdminUserController::class, 'index'])->name('users.index');
 //user: route hiển thị forrm thêm người dùng
@@ -21,11 +23,10 @@ Route::get('/users/create', [CrudAdminUserController::class, 'create'])->name('u
 //user: route đến hàm store để xử lý thêm người dùng
 Route::post('/users', [CrudAdminUserController::class, 'store'])->name('users.store');
 
-
-
-
-
-
+//route crud_orders
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 
 
