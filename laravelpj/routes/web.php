@@ -11,9 +11,6 @@ use App\Http\Controllers\CrudUserController;
 
 
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentController;
-
-use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\ProductController;
 
 
@@ -58,6 +55,7 @@ Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.c
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
+Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 //route tintuc
 Route::get('/blog', [BaiVietController::class, 'index'])->name('baiviet.index');
 Route::get('/blog/{id}', [BaiVietController::class, 'show'])->name('baiviet.show');

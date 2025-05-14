@@ -67,4 +67,13 @@ class OrderController extends Controller
         $order->update($validated);
         return redirect()->route('orders.index');
     }
+     // Xóa đơn hàng
+    public function destroy($id)
+    {
+        $order = Order::find($id);
+        if ($order) {
+            $order->delete();
+        }
+        return redirect()->back();
+    }
 }

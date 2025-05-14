@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('title', 'Thêm Đơn Hàng')
+@section('title', 'Chỉnh sửa Đơn Hàng')
 
 @section('content')
 <style>
@@ -45,10 +45,6 @@
     outline: none;
   }
 
-  textarea {
-    resize: vertical;
-  }
-
   .form-actions {
     margin-top: 30px;
     text-align: right;
@@ -71,43 +67,43 @@
 </style>
 
 <div class="form-wrapper">
-  <h2>Thêm Đơn Hàng Mới</h2>
+  <h2>Chỉnh sửa Đơn hàng</h2>
 
-  <form action="{{ route('orders.store') }}" method="POST">
+  <form action="{{ route('orders.update', $order->id) }}" method="POST">
     @csrf
+    @method('PUT')
 
     <label for="ten_don_hang">Tên đơn hàng</label>
-    <input type="text" name="ten_don_hang" placeholder="Nhập tên đơn hàng..." required>
+    <input type="text" name="ten_don_hang" value="{{ $order->ten_don_hang }}" required>
 
     <label for="ten_khach_hang">Tên khách hàng</label>
-    <input type="text" name="ten_khach_hang" placeholder="Nhập tên khách hàng..." required>
+    <input type="text" name="ten_khach_hang" value="{{ $order->ten_khach_hang }}" required>
 
     <label for="so_luong">Số lượng</label>
-    <input type="number" name="so_luong" min="1" placeholder="VD: 5" required>
+    <input type="number" name="so_luong" value="{{ $order->so_luong }}" required>
 
     <label for="tong_tien">Tổng tiền (VNĐ)</label>
-    <input type="number" name="tong_tien" min="0" placeholder="VD: 500000">
+    <input type="number" name="tong_tien" value="{{ $order->tong_tien }}">
 
     <label for="phuong_thuc_thanh_toan">Phương thức thanh toán</label>
     <select name="phuong_thuc_thanh_toan" required>
-      <option value="">-- Chọn phương thức --</option>
-      <option value="Tiền mặt">Tiền mặt</option>
-      <option value="Chuyển khoản">Chuyển khoản</option>
-      <option value="Thẻ tín dụng">Thẻ tín dụng</option>
+      <option value="Tiền mặt" {{ $order->phuong_thuc_thanh_toan == 'Tiền mặt' ? 'selected' : '' }}>Tiền mặt</option>
+      <option value="Chuyển khoản" {{ $order->phuong_thuc_thanh_toan == 'Chuyển khoản' ? 'selected' : '' }}>Chuyển khoản</option>
+      <option value="Thẻ tín dụng" {{ $order->phuong_thuc_thanh_toan == 'Thẻ tín dụng' ? 'selected' : '' }}>Thẻ tín dụng</option>
     </select>
 
     <label for="trang_thai">Trạng thái</label>
     <select name="trang_thai" required>
-      <option value="">-- Chọn trạng thái --</option>
-      <option value="Chưa xử lý">Chưa xử lý</option>
-      <option value="Đã xử lý">Đã xử lý</option>
+      <option value="Chưa xử lý" {{ $order->trang_thai == 'Chưa xử lý' ? 'selected' : '' }}>Chưa xử lý</option>
+      <option value="Đang xử lý" {{ $order->trang_thai == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+      <option value="Đã xử lý" {{ $order->trang_thai == 'Đã xử lý' ? 'selected' : '' }}>Đã xử lý</option>
     </select>
 
     <label for="ghi_chu">Ghi chú</label>
-    <textarea name="ghi_chu" rows="3" placeholder="VD: Giao gấp trước thứ 6..."></textarea>
+    <textarea name="ghi_chu" rows="3">{{ $order->ghi_chu }}</textarea>
 
     <div class="form-actions">
-      <button type="submit" class="btn-submit">Lưu đơn hàng</button>
+      <button type="submit" class="btn-submit">Cập nhật</button>
     </div>
   </form>
 </div>
