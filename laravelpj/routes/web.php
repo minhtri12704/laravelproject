@@ -20,11 +20,15 @@ use App\Http\Controllers\CrudUserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//route category xem va them
+//route category Show and Create
 Route::get('/categories', [CrudCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/create', [CrudCategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CrudCategoryController::class, 'store'])->name('categories.store');
-
+//route category Edit
+Route::get('/categories/{id}/edit', [CrudCategoryController::class, 'editCategory'])->name('categories.editCategory');
+Route::put('/categories/{id}', [CrudCategoryController::class, 'update'])->name('categories.update');
+//Route Delete
+Route::delete('/categories/{id}', [CrudCategoryController::class, 'deleteCategory'])->name('categories.deleteCategory');
 
 
 //user:route hiển thị danh sách người dùng mẫu

@@ -43,7 +43,7 @@
           </form>
 
 <!--Xóa-->
-          <form action="#" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+          <form action="{{ route('categories.deleteCategory', $category->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
             @csrf
             @method('DELETE')
             <button class="delete" style="background-color: #ff4d6d; padding: 6px 12px; border: none; border-radius: 8px;">Xoá</button>
