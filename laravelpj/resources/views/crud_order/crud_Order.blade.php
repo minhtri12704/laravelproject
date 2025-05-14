@@ -223,8 +223,11 @@ body {
                     <a href="{{ route('orders.edit', $donHang->id) }}">
                         <button class="btn-edit">Sửa</button>
                     </a>
-                    <form action="#" method="POST" style="display:inline;">
-                        <button type="submit" class="btn-delete">Xóa</button>
+                    <form action="{{ route('orders.destroy', $donHang->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
                     </form>
                 </td>
             </tr>
