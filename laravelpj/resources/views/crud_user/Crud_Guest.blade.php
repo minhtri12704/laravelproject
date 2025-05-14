@@ -114,7 +114,7 @@
                     <td>{{ $khach->SoDienThoai }}</td>
                     <td>{{ $khach->DiaChi }}</td>
                     <td>
-                        <a href="#" class="edit">✏️ Sửa</a>
+                        <a href="{{ route('khachhang.edit', $khach->idKhach) }}" class="edit">✏️ Sửa</a>
                         <form action="#" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?')">
                             @csrf
                             @method('DELETE')
