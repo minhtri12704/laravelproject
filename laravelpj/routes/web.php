@@ -35,7 +35,6 @@ Route::put('/categories/{id}', [CrudCategoryController::class, 'update'])->name(
 Route::delete('/categories/{id}', [CrudCategoryController::class, 'deleteCategory'])->name('categories.deleteCategory');
 
 
-Route::get('/products/category/{id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
 
 //user:route hiển thị danh sách người dùng mẫu
 Route::get('/users', [CrudAdminUserController::class, 'index'])->name('users.index');
