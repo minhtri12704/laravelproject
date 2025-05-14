@@ -84,6 +84,7 @@
 </script>
 @endif
 
+
 <div class="text-end mb-3">
     <a href="{{ route('users.create') }}" class="btn btn-dark mb-3">Thêm người dùng</a>
 </div>
@@ -130,7 +131,7 @@
                 </form>
 
                 <!-- Nút Xóa -->
-                <form action="#" method="POST" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+                <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="delete" style="background-color: #ff4d6d; padding: 6px 12px; border: none; border-radius: 8px; color: white;">

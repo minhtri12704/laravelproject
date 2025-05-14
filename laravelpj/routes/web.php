@@ -35,7 +35,8 @@ Route::post('/users', [CrudAdminUserController::class, 'store'])->name('users.st
 // Xử lý cập nhật người dùng
 Route::get('/users/update/{id}', [CrudAdminUserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [CrudAdminUserController::class, 'update'])->name('users.update');
-
+//xử lý xóa người dùng// Xử lý xóa người dùng
+Route::delete('/users/{id}', [CrudAdminUserController::class, 'delete'])->name('users.delete');
 //route crud_orders
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
