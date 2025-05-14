@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CrudAdminUserController;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\CrudCategoryController;
 
 
@@ -38,7 +38,9 @@ Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.c
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 
-
+//route tintuc
+Route::get('/blog', [BaiVietController::class, 'index'])->name('baiviet.index');
+Route::get('/blog/{id}', [BaiVietController::class, 'show'])->name('baiviet.show');
 Route::get('/', function () {
     return view('welcome');
 });

@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             OrderSeeder::class,
             CategorySeeder::class,
-
+            BaiVietSeeder::class,
         ]);
     }
 }
