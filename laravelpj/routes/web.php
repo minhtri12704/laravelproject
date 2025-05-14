@@ -32,6 +32,10 @@ Route::get('/users/create', [CrudAdminUserController::class, 'create'])->name('u
 //user: route đến hàm store để xử lý thêm người dùng
 Route::post('/users', [CrudAdminUserController::class, 'store'])->name('users.store');
 
+// Xử lý cập nhật người dùng
+Route::get('/users/update/{id}', [CrudAdminUserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [CrudAdminUserController::class, 'update'])->name('users.update');
+
 //route crud_orders
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
