@@ -59,17 +59,7 @@
                             aria-expanded="false">
                             Danh mục
                         </a>
-                        <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {{-- vòng lặp foreach để chạy vòng lặp trên @php...@endphp --}}
-                            @foreach($categories as $category)
-                            <li>
-                                <a class="dropdown-item" href="{{ route('products.byCategory', $category->id) }}">
-                                    {{-- hiển thị tên danh mục --}}
-                                    {{ $category->name }}
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul> -->
+                        
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog tin tức</a>
