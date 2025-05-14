@@ -100,7 +100,7 @@
 
                     <div class="d-grid gap-2">
                         <a href="#" class="btn btn-dark btn-sm">Mua ngay</a>
-                        <a href="#" class="btn btn-outline-dark btn-sm">Xem chi tiết</a>
+                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
