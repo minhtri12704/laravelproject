@@ -81,4 +81,12 @@ class CrudAdminUserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Đã cập nhật người dùng!');
     }
+
+    //hàm xóa
+        public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'Đã xóa người dùng!');
+    }
 }
