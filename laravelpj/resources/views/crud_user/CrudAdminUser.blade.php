@@ -69,6 +69,21 @@
 </style>
 
 <h2>Quản lý người dùng</h2>
+@if(session('success'))
+<div id="success-alert" class="position-fixed top-50 start-50 translate-middle text-center p-4 rounded" style="z-index: 9999; background-color: #28a745; color: white; font-size: 18px;">
+    {{ session('success') }}
+</div>
+
+<script>
+    setTimeout(function () {
+        const alertBox = document.getElementById('success-alert');
+        if (alertBox) {
+            alertBox.style.display = 'none';
+        }
+    }, 3000);
+</script>
+@endif
+
 <div class="text-end mb-3">
     <a href="{{ route('users.create') }}" class="btn btn-dark mb-3">Thêm người dùng</a>
 </div>
