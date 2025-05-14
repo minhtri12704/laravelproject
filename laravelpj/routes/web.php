@@ -12,7 +12,7 @@ use App\Http\Controllers\ProductListController;
 
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\KhachHangController;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomePageController;
@@ -86,6 +86,10 @@ Route::get('/sanpham/{id}', [ProductListController::class, 'showByCategory'])->n
 // Trang chi tiết sản phẩm
 Route::get('/chitietsanpham/{id}', [ChiTietSanPhamController::class, 'show'])->name('chitietsanpham.show');
 
+//route Guest
+Route::get('/khachhang', [KhachHangController::class, 'index'])->name('khachhang');
+Route::get('/khachhang/create', [KhachHangController::class, 'create'])->name('khachhang.create');
+Route::post('/khachhang', [KhachHangController::class, 'store'])->name('khachhang.store');
 
 
 
