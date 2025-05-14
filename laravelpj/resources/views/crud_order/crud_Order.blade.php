@@ -220,7 +220,7 @@ body {
                 </td>
                 <td>{{ $donHang->ghi_chu }}</td>
                 <td>
-                    <a href="#">
+                    <a href="{{ route('orders.edit', $donHang->id) }}">
                         <button class="btn-edit">Sửa</button>
                     </a>
                     <form action="#" method="POST" style="display:inline;">

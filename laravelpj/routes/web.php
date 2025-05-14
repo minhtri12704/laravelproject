@@ -10,6 +10,10 @@ use App\Http\Controllers\CrudProductController;
 use App\Http\Controllers\CrudUserController;
 
 
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +51,8 @@ Route::delete('/users/{id}', [CrudAdminUserController::class, 'delete'])->name('
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
 //route tintuc
 Route::get('/blog', [BaiVietController::class, 'index'])->name('baiviet.index');
 Route::get('/blog/{id}', [BaiVietController::class, 'show'])->name('baiviet.show');
