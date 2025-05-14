@@ -108,7 +108,7 @@
 
             <th>
                 <!-- Nút Sửa -->
-                <form action="#" method="GET" style="display: inline-block;">
+                <form action="{{ route('users.edit', ['id' => $user->id]) }}" method="GET" style="display: inline-block;">
                     <button type="submit" class="edit" style="background-color: #ffa6c9; padding: 6px 12px; border: none; border-radius: 8px; color: white;">
                         Sửa
                     </button>

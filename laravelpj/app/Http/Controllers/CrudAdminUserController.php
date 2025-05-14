@@ -22,28 +22,63 @@ class CrudAdminUserController extends Controller
         return view('crud_user.CrudAdminUserCreate', compact('roles'));
     }
     //hàm store giúp xử lí thêm người dùng tại trang thêm
-     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'phone' => 'nullable|string|max:20',
-        'email' => 'required|email|unique:users,email',
-        'address' => 'nullable|string|max:255',
-        'role' => 'required|exists:role,id',
-        'password' => 'required|string|min:6',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'nullable|string|max:255',
+            'role' => 'required|exists:role,id',
+            'password' => 'required|string|min:6',
+        ]);
 
-    $user = User::create([
-        'name' => $request->name,
-        'phone' => $request->phone,
-        'email' => $request->email,
-        'address' => $request->address,
-        'password' =>$request->password,
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+            'password' => $request->password,
+        ]);
 
-    // Thêm role vào bảng user_role
-    $user->roles()->attach($request->role);
+        // Thêm role vào bảng user_role
+        $user->roles()->attach($request->role);
 
-    return redirect()->route('users.index')->with('success', 'Đã thêm người dùng!');
-}
+        return redirect()->route('users.index')->with('success', 'Đã thêm người dùng!');
+    }
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('crud_user.CrudAdminUserEdit', compact('user', 'roles'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'address' => 'nullable|string|max:255',
+            'role' => 'required|exists:role,id',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+            'password' => $request->password,
+        ]);
+
+        // Cập nhật lại role
+        $user->roles()->sync([$request->role]);
+
+
+        return redirect()->route('users.index')->with('success', 'Đã cập nhật người dùng!');
+    }
 }
