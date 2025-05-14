@@ -151,16 +151,24 @@ body {
 }
 
 @keyframes slideLeft {
-    0%, 10% {
+
+    0%,
+    10% {
         transform: translateX(0%);
     }
-    20%, 30% {
+
+    20%,
+    30% {
         transform: translateX(-100%);
     }
-    40%, 50% {
+
+    40%,
+    50% {
         transform: translateX(-200%);
     }
-    60%, 100% {
+
+    60%,
+    100% {
         transform: translateX(0%);
     }
 }
@@ -214,6 +222,27 @@ body {
     color: #555;
     line-height: 1.6;
 }
+
+.custom-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #28a745;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    z-index: 9999;
+}
+
+.custom-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
 
 <!-- Banner slider -->
@@ -225,7 +254,7 @@ body {
         <img src="{{ asset('images/maylanh3.jpg') }}" alt="Banner 3">
         @endforelse
     </div>
-</div>  
+</div>
 <!-- spnb -->
 <section style="margin: 40px 0;">
     <h2 class="section-title">Sản phẩm nổi bật</h2>
@@ -247,13 +276,33 @@ body {
 -->
 <!-- Product List -->
 <h2 class="section-title" id="product-list">Danh sách sản phẩm</h2> <br>
+<!-- wishhlistwhislist -->
+<div style="text-align: right; margin-bottom: 20px;">
+    <a href="{{ route('wishlist.show_wishlist') }}" class="btn btn-primary">
+        <i class="bi bi-heart-fill"></i> Danh sách yêu thích
+    </a>
+</div>
+<!-- dssp -->
 <div class="product-grid">
     @forelse ($products as $product)
     <div class="product-card">
-        <div class="favorite-icon" onclick="alert('Yêu thích rồi nhé 😍')">♥</div>
+        <!-- <div class="favorite-icon" onclick="alert('Yêu thích rồi nhé 😍')">♥</div> -->
+        <!-- add widhlist -->
+        <form action="{{ route('wishlist.add', $product->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="favorite-icon" style="border: none; background: none;">
+                ♥
+            </button>
+        </form>
+
         <img src="{{ asset('images/' . ($product->image ?? 'default.jpg')) }}" alt="{{ $product->ten_san_pham }}">
         <div class="product-name">{{ $product->ten_san_pham }}</div>
         <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</div>
+
+        <p style="font-size: 14px; color: #777;">
+            Đã yêu thích {{ $wishlist[$product->id] ?? 1 }} lần
+        </p>
+
         <button class="btn-cart">Thêm vào giỏ</button>
     </div>
     @empty
@@ -307,4 +356,19 @@ body {
 <!-- Pagination -->
 
 </div>
+@if(session('success'))
+<div id="wishlist-toast" class="custom-toast">
+    {{ session('success') }}
+</div>
+
+<script>
+const toast = document.getElementById('wishlist-toast');
+toast.classList.add('show');
+
+// Ẩn toast sau 2.5s
+setTimeout(() => {
+    toast.classList.remove('show');
+}, 2500);
+</script>
+@endif
 @endsection
