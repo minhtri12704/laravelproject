@@ -8,7 +8,7 @@ use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\CrudProductController;
 use App\Http\Controllers\CrudUserController;
-
+use App\Http\Controllers\ProductListController;
 
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentController;
@@ -73,9 +73,17 @@ Route::get('/products/{product}/edit', [CrudProductController::class, 'edit'])->
 Route::put('/products/{product}', [CrudProductController::class, 'update'])->name('products.update');
 
 
+
 //route payment
 Route::get('/payment', [PaymentController::class, 'showForm'])->name('payment.form');
 Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+
+// Hiển thị danh sách sản phẩm chính
+Route::get('/sanpham', [ProductListController::class, 'index'])->name('sanpham.index');
+//route lấy danh mục tại HomePage
+Route::get('/sanpham/{id}', [ProductListController::class, 'showByCategory'])->name('products.byCategory');
+
+
 
 Route::get('/', function () {
     return view('welcome');
