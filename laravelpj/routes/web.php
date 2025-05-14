@@ -4,10 +4,17 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CrudAdminUserController;
 use App\Http\Controllers\OrderController;
+
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\CrudProductController;
 use App\Http\Controllers\CrudUserController;
+
+use App\Http\Controllers\PaymentController;
+
+use App\Http\Controllers\CrudCategoryController;
+use App\Http\Controllers\ProductController;
+
 
 
 /*
@@ -24,12 +31,14 @@ use App\Http\Controllers\CrudUserController;
 Route::get('/categories', [CrudCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/create', [CrudCategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CrudCategoryController::class, 'store'])->name('categories.store');
+<<<<<<< HEAD
 //route category Edit
 Route::get('/categories/{id}/edit', [CrudCategoryController::class, 'editCategory'])->name('categories.editCategory');
 Route::put('/categories/{id}', [CrudCategoryController::class, 'update'])->name('categories.update');
 //Route Delete
 Route::delete('/categories/{id}', [CrudCategoryController::class, 'deleteCategory'])->name('categories.deleteCategory');
 
+Route::get('/products/category/{id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
 
 //user:route hiển thị danh sách người dùng mẫu
 Route::get('/users', [CrudAdminUserController::class, 'index'])->name('users.index');
@@ -62,7 +71,9 @@ Route::get('/products/{product}/edit', [CrudProductController::class, 'edit'])->
 Route::put('/products/{product}', [CrudProductController::class, 'update'])->name('products.update');
 
 
-
+//route payment
+Route::get('/payment', [PaymentController::class, 'showForm'])->name('payment.form');
+Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
 
 Route::get('/', function () {
     return view('welcome');
