@@ -22,7 +22,9 @@ use App\Http\Controllers\CrudCategoryController;
 Route::get('/categories', [CrudCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/create', [CrudCategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CrudCategoryController::class, 'store'])->name('categories.store');
-
+//route category Sua
+Route::get('/categories/{id}/edit', [CrudCategoryController::class, 'editCategory'])->name('categories.editCategory');
+Route::put('/categories/{id}', [CrudCategoryController::class, 'update'])->name('categories.update');
 
 
 //user:route hiển thị danh sách người dùng mẫu
