@@ -68,7 +68,7 @@
 
                 <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Người dùng</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Quản lý khách hàng</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Quản lý sản phẩm</a></li>
+                <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link">Quản lý sản phẩm</a></li>
                 <li class="nav-item"><a href="{{ route('orders.index') }}" class="nav-link">Quản lý đơn hàng</a></li>
                 <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Quản lý danh mục</a></li>
 
