@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentController;
 
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HomePageController;
 
 
 /*
@@ -85,6 +86,20 @@ Route::get('/sanpham/{id}', [ProductListController::class, 'showByCategory'])->n
 // Trang chi tiết sản phẩm
 Route::get('/chitietsanpham/{id}', [ChiTietSanPhamController::class, 'show'])->name('chitietsanpham.show');
 
+
+
+
+
+
+
+
+
+
+
+
+
+//home page
+Route::get('/home', [HomePageController::class, 'index'])->name('home');
 
 Route::get('/', function () {
     return view('welcome');
