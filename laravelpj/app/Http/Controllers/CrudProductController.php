@@ -43,4 +43,35 @@ class CrudProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Thêm sản phẩm thành công');
     }
+
+
+    //hàm eidt và update
+    public function edit(CrudProduct $product)
+    {
+        $categories = Category::all();
+        return view('Crud_user.CrudProductEdit', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, CrudProduct $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $data['image'] = $filename;
+        }
+
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
+    }
 }

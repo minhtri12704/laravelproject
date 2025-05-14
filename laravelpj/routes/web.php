@@ -53,7 +53,9 @@ Route::get('/products', [CrudProductController::class, 'index'])->name('products
 Route::get('/products/create', [CrudProductController::class, 'create'])->name('products.create');
 //route xử lý thêm sản phẩm
 Route::post('/products', [CrudProductController::class, 'store'])->name('products.store');
-
+//route xử lí chỉnh sửa sản phẩm
+Route::get('/products/{product}/edit', [CrudProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [CrudProductController::class, 'update'])->name('products.update');
 
 
 
