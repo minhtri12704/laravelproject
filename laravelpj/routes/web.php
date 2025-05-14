@@ -71,7 +71,7 @@ Route::post('/products', [CrudProductController::class, 'store'])->name('product
 //route xử lí chỉnh sửa sản phẩm
 Route::get('/products/{product}/edit', [CrudProductController::class, 'edit'])->name('products.edit');
 Route::put('/products/{product}', [CrudProductController::class, 'update'])->name('products.update');
-
+Route::delete('/products/{product}', [CrudProductController::class, 'delete'])->name('products.delete');
 
 
 //route payment

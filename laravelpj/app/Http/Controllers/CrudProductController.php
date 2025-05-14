@@ -74,4 +74,9 @@ class CrudProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
     }
+    public function delete(CrudProduct $product)
+    {
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Xóa thành công');
+    }
 }
