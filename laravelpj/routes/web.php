@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CrudAdminUserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 
 use App\Http\Controllers\CrudCategoryController;
+use App\Http\Controllers\ProductController;
 
 
 /*
@@ -23,7 +25,7 @@ Route::get('/categories', [CrudCategoryController::class, 'index'])->name('categ
 Route::get('/categories/create', [CrudCategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CrudCategoryController::class, 'store'])->name('categories.store');
 
-
+Route::get('/products/category/{id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
 
 //user:route hiển thị danh sách người dùng mẫu
 Route::get('/users', [CrudAdminUserController::class, 'index'])->name('users.index');
@@ -37,7 +39,9 @@ Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
-
+//route payment
+Route::get('/payment', [PaymentController::class, 'showForm'])->name('payment.form');
+Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
 
 Route::get('/', function () {
     return view('welcome');
