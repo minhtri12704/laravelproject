@@ -11,9 +11,6 @@ use App\Http\Controllers\CrudUserController;
 use App\Http\Controllers\ProductListController;
 
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentController;
-
-use App\Http\Controllers\CrudCategoryController;
 use App\Http\Controllers\ProductController;
 
 
