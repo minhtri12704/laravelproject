@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             BaiVietSeeder::class,
             CrudProductSeeder::class,
+            KhachHangSeeder::class,
         ]);
     }
 }
