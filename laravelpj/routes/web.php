@@ -6,6 +6,8 @@ use App\Http\Controllers\CrudAdminUserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\CrudCategoryController;
+use App\Http\Controllers\CrudProductController;
+use App\Http\Controllers\CrudUserController;
 
 
 /*
@@ -41,11 +43,21 @@ Route::delete('/users/{id}', [CrudAdminUserController::class, 'delete'])->name('
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-
-
 //route tintuc
 Route::get('/blog', [BaiVietController::class, 'index'])->name('baiviet.index');
 Route::get('/blog/{id}', [BaiVietController::class, 'show'])->name('baiviet.show');
+//route productCrud
+//route hiển thị danh sách sản phẩm
+Route::get('/products', [CrudProductController::class, 'index'])->name('products.index');
+//route chuyển hướng qua trang thêm sản phẩm
+Route::get('/products/create', [CrudProductController::class, 'create'])->name('products.create');
+//route xử lý thêm sản phẩm
+Route::post('/products', [CrudProductController::class, 'store'])->name('products.store');
+
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
