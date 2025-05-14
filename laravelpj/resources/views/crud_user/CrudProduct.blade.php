@@ -142,7 +142,7 @@
                     </form>
 
                     <!-- Nút Xóa -->
-                    <form action="#" method="POST" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+                    <form action="{{ route('products.delete', $sp->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="action-button btn-delete">Xóa</button>
