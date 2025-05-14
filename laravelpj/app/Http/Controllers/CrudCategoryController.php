@@ -35,7 +35,7 @@ class CrudCategoryController extends Controller
     public function editCategory($id)
     {
         $categories = Category::findOrFail($id);
-        return view('crud_user.CategoryEdit', compact('categories'));
+        return view('crud_user.Crud_CategoryEdit', compact('categories'));
     }
 
     // Xoá danh mục
