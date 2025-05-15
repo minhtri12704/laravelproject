@@ -41,7 +41,7 @@
     @php
     use App\Models\Category;
     $categories = Category::all();
-    @endphp -->
+    @endphp 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <span class="navbar-brand fw-bold">Điện máy Xanh</span>
@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Trang chủ</a>
+                        <a class="nav-link" href="{{ route('home') }}">Trang chủ</a>
                     </li>
                     {{-- khi ấn vào danh mục sẽ hiển thị các sản phẩm theo danh mục đó --}}
                     <li class="nav-item dropdown">
@@ -59,6 +59,17 @@
                             aria-expanded="false">
                             Danh mục
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {{-- vòng lặp foreach để chạy vòng lặp trên @php...@endphp --}}
+                            @foreach($categories as $category)
+                            <li>
+                                <a class="dropdown-item" href="{{ route('products.byCategory', $category->id) }}">
+                                    {{-- hiển thị tên danh mục --}}
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
                         
                     </li>
                     <li class="nav-item">
@@ -73,7 +84,7 @@
                     <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <a href="#" class="btn btn-outline-light ms-3">Đăng nhập</a>
-                <a href="#" class="btn btn-outline-light ms-2">
+                <a href="{{ route('cart.view') }}" class="btn btn-outline-light ms-2">
                     <i class="bi bi-cart"></i>
                 </a>
 
