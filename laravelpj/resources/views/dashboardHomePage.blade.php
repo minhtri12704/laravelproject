@@ -45,7 +45,8 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <span class="navbar-brand fw-bold">Điện máy Xanh</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -73,17 +74,25 @@
                         
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog tin tức</a>
+                        <a class="nav-link" href="{{ route('baiviet.index') }}">Blog tin tức</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Về chúng tôi</a>
                     </li>
                 </ul>
+                <!-- ni hao -->
+                @if(session()->has('khach_hang'))
+                <div class="me-3 d-flex align-items-center text-white fw-bold">
+                    👋 Xin chào [ {{ session('khach_hang')->Ten }} ]
+                </div>
+                @endif
+
                 <form class="d-flex search-form" role="search" action="#" method="GET">
-                    <input class="form-control me-2" type="search" name="query" placeholder="Tìm kiếm..." aria-label="Search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Tìm kiếm..."
+                        aria-label="Search">
                     <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <a href="#" class="btn btn-outline-light ms-3">Đăng nhập</a>
+                <a href="{{ route('login') }}" class="btn btn-outline-light ms-3">Đăng Xuất</a>
                 <a href="{{ route('cart.view') }}" class="btn btn-outline-light ms-2">
                     <i class="bi bi-cart"></i>
                 </a>
@@ -114,9 +123,12 @@
                 <div class="col-md-4 mb-3 text-md-end">
                     <h5>Thương hiệu hợp tác</h5>
                     <div class="d-flex flex-wrap justify-content-md-end justify-content-center gap-2">
-                        <img src="{{ asset('images/DienMayXanh.jpg') }}" alt="Điện máy Xanh" style="height: 40px;width:100px;">
-                        <img src="{{ asset('images/TheGioiDiDong.jpg') }}" alt="Thế Giới Di Động" style="height: 40px;width:100px;">
-                        <img src="{{ asset('images/Panasonic.jpg') }}" alt="Panasonic" style="height: 40px;width:100px;">
+                        <img src="{{ asset('images/DienMayXanh.jpg') }}" alt="Điện máy Xanh"
+                            style="height: 40px;width:100px;">
+                        <img src="{{ asset('images/TheGioiDiDong.jpg') }}" alt="Thế Giới Di Động"
+                            style="height: 40px;width:100px;">
+                        <img src="{{ asset('images/Panasonic.jpg') }}" alt="Panasonic"
+                            style="height: 40px;width:100px;">
                         <img src="{{ asset('images/LG.jpg') }}" alt="LG" style="height: 40px;width:100px;">
                         <img src="{{ asset('images/SamSung.jpg') }}" alt="Samsung" style="height: 40px;width:100px;">
 
@@ -126,7 +138,7 @@
             </div>
         </div>
     </footer>
-    
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

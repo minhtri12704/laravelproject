@@ -18,7 +18,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomePageController;
 
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\RegisterController;   
+use App\Http\Controllers\RegisterController;  
+use App\Http\Controllers\LoginController; 
 
 
 /*
@@ -97,8 +98,11 @@ Route::get('/khachhang/{id}/edit', [KhachHangController::class, 'edit'])->name('
 Route::delete('/khachhang/{id}', [KhachHangController::class, 'destroy'])->name('khachhang.destroy');
 
 //route LOGIN
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 

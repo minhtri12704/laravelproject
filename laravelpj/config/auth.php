@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'khach',
-        'passwords' => 'khach_hangshangs',
+        'guard' => 'web',
+        'passwords' => 'khach_hangs',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
         'driver' => 'session',
-        'provider' => 'users',
+        'provider' => 'khach_hangs',
     ],
     'khach' => [
         'driver' => 'session',
