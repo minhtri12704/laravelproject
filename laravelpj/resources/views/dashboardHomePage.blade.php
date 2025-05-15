@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    <!-- {{-- chạy danh mục, hiển thị toàn bộ danh mục có trong quản lí danh mục --}}
+    {{-- chạy danh mục, hiển thị toàn bộ danh mục có trong quản lí danh mục --}}
     @php
     use App\Models\Category;
     $categories = Category::all();

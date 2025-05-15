@@ -128,3 +128,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 //user: route xử lí thêm người dùng
+use App\Http\Controllers\CartController;
+
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
