@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomePageController;
 
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\RegisterController;   
 
 
 /*
@@ -95,6 +96,9 @@ Route::post('/khachhang', [KhachHangController::class, 'store'])->name('khachhan
 Route::get('/khachhang/{id}/edit', [KhachHangController::class, 'edit'])->name('khachhang.edit');
 Route::delete('/khachhang/{id}', [KhachHangController::class, 'destroy'])->name('khachhang.destroy');
 
+//route LOGIN
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 
 
