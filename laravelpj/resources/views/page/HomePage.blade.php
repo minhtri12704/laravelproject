@@ -274,8 +274,10 @@ body {
         </form>
         <img src="{{ asset('images/' . ($product->image ?? 'default.jpg')) }}" alt="{{ $product->ten_san_pham }}">
         <div class="product-name">{{ $product->ten_san_pham }}</div>
-        <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</div>
-        <button class="btn-cart">Thêm vào giỏ</button>
+        <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</div> <br>
+        <a href="{{ route('chitietsanpham.show', $product->id) }}" class="btn-cart">
+            <i class="bi bi-eye"></i> Xem chi tiết
+        </a>
     </div>
     @empty
     <p style="grid-column: 1 / -1; text-align: center;">Không có sản phẩm nào.</p>
