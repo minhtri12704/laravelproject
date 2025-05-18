@@ -109,13 +109,14 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //route KhuyenMaiGiamGia
 //Trang Khuyến Mãi
 Route::get('/khuyenmai', [KhuyenMaiController::class, 'index'])->name('khuyenmai.index');
-
 //Trang thêm mới
 Route::get('/khuyenmai/create', [KhuyenMaiController::class, 'create'])->name('khuyenmai.create');
-
 //Xử lý thêm mới
 Route::post('/khuyenmai', [KhuyenMaiController::class, 'store'])->name('khuyenmai.store');
-
+//Trang sửa
+Route::get('/khuyenmai/{id}/edit', [KhuyenMaiController::class, 'edit'])->name('khuyenmai.edit');
+//Xử lý cập nhật
+Route::put('/khuyenmai/{id}', [KhuyenMaiController::class, 'update'])->name('khuyenmai.update');
 
 
 
