@@ -172,31 +172,6 @@ buyBtn.addEventListener('click', function(e) {
 function showAlert() {
     alertBox.style.display = 'block';
     setTimeout(() => {
-        alertBox.style.display = 'none';
-    }, 3000);
-}
-
-function updateBuyButton() {
-    const checked = document.querySelectorAll('input[name="selected[]"]:checked').length;
-    buyBtn.textContent = checked > 0 ? `Mua hàng (${checked})` : 'Mua hàng';
-}
-
-checkboxes.forEach(cb => cb.addEventListener('change', updateBuyButton));
-
-if (selectAll) {
-    selectAll.addEventListener('change', function() {
-        checkboxes.forEach(cb => cb.checked = this.checked);
-        updateBuyButton();
-    });
-}
-
-const successAlert = document.getElementById('success-alert');
-if (successAlert) {
-    setTimeout(() => {
-        successAlert.style.display = 'none';
-    }, 3000);
-}
-
             alertBox.style.display = 'none';
         }, 3000); // 3 giây
     }
