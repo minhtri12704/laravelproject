@@ -145,9 +145,10 @@ Route::get('/', function () {
 
 // Giỏ hàng
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.addById');
 Route::get('/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/add-to-cart/{id}', [CartController::class, 'addProductById'])->name('cart.add');
 
 Route::get('/simple-chatbot', function () {
     return view('simple-chatbot');

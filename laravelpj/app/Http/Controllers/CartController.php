@@ -7,23 +7,47 @@ use App\Models\CrudProduct;
 
 class CartController extends Controller
 {
-    public function addToCart($id)
+    // Hàm thêm sản phẩm vào giỏ hàng (dùng lại nhiều nơi)
+    protected function addProductToCart(CrudProduct $product)
     {
-        $product = CrudProduct::findOrFail($id);
         $cart = session()->get('cart', []);
+        $id = $product->id;
 
-        $cart[$id] = [
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'image' => $product->image,
-            'quantity' => isset($cart[$id]) ? $cart[$id]['quantity'] + 1 : 1,
-        ];
-
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                'id' => $id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'image' => $product->image,
+                'quantity' => 1,
+            ];
+        }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Đã thêm vào giỏ hàng thành công!');
     }
 
+    // Nhận request thêm sản phẩm vào giỏ hàng theo product_id
+    public function addToCart(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $product = CrudProduct::findOrFail($productId);
+
+        $this->addProductToCart($product);
+
+        return redirect()->route('cart.view')->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
+    }
+
+    // Bạn có thể dùng hàm này ở những chỗ khác cũng được:
+    public function addProductById($id)
+    {
+        $product = CrudProduct::findOrFail($id);
+        $this->addProductToCart($product);
+        // Ví dụ redirect về trang hiện tại hoặc trang giỏ hàng
+        return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
+    }
+
+    // Phần còn lại giữ nguyên
     public function viewCart()
     {
         $cart = session()->get('cart', []);
@@ -33,8 +57,10 @@ class CartController extends Controller
     public function removeItem($id)
     {
         $cart = session()->get('cart', []);
-        unset($cart[$id]);
-        session()->put('cart', $cart);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
         return redirect()->route('cart.view')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng');
     }
 
@@ -42,7 +68,6 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        // Tăng số lượng
         if ($request->has('increase')) {
             $id = $request->input('increase');
             if (isset($cart[$id])) {
@@ -50,7 +75,6 @@ class CartController extends Controller
             }
         }
 
-        // Giảm số lượng
         if ($request->has('decrease')) {
             $id = $request->input('decrease');
             if (isset($cart[$id]) && $cart[$id]['quantity'] > 1) {
@@ -58,26 +82,12 @@ class CartController extends Controller
             }
         }
 
-        // Thanh toán (checkout)
         if ($request->has('checkout')) {
-            $selected = $request->input('selected', []);
-            session(['selected_items' => $selected]);
-
-            $cart = session()->get('cart', []);
-            $total = 0;
-            foreach ($selected as $id) {
-                if (isset($cart[$id])) {
-                    $total += $cart[$id]['price'] * $cart[$id]['quantity'];
-                }
-            }
-
-            return redirect()->route('payment.form', ['total' => $total]);
+            session()->forget('cart');
+            return redirect()->route('cart.view')->with('success', 'Thanh toán thành công!');
         }
-        
 
         session()->put('cart', $cart);
         return redirect()->route('cart.view');
-        
     }
-    
 }
