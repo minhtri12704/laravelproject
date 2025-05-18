@@ -109,7 +109,7 @@
                 <td>{{ \Carbon\Carbon::parse($km->ngay_bat_dau)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($km->ngay_ket_thuc)->format('d/m/Y') }}</td>
                 <td>
-                    <a href="#" class="btn btn-warning btn-sm">
+                    <a href="{{ route('khuyenmai.edit', $km->id) }}" class="btn btn-warning btn-sm">
                         ✏️ Sửa
                     </a>
                     <form action="#" method="POST" style="display:inline-block" 

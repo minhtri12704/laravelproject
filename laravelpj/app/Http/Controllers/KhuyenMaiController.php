@@ -36,7 +36,7 @@ class KhuyenMaiController extends Controller
     public function edit($id)
     {
         $km = KhuyenMai::findOrFail($id);
-        return view('page.editKhuyenMai', compact('km')); // ✅ đúng tên file
+        return view('page.KhuyenMaiGiamGiaEdit', compact('km')); // ✅ đúng tên file
     }
 
     public function update(Request $request, $id)
