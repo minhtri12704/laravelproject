@@ -101,7 +101,7 @@
     @endif
 
     @if(!empty($cart))
-    <form method="POST" action="{{ route('cart.update') }}">
+    <form method="POST" action="{{ route('cart.view') }}">
         @csrf
         <div class="shop-group">
             <div class="shop-title">💼 Cửa hàng của bạn</div>
