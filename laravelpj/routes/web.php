@@ -20,6 +20,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\RegisterController;  
 use App\Http\Controllers\LoginController; 
+use App\Http\Controllers\CartController; 
 
 use App\Http\Controllers\KhuyenMaiController;
 
@@ -136,8 +137,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 //user: route xử lí thêm người dùng
-use App\Http\Controllers\CartController;
 
+// Giỏ hàng
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+
