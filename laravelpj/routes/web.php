@@ -20,7 +20,8 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\RegisterController;  
 use App\Http\Controllers\LoginController; 
-use App\Http\Controllers\CartController; 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ChatBotController;
 
 
 /*
@@ -136,3 +137,7 @@ Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('car
 Route::get('/remove-item/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
+Route::get('/simple-chatbot', function () {
+    return view('simple-chatbot');
+});
+Route::post('/simple-chatbot/ask', [ChatBotController::class, 'ask'])->name('simplebot.ask');
