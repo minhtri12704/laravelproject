@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\CrudProduct;
 use Illuminate\Http\Request;
+use App\Models\ChiTietSanPham;
 
 class CrudProductController extends Controller
 {
@@ -79,4 +80,6 @@ class CrudProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Xóa thành công');
     }
+
+
 }

@@ -121,8 +121,10 @@ Route::put('/khuyenmai/{id}', [KhuyenMaiController::class, 'update'])->name('khu
 //Xử lý xóa
 Route::delete('/khuyenmai/{id}', [KhuyenMaiController::class, 'destroy'])->name('khuyenmai.destroy');
 
+//Route Search
+Route::get('/search', [HomePageController::class, 'search'])->name('search');
 
-
+Route::get('/products/{id}', [CrudProductController::class, 'show'])->name('products.detail');
 
 
 

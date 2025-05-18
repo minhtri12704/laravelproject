@@ -32,4 +32,16 @@ class HomePageController extends Controller
 
     return view('page.homepage', compact('products', 'categories', 'bestSellers'));
     }
+    public function search(Request $request)
+{
+    $query = $request->input('query'); // từ khóa tìm kiếm
+
+    // Tìm tất cả sản phẩm có chứa từ khóa trong tên
+    $products = CrudProduct::where('name', 'like', '%' . $query . '%')->paginate(8);
+    
+    return view('page.KetQuaTimKiem', compact('products', 'query'));
+}
+
+    
+
 }
