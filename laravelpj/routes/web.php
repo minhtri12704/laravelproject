@@ -21,6 +21,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\RegisterController;  
 use App\Http\Controllers\LoginController; 
 
+use App\Http\Controllers\KhuyenMaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,8 +105,15 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+//route KhuyenMaiGiamGia
+//Trang Khuyến Mãi
+Route::get('/khuyenmai', [KhuyenMaiController::class, 'index'])->name('khuyenmai.index');
 
+//Trang thêm mới
+Route::get('/khuyenmai/create', [KhuyenMaiController::class, 'create'])->name('khuyenmai.create');
 
+//Xử lý thêm mới
+Route::post('/khuyenmai', [KhuyenMaiController::class, 'store'])->name('khuyenmai.store');
 
 
 
