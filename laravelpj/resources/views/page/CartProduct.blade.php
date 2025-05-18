@@ -236,5 +236,6 @@
     // 7. Gọi 1 lần khi load trang
     updateBuyButton();
     updateTotalPrice();
+    //
 </script>
 @endsection
