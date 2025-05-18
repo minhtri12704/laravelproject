@@ -60,9 +60,18 @@ class CartController extends Controller
 
         // Thanh toán (checkout)
         if ($request->has('checkout')) {
-            // Có thể xử lý lưu đơn hàng vào DB ở đây nếu muốn
-            session()->forget('cart');
-            return redirect()->route('cart.view')->with('success', 'Thanh toán thành công!');
+            $selected = $request->input('selected', []);
+            session(['selected_items' => $selected]);
+
+            $cart = session()->get('cart', []);
+            $total = 0;
+            foreach ($selected as $id) {
+                if (isset($cart[$id])) {
+                    $total += $cart[$id]['price'] * $cart[$id]['quantity'];
+                }
+            }
+
+            return redirect()->route('payment.form', ['total' => $total]);
         }
         
 
