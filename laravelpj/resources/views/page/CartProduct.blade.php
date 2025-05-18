@@ -100,20 +100,16 @@
     </div>
     @endif
 
-
     @if(!empty($cart))
     <form method="POST" action="{{ route('cart.update') }}">
         @csrf
         <div class="shop-group">
             <div class="shop-title">💼 Cửa hàng của bạn</div>
 
-            @php $total = 0; @endphp
             @foreach($cart as $item)
-            @php
-            $itemTotal = $item['price'] * $item['quantity'];
-            $total += $itemTotal;
-            @endphp
-            <div class="cart-item shadow-sm border rounded-3 p-3 bg-white">
+            <div class="cart-item shadow-sm border rounded-3 p-3 bg-white"
+                 data-price="{{ $item['price'] }}"
+                 data-quantity="{{ $item['quantity'] }}">
                 <input type="checkbox" name="selected[]" value="{{ $item['id'] }}">
                 <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}">
                 <div class="cart-info">
@@ -128,7 +124,7 @@
                     </div>
                 </div>
                 <!-- Tổng tiền mỗi sản phẩm -->
-                <div><strong>{{ number_format($itemTotal, 0, ',', '.') }}đ</strong></div>
+                <div><strong>{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}đ</strong></div>
                 <!-- Nút xóa sản phẩm -->
                 <div>
                     <a href="{{ route('cart.remove', $item['id']) }}" class="btn btn-sm btn-danger">Xóa</a>
@@ -145,7 +141,7 @@
             </div>
             <div>
                 <span class="me-3 fw-bold">Tổng cộng:</span>
-                <span class="text-danger fw-bold h5">{{ number_format($total, 0, ',', '.') }}đ</span>
+                <span class="text-danger fw-bold h5" id="total-price">0đ</span>
                 <!-- Nút mua hàng -->
                 <button type="submit" id="buy-button" name="checkout" class="btn btn-danger ms-3">Mua hàng</button>
             </div>
@@ -199,16 +195,36 @@
         buyBtn.textContent = checked > 0 ? `Mua hàng (${checked})` : 'Mua hàng';
     }
 
-    // 4. Khi chọn hoặc bỏ chọn từng sản phẩm
-    checkboxes.forEach(cb => cb.addEventListener('change', updateBuyButton));
+    // 4. Cập nhật tổng tiền theo sản phẩm được chọn
+    function updateTotalPrice() {
+        const selectedCheckboxes = document.querySelectorAll('input[name="selected[]"]:checked');
+        let total = 0;
+        selectedCheckboxes.forEach(cb => {
+            const itemDiv = cb.closest('.cart-item');
+            const price = parseFloat(itemDiv.getAttribute('data-price'));
+            const quantity = parseInt(itemDiv.getAttribute('data-quantity'));
+            total += price * quantity;
+        });
 
-    // 5. Khi bấm "Chọn tất cả"
+        const totalPriceEl = document.getElementById('total-price');
+        totalPriceEl.textContent = total.toLocaleString('vi-VN') + 'đ';
+    }
+
+    // 5. Khi chọn hoặc bỏ chọn từng sản phẩm
+    checkboxes.forEach(cb => cb.addEventListener('change', () => {
+        updateBuyButton();
+        updateTotalPrice();
+    }));
+
+    // 6. Khi bấm "Chọn tất cả"
     if (selectAll) {
         selectAll.addEventListener('change', function() {
             checkboxes.forEach(cb => cb.checked = this.checked);
             updateBuyButton();
+            updateTotalPrice();
         });
     }
+
     // Ẩn thông báo xóa thành công sau 3s
     const successAlert = document.getElementById('success-alert');
     if (successAlert) {
@@ -217,8 +233,8 @@
         }, 3000);
     }
 
-
-    // 6. Gọi 1 lần khi load trang
+    // 7. Gọi 1 lần khi load trang
     updateBuyButton();
+    updateTotalPrice();
 </script>
 @endsection
