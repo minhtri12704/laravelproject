@@ -7,32 +7,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #007bff;
-            color: #f5f5f5;
-        }
+    body {
+        background-color: #007bff;
+        color: #f5f5f5;
+    }
 
-        .navbar {
-            background-color: #007bff;
-        }
+    .navbar {
+        background-color: #007bff;
+    }
 
-        .navbar .nav-link,
-        .navbar .navbar-brand {
-            color: #ffffff;
-        }
+    .navbar .nav-link,
+    .navbar .navbar-brand {
+        color: #ffffff;
+    }
 
-        .navbar .nav-link:hover {
-            color: #cce6ff;
-        }
+    .navbar .nav-link:hover {
+        color: #cce6ff;
+    }
 
-        .content {
-            padding: 20px;
-        }
+    .content {
+        padding: 20px;
+    }
 
-        .search-form .form-control {
-            background-color: #fff;
-            color: #000;
-        }
+    .search-form .form-control {
+        background-color: #fff;
+        color: #000;
+    }
     </style>
 </head>
 
@@ -41,7 +41,7 @@
     @php
     use App\Models\Category;
     $categories = Category::all();
-    @endphp 
+    @endphp
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <span class="navbar-brand fw-bold">Điện máy Xanh</span>
@@ -56,8 +56,8 @@
                     </li>
                     {{-- khi ấn vào danh mục sẽ hiển thị các sản phẩm theo danh mục đó --}}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Danh mục
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -71,7 +71,7 @@
                             </li>
                             @endforeach
                         </ul>
-                        
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('baiviet.index') }}">Blog tin tức</a>
@@ -87,11 +87,15 @@
                 </div>
                 @endif
 
-                <form class="d-flex search-form" role="search" action="#" method="GET">
+                <form class="d-flex search-form" role="search" action="{{ route('search') }}" method="GET">
                     <input class="form-control me-2" type="search" name="query" placeholder="Tìm kiếm..."
                         aria-label="Search">
                     <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
                 </form>
+
+
+
+
                 <a href="{{ route('login') }}" class="btn btn-outline-light ms-3">Đăng Xuất</a>
                 <a href="{{ route('cart.view') }}" class="btn btn-outline-light ms-2">
                     <i class="bi bi-cart"></i>
