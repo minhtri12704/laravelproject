@@ -117,7 +117,8 @@ Route::post('/khuyenmai', [KhuyenMaiController::class, 'store'])->name('khuyenma
 Route::get('/khuyenmai/{id}/edit', [KhuyenMaiController::class, 'edit'])->name('khuyenmai.edit');
 //Xử lý cập nhật
 Route::put('/khuyenmai/{id}', [KhuyenMaiController::class, 'update'])->name('khuyenmai.update');
-
+//Xử lý xóa
+Route::delete('/khuyenmai/{id}', [KhuyenMaiController::class, 'destroy'])->name('khuyenmai.destroy');
 
 
 

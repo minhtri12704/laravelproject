@@ -112,7 +112,7 @@
                     <a href="{{ route('khuyenmai.edit', $km->id) }}" class="btn btn-warning btn-sm">
                         ✏️ Sửa
                     </a>
-                    <form action="#" method="POST" style="display:inline-block" 
+                    <form action="{{ route('khuyenmai.destroy', $km->id) }}" method="POST" style="display:inline-block" 
                           onsubmit="return confirm('Bạn có chắc muốn xóa?')">
                         @csrf
                         @method('DELETE')
