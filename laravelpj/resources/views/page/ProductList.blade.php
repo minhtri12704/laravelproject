@@ -67,7 +67,40 @@
         color: #ffffff;
     }
 </style>
+{{-- Bộ lọc sản phẩm --}}
+@php
+    use App\Models\Category;
+    $categories = Category::all();
+    @endphp
+<div class="container py-3">
+    <form method="GET" action="{{ route('sanpham.index') }}" class="row g-3 align-items-end" style="background: #fff; padding: 20px; border-radius: 10px;">
+        <div class="col-md-4">
+            <label for="category_id" class="form-label">Danh mục</label>
+            <select name="category_id" id="category_id" class="form-select">
+                <option value="">-- Tất cả danh mục --</option>
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
+        <div class="col-md-4">
+            <label for="price_range" class="form-label">Khoảng giá</label>
+            <select name="price_range" id="price_range" class="form-select">
+                <option value="">-- Tất cả mức giá --</option>
+                <option value="1" {{ request('price_range') == 1 ? 'selected' : '' }}>Dưới 500.000đ</option>
+                <option value="2" {{ request('price_range') == 2 ? 'selected' : '' }}>500.000đ - 1.000.000đ</option>
+                <option value="3" {{ request('price_range') == 3 ? 'selected' : '' }}>Trên 1.000.000đ</option>
+            </select>
+        </div>
+
+        <div class="col-md-4 text-end">
+            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-funnel-fill"></i> Lọc sản phẩm</button>
+        </div>
+    </form>
+</div>
 <div class="container mt-5">
     <h2 class="text-center mb-4" style="color: black; text-shadow: 1px 1px 3px #000;">Danh sách Sản phẩm</h2>
 
