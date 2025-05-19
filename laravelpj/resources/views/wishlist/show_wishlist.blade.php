@@ -108,20 +108,22 @@ footer {
             <div class="product-name">{{ $product->name }}</div>
             <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</div>
 
-            <p style="margin-top: 5px;">
+            <!-- <p style="margin-top: 5px;">
                 Đã yêu thích <strong>{{ $wishlist[$product->id] ?? 0 }}</strong> lần
             </p>
 
             <form action="{{ route('wishlist.decrease', $product->id) }}" method="POST" style="display:inline;">
                 @csrf
                 <button class="btn btn-warning btn-sm">Giảm 1</button>
-            </form>
+            </form> -->
 
             <form action="{{ route('wishlist.remove', $product->id) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger btn-sm">Xóa hết</button>
-            </form>
+            </form> <br> <br>
+
+            <a href="{{ route('cart.add', $product->id) }}" class="btn btn-success">Thêm vào giỏ</a>
         </div>
 
         @empty
