@@ -16,7 +16,7 @@ class CrudProductSeeder extends Seeder
     {
         //chạy dữ liệu mẫu với số lượng là 10 sản phẩm
         $categories = Category::all();
-        $imageList = ['mayquat.png', 'tivi.png', 'maylanh1.jpg', 'tu-lanh-panasonic.jpg'];
+        $imageList = ['mayquat.png', 'tivi.png','dieuhoa-daikin.jpg', 'maylanh1.jpg', 'tu-lanh-panasonic.jpg'];
         foreach ($categories as $category) {
             for ($i = 1; $i <= 10; $i++) {
                 CrudProduct::create([
