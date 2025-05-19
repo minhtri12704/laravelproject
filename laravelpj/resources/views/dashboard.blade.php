@@ -71,7 +71,7 @@
                 <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link">Quản lý sản phẩm</a></li>
                 <li class="nav-item"><a href="{{ route('orders.index') }}" class="nav-link">Quản lý đơn hàng</a></li>
                 <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Quản lý danh mục</a></li>
-
+                <li class="nav-item"><a href="{{ route('khuyenmai.index') }}" class="nav-link">Chương Trình Khuyến Mãi</a></li>
             </ul>
         </div>
         <div class="content flex-grow-1">
