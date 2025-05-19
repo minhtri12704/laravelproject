@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $danhMuc = ['Máy giặt', 'Máy lạnh', 'Tủ lạnh'];
+        $danhMuc = ['Máy giặt', 'Máy lạnh', 'Tủ lạnh','Điều Hòa'];
 
         foreach ($danhMuc as $ten) {
             Category::create([
