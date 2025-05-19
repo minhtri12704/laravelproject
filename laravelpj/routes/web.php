@@ -150,6 +150,10 @@ Route::get('/remove-item/{id}', [CartController::class, 'removeItem'])->name('ca
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 Route::get('/add-to-cart/{id}', [CartController::class, 'addProductById'])->name('cart.add');
 
+//Route Giảm giá
+Route::get('/check-discount', [CartController::class, 'checkDiscount'])->name('cart.checkDiscount');
+
+
 Route::get('/simple-chatbot', function () {
     return view('simple-chatbot');
 });
