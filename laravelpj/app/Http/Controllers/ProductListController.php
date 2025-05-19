@@ -2,23 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SanPham;
 use Illuminate\Http\Request;
 use App\Models\CrudProduct;
-use App\Models\ChiTietSanPham;
+use App\Models\Category;
 
 class ProductListController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sanPhams = CrudProduct::with('category')->paginate(10); // Hoặc 8/16 tuỳ bạn
-        return view('page.ProductList', compact('sanPhams'));
+        $query = CrudProduct::query();
+
+        // Lọc theo danh mục
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Lọc theo khoảng giá
+        if ($request->filled('price_range')) {
+            switch ($request->price_range) {
+                case 1:
+                    $query->where('price', '<', 500000);
+                    break;
+                case 2:
+                    $query->whereBetween('price', [500000, 1000000]);
+                    break;
+                case 3:
+                    $query->where('price', '>', 1000000);
+                    break;
+            }
+        }
+
+        $sanPhams = $query->with('category')->paginate(10)->appends($request->query());
+        $categories = Category::all();
+
+        return view('page.ProductList', compact('sanPhams', 'categories'));
     }
-    //hiển thị danh mục chính trên thanh navbar
+
+    // Hiển thị sản phẩm theo danh mục từ navbar
     public function showByCategory($id)
     {
-        $sanPhams = \App\Models\CrudProduct::where('category_id', $id)->paginate(12);
-        return view('page.ProductList', compact('sanPhams'));
+        $sanPhams = CrudProduct::where('category_id', $id)->paginate(12);
+        $categories = Category::all(); // Để render lại dropdown trong view nếu cần
+
+        return view('page.ProductList', compact('sanPhams', 'categories'));
     }
-    
 }
