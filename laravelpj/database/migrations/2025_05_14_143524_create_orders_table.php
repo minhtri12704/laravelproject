@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('ten_don_hang');
             $table->string('ten_khach_hang');
-            $table->integer('so_luong');
             $table->double('tong_tien')->nullable();
             $table->string('phuong_thuc_thanh_toan');
             $table->string('trang_thai');
