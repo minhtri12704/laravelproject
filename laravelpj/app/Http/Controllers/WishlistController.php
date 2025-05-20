@@ -26,29 +26,4 @@ class WishlistController extends Controller
 
     return back()->with('success', 'Đã thêm vào yêu thích!');
     }
-    
-    // chức năng xóa sản phẩm yêu thíchthích
-    public function remove($id)
-    {
-        $wishlist = session()->get('wishlist', []);
-    unset($wishlist[$id]);
-    session()->put('wishlist', $wishlist);
-
-    return back()->with('success', 'Đã xóa khỏi danh sách yêu thích!');
-    }
-
-    // xóa số lượng khi thêm
-    public function decrease($id)
-    {
-    $wishlist = session()->get('wishlist', []);
-    if (isset($wishlist[$id])) {
-        $wishlist[$id]--;   
-        if ($wishlist[$id] <= 0) {
-            unset($wishlist[$id]);
-        }
-        session()->put('wishlist', $wishlist);
-    }
-
-    return back()->with('success', 'Đã giảm số lượt yêu thích!');
-    }
 }
