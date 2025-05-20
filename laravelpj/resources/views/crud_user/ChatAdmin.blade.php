@@ -6,7 +6,7 @@
 @foreach($messages as $msg)
     <div class="card my-3">
         <div class="card-body">
-            <strong>{{ $msg->customer->name ?? 'Ẩn danh' }}:</strong>
+            <strong>{{ $msg->customer->Ten ?? 'Ẩn danh' }}:</strong>
             <p>{{ $msg->message }}</p>
             <small>{{ $msg->created_at->format('d/m/Y H:i') }}</small>
 

@@ -38,7 +38,7 @@ class CrudAdminUserController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         // Thêm role vào bảng user_role
@@ -72,7 +72,7 @@ class CrudAdminUserController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
-            'password' => $request->password,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
         ]);
 
         // Cập nhật lại role
@@ -83,7 +83,7 @@ class CrudAdminUserController extends Controller
     }
 
     //hàm xóa
-        public function delete($id)
+    public function delete($id)
     {
         $user = User::findOrFail($id);
         $user->delete();

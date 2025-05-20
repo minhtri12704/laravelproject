@@ -8,33 +8,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-    body {
-        background-color: #007bff;
-        color: #f5f5f5;
-    }
+        body {
+            background-color: #007bff;
+            color: #f5f5f5;
+        }
 
-    .navbar {
-        background-color: #007bff;
-    }
+        .navbar {
+            background-color: #007bff;
+        }
 
-    .navbar .nav-link,
-    .navbar .navbar-brand {
-        color: #ffffff;
-    }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: #ffffff;
+        }
 
-    .navbar .nav-link:hover {
-        color: #cce6ff;
-    }
+        .navbar .nav-link:hover {
+            color: #cce6ff;
+        }
 
-    .content {
-        padding: 20px;
-    }
+        .content {
+            padding: 20px;
+        }
 
-<<<<<<< HEAD
         .search-form .form-control {
             background-color: #fff;
             color: #000;
         }
+
+        .search-form .form-control {
+            background-color: #fff;
+            color: #000;
+        }
+
 
         #chat-toggle-btn {
             position: fixed;
@@ -57,17 +62,40 @@
             bottom: 90px;
             right: 30px;
             width: 300px;
-            background: white;
-            border-radius: 10px;
+            background: #fff;
+            border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-            padding: 15px;
+            padding: 10px;
             z-index: 1000;
+            font-size: 14px;
         }
 
-    .search-form .form-control {
-        background-color: #fff;
-        color: #000;
-    }
+        .chat-messages {
+            max-height: 260px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .chat-bubble {
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            display: inline-block;
+        }
+
+        .admin-message {
+            background-color: #e6e6e6;
+            color: #333;
+            border-radius: 15px 15px 15px 0;
+        }
+
+        .user-message {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 15px 15px 0 15px;
+        }
     </style>
 </head>
 
@@ -139,7 +167,7 @@
             </div>
         </div>
     </nav>
-    
+
 
 
 
@@ -149,34 +177,81 @@
     <!-- Nút mở chat -->
     <button id="chat-toggle-btn"><i class="fa fa-comments"></i></button>
 
-    <!-- Form chat -->
+    <!-- Chat box -->
     <div id="chat-box">
-        <form method="POST" action="{{ route('guest.chat.send') }}">
+        <div id="chat-history" class="chat-messages">
+            <p class="text-muted">💬 Đang tải hội thoại...</p>
+        </div>
+        <form id="chatForm" method="POST" action="{{ route('guest.chat.send') }}" class="d-flex align-items-center mt-2">
             @csrf
-            <div class="mb-2">
-                <label for="customer_id" class="form-label">Khách hàng</label>
-                <select name="customer_id" id="customer_id" class="form-control" required>
-                    @foreach(\App\Models\KhachHang::all() as $khach)
-                    <option value="{{ $khach->idKhach }}">{{ $khach->hoten_khachhang }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-2">
-                <textarea name="message" class="form-control" rows="3" placeholder="Nhập tin nhắn..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-sm btn-primary w-100">Gửi</button>
+            <input type="hidden" name="customer_id" id="customer_id_hidden" value="{{ session('khach_hang')->idKhach ?? '' }}">
+            <input type="text" name="message" id="chatMessage" class="form-control form-control-sm me-2 rounded-pill" placeholder="Aa..." required>
+            <button type="submit" class="btn btn-sm btn-primary rounded-circle"><i class="fas fa-paper-plane"></i></button>
         </form>
     </div>
 
-    <!-- Script bật/tắt chat -->
+
+
     <script>
         const toggleBtn = document.getElementById('chat-toggle-btn');
         const chatBox = document.getElementById('chat-box');
+        const customerId = document.getElementById('customer_id_hidden').value;
 
         toggleBtn.addEventListener('click', () => {
             chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'block' : 'none';
+            if (chatBox.style.display === 'block') {
+                loadMessages(customerId);
+            }
+        });
+
+        function loadMessages(customerId) {
+            fetch(`/api/chat/messages?customer_id=${customerId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const history = document.getElementById('chat-history');
+                    history.innerHTML = '';
+
+                    if (data.length === 0) {
+                        history.innerHTML = '<p class="text-muted">Chưa có hội thoại nào.</p>';
+                        return;
+                    }
+
+                    data.forEach(msg => {
+                        const isAdmin = msg.user_id !== null;
+
+                        const bubble = document.createElement('div');
+                        bubble.className = 'chat-bubble ' + (isAdmin ? 'admin-message' : 'user-message');
+                        bubble.innerHTML = msg.message;
+
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'd-flex mb-1';
+                        wrapper.style.justifyContent = isAdmin ? 'flex-start' : 'flex-end';
+
+
+                        wrapper.appendChild(bubble);
+
+                        history.appendChild(wrapper);
+                    });
+
+                    history.scrollTop = history.scrollHeight;
+                });
+        }
+
+
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(() => {
+                    document.getElementById('chatMessage').value = '';
+                    loadMessages(customerId);
+                });
         });
     </script>
+
 
 
 
