@@ -12,7 +12,7 @@ class PaymentController extends Controller
      */
     public function showForm(Request $request)
     {
-        $total = $request->query('total', 0); // ✅ Lấy từ query string
+        $total = $request->query('total', session('cart_total', 0));
         return view('page.payment', compact('total'));
     }
 
@@ -26,6 +26,9 @@ class PaymentController extends Controller
             'amount'          => 'required|numeric|min:0',
             'payment_method'  => 'required|in:cash,bank',
         ]);
+
+        $amount = str_replace(',', '', $request->amount);
+        $validated['amount'] = (float) $amount;
 
         // Lưu thông tin thanh toán vào database
         Payment::create($validated);
@@ -44,6 +47,6 @@ class PaymentController extends Controller
         session()->forget('selected_items');
 
         // Quay lại form thanh toán kèm thông báo
-        return redirect()->route('payment.form')->with('success', 'Thanh toán thành công!');
+         return redirect()->route('payment.form')->with('success', 'Thanh toán thành công!');
     }
 }
