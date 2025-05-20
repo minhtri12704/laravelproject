@@ -33,32 +33,32 @@ class BaiVietSeeder extends Seeder
             [
                 'tieude' => 'Điều hòa hai chiều có đáng mua không?',
                 'noidung' => 'Điều hòa hai chiều có chức năng làm mát lẫn sưởi ấm, đặc biệt phù hợp với khu vực miền Bắc có mùa đông lạnh. Dù giá cao hơn máy một chiều, nhưng lại rất tiện lợi và tiết kiệm không gian.',
-                'hinhanh' => 'images/maylanh5.jpg',
+                'hinhanh' => 'images/dieuhoa-daikin.jpg',
             ],
             [
                 'tieude' => 'Kinh nghiệm chọn mua máy lọc không khí cho gia đình',
                 'noidung' => 'Máy lọc không khí giúp loại bỏ bụi mịn, vi khuẩn và mùi hôi. Bạn nên chọn loại có màng lọc HEPA, tích hợp cảm biến bụi và có công suất phù hợp với diện tích phòng.',
-                'hinhanh' => 'images/maylanh6.jpg',
+                'hinhanh' => 'images/tivi-lg1.jpg',
             ],
             [
                 'tieude' => 'Giải mã các công nghệ mới trên Smart Tivi 2024',
                 'noidung' => 'Smart Tivi hiện nay được trang bị nhiều công nghệ hiện đại như 4K HDR, trợ lý ảo Google Assistant, điều khiển giọng nói, kết nối điện thoại... giúp bạn có trải nghiệm giải trí thông minh và tiện lợi hơn.',
-                'hinhanh' => 'images/maylanh7.jpg',
+                'hinhanh' => 'images/tivi-lg.jpg',
             ],
             [
                 'tieude' => 'Có nên mua máy giặt có sấy 2 trong 1?',
                 'noidung' => 'Máy giặt có sấy tích hợp giúp bạn tiết kiệm không gian và thời gian phơi đồ, đặc biệt phù hợp với căn hộ chung cư. Tuy nhiên, chi phí ban đầu cao và tiêu thụ điện nhiều hơn máy giặt thông thường.',
-                'hinhanh' => 'images/maylanh8.jpg',
+                'hinhanh' => 'images/maylanh4.jpg',
             ],
             [
                 'tieude' => 'Hướng dẫn sử dụng máy lạnh đúng cách, tiết kiệm điện',
                 'noidung' => 'Không nên để nhiệt độ dưới 24°C, hãy bật chế độ Eco hoặc hẹn giờ tắt máy lạnh khi ngủ. Việc bảo trì định kỳ cũng giúp máy lạnh hoạt động hiệu quả và ít hao điện.',
-                'hinhanh' => 'images/maylanh9.jpg',
+                'hinhanh' => 'images/maylanh1.jpg',
             ],
             [
                 'tieude' => 'Cập nhật các mẫu tủ lạnh side-by-side bán chạy nhất',
                 'noidung' => 'Tủ lạnh side-by-side có thiết kế sang trọng, dung tích lớn, phù hợp với gia đình đông người. Bài viết sẽ giới thiệu các mẫu đáng mua đến từ Samsung, LG và Hitachi đang được người dùng đánh giá cao.',
-                'hinhanh' => 'images/maylanh10.jpg',
+                'hinhanh' => 'images/maylanh3.jpg',
             ]
         ];
 
