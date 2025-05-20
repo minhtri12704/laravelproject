@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
     body {
@@ -35,59 +36,32 @@
             color: #000;
         }
 
-        #chat-icon {
+        #chat-toggle-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background-color: #0d6efd;
             color: white;
-            border: none;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
+            padding: 15px 18px;
+            border: none;
+            font-size: 20px;
             cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        #chat-popup {
+        #chat-box {
             display: none;
             position: fixed;
             bottom: 90px;
-            right: 20px;
+            right: 30px;
             width: 300px;
             background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow: hidden;
-        }
-
-        #chat-messages {
-            max-height: 300px;
-            overflow-y: auto;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
             padding: 15px;
-        }
-
-        #chat-input {
-            display: flex;
-            border-top: 1px solid #ccc;
-        }
-
-        #chat-input input {
-            flex: 1;
-            border: none;
-            padding: 10px;
-        }
-
-        #chat-input button {
-            background: #0d6efd;
-            color: white;
-            border: none;
-            padding: 10px 15px;
+            z-index: 1000;
         }
 
     .search-form .form-control {
@@ -172,18 +146,37 @@
     <div class="content">
         @yield('content')
     </div>
-    <!-- Icon mở chatbot -->
-    <button id="chat-icon"><i class="bi bi-chat-dots"></i></button>
+    <!-- Nút mở chat -->
+    <button id="chat-toggle-btn"><i class="fa fa-comments"></i></button>
 
-    <!-- Popup chatbot -->
-    <div id="chat-popup">
-        <div class="bg-primary text-white p-2">🤖 Chatbot Điện máy</div>
-        <div id="chat-messages"></div>
-        <div id="chat-input">
-            <input type="text" id="user-message" placeholder="Nhập nội dung..." />
-            <button id="send-btn">Gửi</button>
-        </div>
+    <!-- Form chat -->
+    <div id="chat-box">
+        <form method="POST" action="{{ route('guest.chat.send') }}">
+            @csrf
+            <div class="mb-2">
+                <label for="customer_id" class="form-label">Khách hàng</label>
+                <select name="customer_id" id="customer_id" class="form-control" required>
+                    @foreach(\App\Models\KhachHang::all() as $khach)
+                    <option value="{{ $khach->idKhach }}">{{ $khach->hoten_khachhang }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-2">
+                <textarea name="message" class="form-control" rows="3" placeholder="Nhập tin nhắn..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary w-100">Gửi</button>
+        </form>
     </div>
+
+    <!-- Script bật/tắt chat -->
+    <script>
+        const toggleBtn = document.getElementById('chat-toggle-btn');
+        const chatBox = document.getElementById('chat-box');
+
+        toggleBtn.addEventListener('click', () => {
+            chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'block' : 'none';
+        });
+    </script>
 
 
 
@@ -220,43 +213,6 @@
             </div>
         </div>
     </footer>
-    <script>
-        const chatIcon = document.getElementById('chat-icon');
-        const chatPopup = document.getElementById('chat-popup');
-        const sendBtn = document.getElementById('send-btn');
-        const userInput = document.getElementById('user-message');
-        const chatMessages = document.getElementById('chat-messages');
-
-        // Toggle mở/tắt chatbot
-        chatIcon.onclick = () => {
-            chatPopup.style.display = chatPopup.style.display === 'none' ? 'block' : 'none';
-        };
-
-        // Gửi tin nhắn
-        sendBtn.onclick = () => {
-            const msg = userInput.value.trim();
-            if (!msg) return;
-            chatMessages.innerHTML += `<div><strong>Bạn:</strong> ${msg}</div>`;
-            userInput.value = '';
-
-            fetch("{{ route('simplebot.ask') }}", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        message: msg
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    chatMessages.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                });
-        };
-    </script>
-
 
 
 

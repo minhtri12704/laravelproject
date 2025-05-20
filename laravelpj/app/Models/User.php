@@ -49,10 +49,12 @@ class User extends Authenticatable
     }
 
     public function roles()
-{
-    return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
-}
+    {
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    }
 
-
-
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'user_id', 'id');
+    }
 }

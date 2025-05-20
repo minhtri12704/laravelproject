@@ -21,9 +21,11 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\RegisterController;  
 use App\Http\Controllers\LoginController; 
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\ChatBotController;
 
 use App\Http\Controllers\KhuyenMaiController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\GuestChatController;
+use App\Models\ChatMessage;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,7 +156,9 @@ Route::get('/add-to-cart/{id}', [CartController::class, 'addProductById'])->name
 Route::get('/check-discount', [CartController::class, 'checkDiscount'])->name('cart.checkDiscount');
 
 
-Route::get('/simple-chatbot', function () {
-    return view('simple-chatbot');
-});
-Route::post('/simple-chatbot/ask', [ChatBotController::class, 'ask'])->name('simplebot.ask');
+// chat
+    Route::get('/chat', [ChatController::class, 'index'])->name('chatadmin.index');
+    Route::post('/chat/reply', [ChatController::class, 'reply'])->name('chatadmin.reply');
+//chat bên khách hàng
+Route::get('/lien-he', [GuestChatController::class, 'showForm'])->name('guest.chat.form');
+Route::post('/lien-he', [GuestChatController::class, 'sendMessage'])->name('guest.chat.send');
