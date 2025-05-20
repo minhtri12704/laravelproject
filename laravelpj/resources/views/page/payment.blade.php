@@ -108,7 +108,7 @@ button:hover {
         </select>
 
         <label for="amount">Số tiền (VNĐ)</label>
-        <input type="text" id="amount" name="amount" value="{{ old('amount', $total ?? '') }}" readonly required>
+        <input type="text" id="amount" name="amount" value="{{ session('success') ? '' : old('amount', $total ?? '') }}" readonly required>
 
         <button type="submit">Thanh Toán</button>
     </form>
