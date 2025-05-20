@@ -71,6 +71,7 @@
                 <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link">Quản lý sản phẩm</a></li>
                 <li class="nav-item"><a href="{{ route('orders.index') }}" class="nav-link">Quản lý đơn hàng</a></li>
                 <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Quản lý danh mục</a></li>
+                <li class="nav-item"><a href="{{ route('chatadmin.index') }}" class="nav-link">Quản lý tin nhắn</a></li>
 
             </ul>
         </div>

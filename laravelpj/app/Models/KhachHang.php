@@ -18,4 +18,8 @@ class KhachHang extends Model
 
     protected $hidden = ['MatKhau']; // Ẩn khi trả về JSON
 
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'customer_id', 'idKhach');
+    }
 }
