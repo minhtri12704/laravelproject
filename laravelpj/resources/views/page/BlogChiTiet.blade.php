@@ -13,19 +13,23 @@ body {
 }
 
 .article-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    line-height: 1.4;
 }
 
 .article-image {
     width: 100%;
-    max-height: 450px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    max-height: 500px;
+    object-fit: contain;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
 .article-content {
