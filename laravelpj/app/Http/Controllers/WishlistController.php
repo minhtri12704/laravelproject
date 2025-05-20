@@ -17,7 +17,7 @@ class WishlistController extends Controller
     return view('wishlist.show_wishlist', compact('products', 'wishlist'));
     }
 
-    // thêm sản phẩm yêu thíchthích
+    // chức năng phẩm 
     public function add($id)
     {
         $wishlist = session()->get('wishlist', []);
@@ -25,5 +25,15 @@ class WishlistController extends Controller
     session()->put('wishlist', $wishlist);
 
     return back()->with('success', 'Đã thêm vào yêu thích!');
+    }
+    
+    // chức năng xóa 
+    public function remove($id)
+    {
+        $wishlist = session()->get('wishlist', []);
+    unset($wishlist[$id]);
+    session()->put('wishlist', $wishlist);
+
+    return back()->with('success', 'Đã xóa khỏi danh sách yêu thích!');
     }
 }
