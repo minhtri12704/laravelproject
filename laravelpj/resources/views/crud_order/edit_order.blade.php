@@ -79,9 +79,6 @@
     <label for="ten_khach_hang">Tên khách hàng</label>
     <input type="text" name="ten_khach_hang" value="{{ $order->ten_khach_hang }}" required>
 
-    <label for="so_luong">Số lượng</label>
-    <input type="number" name="so_luong" value="{{ $order->so_luong }}" required>
-
     <label for="tong_tien">Tổng tiền (VNĐ)</label>
     <input type="number" name="tong_tien" value="{{ $order->tong_tien }}">
 

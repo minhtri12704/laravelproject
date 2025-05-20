@@ -102,7 +102,9 @@ class CartController extends Controller
             }
 
             session()->put('cart_total', $total);
-            return redirect()->route('payment.form', ['total' => $total]);
+            return redirect()->route('payment.form', [
+                'total' => $total,
+            ])->with('selected_items', collect($selected)->map(fn($id) => $cart[$id] ?? [])->filter());
         }
 
         session()->put('cart', $cart);

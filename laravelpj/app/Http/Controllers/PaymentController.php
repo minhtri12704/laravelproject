@@ -4,49 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\Order;
 
 class PaymentController extends Controller
 {
-    /**
-     * Hiển thị form thanh toán với tổng tiền nhận từ cart
-     */
     public function showForm(Request $request)
     {
         $total = $request->query('total', session('cart_total', 0));
-        return view('page.payment', compact('total'));
+        $selectedItems = session('selected_items', []);
+        return view('page.payment', compact('total', 'selectedItems'));
     }
 
     public function process(Request $request)
     {
-        // Validate dữ liệu từ form
+        // Validate dữ liệu
         $validated = $request->validate([
             'name'            => 'required|string|max:255',
             'email'           => 'required|email',
             'address'         => 'required|string|max:255',
-            'amount'          => 'required|numeric|min:0',
+            'amount'          => 'required|string', // dùng string nếu format tiền
             'payment_method'  => 'required|in:cash,bank',
         ]);
 
-        $amount = str_replace(',', '', $request->amount);
-        $validated['amount'] = (float) $amount;
+        // Làm sạch amount (nếu có dấu phẩy)
+        $amount = (float) str_replace(',', '', $request->amount);
+        $validated['amount'] = $amount;
 
-        // Lưu thông tin thanh toán vào database
-        Payment::create($validated);
+        // Ghi vào bảng payments (nếu muốn giữ lại)
+        $payment = Payment::create($validated);
 
-        // Lấy giỏ hàng hiện tại
+        // Tính tổng số lượng sản phẩm đã chọn
         $cart = session()->get('cart', []);
         $selected = session('selected_items', []);
+        $totalQty = 0;
 
-        // Xoá các sản phẩm đã chọn
+        foreach ($selected as $id) {
+            if (isset($cart[$id])) {
+                $totalQty += $cart[$id]['quantity'];
+            }
+        }
+
+        // Ghi vào bảng đơn hàng
+        Order::create([
+        'ten_don_hang' => 'ĐH-' . now()->format('YmdHis'),
+        'ten_khach_hang' => $validated['name'],
+        'so_luong'                => count(session('selected_items', [])),
+        'tong_tien' => $amount,
+        'phuong_thuc_thanh_toan' => $validated['payment_method'],
+        'trang_thai' => 'Chưa xử lý',
+        'ghi_chu' => 'Tạo từ form thanh toán',
+    ]);
+
+        // Xóa sản phẩm đã chọn
         foreach ($selected as $id) {
             unset($cart[$id]);
         }
 
-        // Cập nhật lại session giỏ hàng
-        session()->put('cart', $cart);
+        // Xóa session giỏ hàng sau khi thanh toán
+        session()->forget('cart');
         session()->forget('selected_items');
+        session()->forget('cart_total');
 
-        // Quay lại form thanh toán kèm thông báo
-         return redirect()->route('payment.form')->with('success', 'Thanh toán thành công!');
+        // (tuỳ bạn có thể redirect qua trang cảm ơn hoặc quay về trang giỏ hàng)
+        return redirect()->route('cart.view')->with('success', 'Thanh toán thành công, giỏ hàng đã được xóa!');
     }
 }
