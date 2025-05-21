@@ -37,7 +37,7 @@
         <td style="padding: 12px; color: #ffb6c1;">{{ $category->id }}</td>
         <td style="padding: 12px; color: #ffb6c1;">{{ $category->name }}</td>
         <td style="padding: 12px;">
-<!--Sửa-->
+<!--Sửa danh mục-->
           <form action="{{ route('categories.editCategory', $category->id) }}" method="GET" style="display:inline-block;">
             <button class="edit" style="background-color: #ffa6c9; padding: 6px 12px; border: none; border-radius: 8px;">Sửa</button>
           </form>
