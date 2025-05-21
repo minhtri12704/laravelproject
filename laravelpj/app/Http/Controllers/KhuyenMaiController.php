@@ -15,7 +15,7 @@ class KhuyenMaiController extends Controller
 
     public function create()
     {
-        return view('page.KhuyenMaiGiamGiaCreate'); // ✅ đúng tên file
+        return view('page.KhuyenMaiGiamGiaCreate');
     }
 
     public function store(Request $request)
@@ -23,7 +23,8 @@ class KhuyenMaiController extends Controller
         $request->validate([
             'ma_phieu' => 'required|unique:khuyen_mais',
             'ten_phieu' => 'required',
-            'phan_tram_giam' => 'required|integer|min:1|max:100',
+            'loai_giam' => 'required|in:percent,fixed',
+            'gia_tri' => 'required|integer|min:1',
             'ngay_bat_dau' => 'required|date',
             'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
         ]);
@@ -36,14 +37,15 @@ class KhuyenMaiController extends Controller
     public function edit($id)
     {
         $km = KhuyenMai::findOrFail($id);
-        return view('page.KhuyenMaiGiamGiaEdit', compact('km')); // ✅ đúng tên file
+        return view('page.KhuyenMaiGiamGiaEdit', compact('km'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'ten_phieu' => 'required',
-            'phan_tram_giam' => 'required|integer|min:1|max:100',
+            'loai_giam' => 'required|in:percent,fixed',
+            'gia_tri' => 'required|integer|min:1',
             'ngay_bat_dau' => 'required|date',
             'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
         ]);

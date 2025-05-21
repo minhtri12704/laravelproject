@@ -87,38 +87,46 @@ label {
     </div>
     @endif
 <!-- Sua -->
-    <form action="{{ route('khuyenmai.update', $km->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+<form action="{{ route('khuyenmai.update', $km->id) }}" method="POST">
+    @csrf
+    @method('PUT')
 
-        <div class="mb-3">
-            <label>Mã phiếu</label>
-            <input type="text" name="ma_phieu" class="form-control" value="{{ $km->ma_phieu }}" disabled>
-        </div>
+    <div class="mb-3">
+        <label for="ma_phieu">Mã phiếu</label>
+        <input type="text" name="ma_phieu" class="form-control" value="{{ $km->ma_phieu }}" disabled>
+    </div>
 
-        <div class="mb-3">
-            <label>Tên phiếu</label>
-            <input type="text" name="ten_phieu" class="form-control" value="{{ $km->ten_phieu }}" required>
-        </div>
+    <div class="mb-3">
+        <label for="ten_phieu">Tên phiếu</label>
+        <input type="text" name="ten_phieu" class="form-control" value="{{ old('ten_phieu', $km->ten_phieu) }}" required>
+    </div>
 
-        <div class="mb-3">
-            <label>Phần trăm giảm</label>
-            <input type="number" name="phan_tram_giam" class="form-control" value="{{ $km->phan_tram_giam }}" min="1"
-                max="100" required>
-        </div>
+    <div class="mb-3">
+        <label for="loai_giam">Loại giảm</label>
+        <select name="loai_giam" class="form-select" required>
+            <option value="percent" {{ $km->loai_giam === 'percent' ? 'selected' : '' }}>Phần trăm (%)</option>
+            <option value="fixed" {{ $km->loai_giam === 'fixed' ? 'selected' : '' }}>Giảm tiền (VNĐ)</option>
+        </select>
+    </div>
 
-        <div class="mb-3">
-            <label>Ngày bắt đầu</label>
-            <input type="date" name="ngay_bat_dau" class="form-control" value="{{ $km->ngay_bat_dau }}" required>
-        </div>
+    <div class="mb-3">
+        <label for="gia_tri">Giá trị giảm</label>
+        <input type="number" name="gia_tri" class="form-control" value="{{ old('gia_tri', $km->gia_tri) }}" min="1" required>
+    </div>
 
-        <div class="mb-3">
-            <label>Ngày kết thúc</label>
-            <input type="date" name="ngay_ket_thuc" class="form-control" value="{{ $km->ngay_ket_thuc }}" required>
-        </div>
+    <div class="mb-3">
+        <label for="ngay_bat_dau">Ngày bắt đầu</label>
+        <input type="date" name="ngay_bat_dau" class="form-control" value="{{ old('ngay_bat_dau', $km->ngay_bat_dau) }}" required>
+    </div>
 
-        <button type="submit" class="btn btn-primary">✅ Cập nhật</button>
-        <a href="{{ route('khuyenmai.index') }}" class="btn btn-secondary">⬅️ Quay lại</a>
-    </form>
+    <div class="mb-3">
+        <label for="ngay_ket_thuc">Ngày kết thúc</label>
+        <input type="date" name="ngay_ket_thuc" class="form-control" value="{{ old('ngay_ket_thuc', $km->ngay_ket_thuc) }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-dark">✅ Cập nhật</button>
+    <a href="{{ route('khuyenmai.index') }}" class="btn btn-secondary">⬅️ Quay lại</a>
+</form>
+
 </div>
 @endsection
