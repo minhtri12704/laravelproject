@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class KhuyenMai extends Model
 {
     protected $fillable = [
-        'ma_phieu', 'ten_phieu', 'phan_tram_giam', 'ngay_bat_dau', 'ngay_ket_thuc'
+        'ma_phieu',
+        'ten_phieu',
+        'loai_giam',
+        'gia_tri',
+        'ngay_bat_dau',
+        'ngay_ket_thuc'
     ];
 }

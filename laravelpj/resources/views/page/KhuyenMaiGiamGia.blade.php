@@ -40,16 +40,6 @@
         background-color: #ff85c0;
     }
 
-    .action-icon {
-        color: #ffccdd;
-        font-size: 1.2rem;
-        margin-right: 10px;
-    }
-
-    .action-icon:hover {
-        color: #ff85c0;
-    }
-
     .pagination .page-link {
         background-color:rgb(255, 255, 255);
         color:rgb(0, 0, 0);
@@ -93,7 +83,8 @@
                 <th>ID</th>
                 <th>Mã phiếu</th>
                 <th>Tên phiếu</th>
-                <th>Giảm (%)</th>
+                <th>Loại giảm</th>
+                <th>Giá trị</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Hành động</th>
@@ -105,14 +96,19 @@
                 <td>{{ $km->id }}</td>
                 <td>{{ $km->ma_phieu }}</td>
                 <td>{{ $km->ten_phieu }}</td>
-                <td>{{ $km->phan_tram_giam }}%</td>
+                <td>
+                    {{ $km->loai_giam === 'percent' ? 'Phần trăm (%)' : 'Giảm tiền (VNĐ)' }}
+                </td>
+                <td>
+                    {{ $km->loai_giam === 'percent' ? $km->gia_tri . '%' : number_format($km->gia_tri, 0, ',', '.') . 'đ' }}
+                </td>
                 <td>{{ \Carbon\Carbon::parse($km->ngay_bat_dau)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($km->ngay_ket_thuc)->format('d/m/Y') }}</td>
                 <td>
                     <a href="#" class="btn btn-warning btn-sm">
                         ✏️ Sửa
                     </a>
-                    <form action="#" method="POST" style="display:inline-block" 
+                    <form action="#" method="POST" style="display:inline-block"
                           onsubmit="return confirm('Bạn có chắc muốn xóa?')">
                         @csrf
                         @method('DELETE')
@@ -120,7 +116,7 @@
                     </form>
                 </td>
             </tr>
-            @endforeach 
+            @endforeach
         </tbody>
     </table>
 
