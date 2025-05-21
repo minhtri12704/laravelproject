@@ -24,7 +24,7 @@ class KhachHangController extends Controller
     
         public function edit($id) {
             $khach = KhachHang::findOrFail($id);
-            return view('crud_user.Crud_GuestCreate', compact('khach'));
+            return view('crud_user.Crud_GuestEdit', compact('khach'));
         }
         
         public function update(Request $request, $id) {
