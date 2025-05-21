@@ -13,6 +13,18 @@
             color: #f5f5f5;
         }
 
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+        }
+
         .navbar {
             background-color: #007bff;
         }

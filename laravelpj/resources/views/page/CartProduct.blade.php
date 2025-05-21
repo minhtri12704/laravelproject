@@ -88,11 +88,26 @@
         padding: 20px;
     }
 </style>
+@php
+$khach = Auth::guard('khach')->user();
+@endphp
+
+@if ($khach)
 <div class="d-flex justify-content-start ms-3">
-    <a href="#" class="btn btn-outline-primary">
+    <a href="{{ route('orders.byKhach', ['id' => $khach->idKhach]) }}" class="btn btn-outline-primary">
         Thông tin thanh toán
     </a>
 </div>
+@else
+<div class="d-flex justify-content-start ms-3">
+    <a href="{{ route('login') }}" class="btn btn-outline-secondary">
+        Đăng nhập để xem đơn hàng
+    </a>
+</div>
+@endif
+
+
+
 <hr>
 <div class="cart-container w-100 px-4 py-5">
     <h3 class="mb-4">🛒 Giỏ hàng của bạn</h3>

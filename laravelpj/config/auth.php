@@ -36,15 +36,16 @@ return [
     */
 
     'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'khach' => [
+            'driver' => 'session',
+            'provider' => 'khach_hangs',
+        ],
     ],
-    'khach' => [
-        'driver' => 'session',
-        'provider' => 'khach_hangs',
-    ],
-    ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -65,13 +66,13 @@ return [
 
     'providers' => [
         'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\User::class,
-    ],
-    'khach_hangs' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\KhachHang::class,
-    ],
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'khach_hangs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\KhachHang::class,
+        ],
     ],
 
     /*
@@ -100,12 +101,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'khach_hangs' => [ // ← thêm mới cái này
-        'provider' => 'khach_hangs',
-        'table' => 'password_reset_tokens',
-        'expire' => 60,
-        'throttle' => 60,
-    ],
+        'khach_hangs' => [
+            'provider' => 'khach_hangs',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*

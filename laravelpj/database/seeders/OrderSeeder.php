@@ -2,24 +2,27 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Order;
+use App\Models\KhachHang;
 
 class OrderSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $paymentMethods = ['Tiền mặt', 'Chuyển khoản', 'Thẻ tín dụng'];
         $statuses = ['Chưa xử lý', 'Đã xử lý'];
 
+        $khachHangs = KhachHang::pluck('idKhach')->toArray(); // Lấy danh sách ID khách hàng
+
+        if (empty($khachHangs)) {
+            return; // Không có khách hàng nào để gán
+        }
+
         for ($i = 1; $i <= 20; $i++) {
             Order::create([
                 'ten_don_hang' => 'Đơn hàng #' . $i,
-                'ten_khach_hang' => 'Nguyễn Văn ' . chr(64 + $i), // A, B, C...
+                'khach_hang_id' => $khachHangs[array_rand($khachHangs)],
                 'tong_tien' => rand(200000, 2000000),
                 'phuong_thuc_thanh_toan' => $paymentMethods[array_rand($paymentMethods)],
                 'trang_thai' => $statuses[array_rand($statuses)],
