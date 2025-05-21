@@ -38,10 +38,10 @@ class LoginController extends Controller
         if (Auth::guard('khach')->attempt([
             'Email' => $request->email,
             'password' => $request->password
-        ])) {
-            return redirect()->route('home')->with('success', 'Đăng nhập thành công!');
+            ])) {
+             return redirect()->route('home')->with('success', 'Đăng nhập thành công!');
+            }
         }
-
         return back()->with('error', 'Email hoặc mật khẩu không đúng')->withInput();
     }
 
