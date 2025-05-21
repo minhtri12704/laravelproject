@@ -4,88 +4,78 @@
 
 @section('content')
 <style>
-body {
-    background-color: #ffffff;
-    color: #222;
-    font-family: 'Segoe UI', sans-serif;
-}
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-.container-pay {
-    max-width: 500px;
-    margin: 50px auto;
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    font-family: 'Quicksand', sans-serif;
-}
+    .checkout-container {
+        max-width: 1140px;
+        margin: 40px auto;
+    }
 
-h2 {
-    text-align: center;
-    color: rgb(0, 0, 0);
-    margin-bottom: 30px;
-}
+    .form-box, .product-box {
+        color: black;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+    }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0.74);
-}
+    h2, h4 {
+        font-weight: bold;
+        color: #333;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="number"],
-select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
+    label {
+        font-weight: 600;
+        margin-top: 10px;
+    }
 
-button {
-    width: 100%;
-    padding: 14px;
-    background-color: rgb(53, 41, 216);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    input, select {
+        margin-bottom: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
 
-button:hover {
-    background-color: rgb(2, 52, 134);
-}
+    button {
+        padding: 14px;
+        font-size: 18px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        transition: background-color 0.3s;
+    }
 
-.note {
-    text-align: center;
-    font-size: 14px;
-    color: #616161;
-    margin-top: 20px;
-}
+    button:hover {
+        background-color: #0056b3;
+    }
 
-.container-pay {
-    margin-top: 5%;
-}
+    .note {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        margin-top: 20px;
+    }
 
-.alert {
-    padding: 15px;
-    background-color: #4CAF50;
-    color: white;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
+    .table thead th {
+        background-color: #f0f0f0;
+    }
+
+    .table img {
+        border-radius: 8px;
+    }
 </style>
-<div class="container py-5">
-    <div class="row g-4 align-items-start">
-        <!-- FORM Thanh toán bên trái -->
+
+<div class="container checkout-container">
+    <div class="row g-4">
+        <!-- Thông tin thanh toán -->
         <div class="col-md-5">
-            <div class="bg-white shadow rounded-4 p-4 h-100">
-                <h2 class="text-center mb-4">Thông Tin Thanh Toán</h2>
+            <div class="form-box">
+                <h2 class="text-center mb-4">🔒 Thanh Toán</h2>
 
                 @if(session('success'))
                 <div class="alert alert-success text-center">
@@ -97,40 +87,40 @@ button:hover {
                     @csrf
 
                     <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control mb-3" required>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control" required>
 
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control mb-3" required>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required>
 
                     <label for="address">Địa chỉ giao hàng</label>
-                    <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control mb-3" required>
+                    <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control" required>
 
                     <label for="payment_method">Phương thức thanh toán</label>
-                    <select id="payment_method" name="payment_method" class="form-select mb-3" required>
+                    <select id="payment_method" name="payment_method" class="form-select" required>
                         <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Tiền mặt</option>
                         <option value="bank" {{ old('payment_method') == 'bank' ? 'selected' : '' }}>Chuyển khoản</option>
                     </select>
 
                     <label for="amount">Số tiền (VNĐ)</label>
-                    <input type="text" id="amount" name="amount" value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control mb-4" readonly required>
+                    <input type="text" id="amount" name="amount" value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control" readonly required>
 
-                    <button type="submit" class="btn btn-primary w-100">Thanh Toán</button>
+                    <button type="submit" class="w-100 mt-3">💳 Thanh Toán</button>
                 </form>
 
-                <div class="note text-center mt-3">
+                <div class="note">
                     Cảm ơn bạn đã mua sắm cùng chúng tôi!
                 </div>
             </div>
         </div>
 
-        <!-- Danh sách sản phẩm bên phải -->
+        <!-- Sản phẩm đã chọn -->
         <div class="col-md-7">
-            <div class="bg-white shadow rounded-4 p-4 h-100">
-                <h4 class="text-center mb-4">🧾 Sản phẩm đã chọn</h4>
+            <div class="product-box">
+                <h4 class="text-center mb-4">🛒 Sản phẩm đã chọn</h4>
 
                 @if(!empty($selectedItems))
                 <table class="table table-bordered align-middle text-center">
-                    <thead class="table-light">
+                    <thead>
                         <tr>
                             <th>Hình</th>
                             <th>Mã</th>
@@ -143,8 +133,7 @@ button:hover {
                         @foreach($selectedItems as $item)
                         <tr>
                             <td>
-                                <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" width="60"
-                                    height="60" style="object-fit:cover; border-radius: 6px;">
+                                <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" width="60" height="60" style="object-fit:cover;">
                             </td>
                             <td>{{ $item['id'] }}</td>
                             <td>{{ $item['name'] }}</td>
@@ -160,10 +149,5 @@ button:hover {
             </div>
         </div>
     </div>
-</div>
-
-<div class="note">
-    Cảm ơn bạn đã mua sắm cùng chúng tôi!
-</div>
 </div>
 @endsection
