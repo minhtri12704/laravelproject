@@ -86,7 +86,7 @@ label {
         </ul>
     </div>
     @endif
-
+<!-- Sua -->
     <form action="{{ route('khuyenmai.update', $km->id) }}" method="POST">
         @csrf
         @method('PUT')
