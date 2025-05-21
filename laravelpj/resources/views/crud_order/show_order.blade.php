@@ -65,7 +65,6 @@
   <ul>
     <li><strong>Tên đơn hàng:</strong> {{ $order->ten_don_hang }}</li>
     <li><strong>Khách hàng:</strong> {{ $order->ten_khach_hang }}</li>
-    <li><strong>Số lượng:</strong> {{ $order->so_luong }}</li>
     <li><strong>Tổng tiền:</strong> {{ number_format($order->tong_tien, 0, ',', '.') }} VNĐ</li>
     <li><strong>Thanh toán:</strong> {{ $order->phuong_thuc_thanh_toan }}</li>
     <li><strong>Trạng thái:</strong> {{ $order->trang_thai }}</li>
