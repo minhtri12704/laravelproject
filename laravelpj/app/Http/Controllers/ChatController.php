@@ -27,16 +27,11 @@ class ChatController extends Controller
         ]);
 
         ChatMessage::create([
-            'user_id'     => auth()->id(),
+            'user_id'     => auth('web')->id(),
             'customer_id' => $request->customer_id,
             'message'     => $request->message,
             'is_bot'      => false,
         ]);
-        if (!auth()->check()) {
-            dd('Chưa đăng nhập, user_id = null');
-        }
-
-        dd('Đã login, user_id = ' . auth()->id());
 
         return back()->with('success', 'Phản hồi đã được gửi!');
     }

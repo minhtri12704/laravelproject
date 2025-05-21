@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KhachHang;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,10 +21,16 @@ class LoginController extends Controller
             'email'    => 'required|email',
             'password' => 'required'
         ]);
-        
-        // Tìm khách theo email
-        $khach = KhachHang::where('Email', $request->email)->first();
 
+        // Ưu tiên kiểm tra đăng nhập admin (bảng users)
+        $admin = User::where('email', $request->email)->first();
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            Auth::login($admin); 
+            return redirect('/users')->with('success', 'Chào mừng quản trị viên!');
+        }
+
+        // Nếu không phải admin → kiểm tra khách hàng
+        $khach = KhachHang::where('Email', $request->email)->first();
         if ($khach && Hash::check($request->password, $khach->MatKhau)) {
             session(['khach_hang' => $khach]);
 
