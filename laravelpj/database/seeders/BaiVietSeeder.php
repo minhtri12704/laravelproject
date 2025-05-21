@@ -58,7 +58,7 @@ class BaiVietSeeder extends Seeder
             [
                 'tieude' => 'Cập nhật các mẫu tủ lạnh side-by-side bán chạy nhất',
                 'noidung' => 'Tủ lạnh side-by-side có thiết kế sang trọng, dung tích lớn, phù hợp với gia đình đông người. Bài viết sẽ giới thiệu các mẫu đáng mua đến từ Samsung, LG và Hitachi đang được người dùng đánh giá cao.',
-                'hinhanh' => 'images/maylanh3.jpg',
+                'hinhanh' => 'images/maylanh2.jpg',
             ]
         ];
 

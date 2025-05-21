@@ -12,6 +12,6 @@ class KhuyenMai extends Model
         'loai_giam',
         'gia_tri',
         'ngay_bat_dau',
-        'ngay_ket_thuc'
+        'ngay_ket_thuc',
     ];
-}
+ }  

@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('ma_phieu')->unique();
             $table->string('ten_phieu');
-            $table->enum('loai_giam', ['percent', 'fixed'])->default('percent'); // Thêm loại giảm
-            $table->integer('gia_tri'); // Dùng chung cho giảm % hoặc giảm tiền
+            $table->enum('loai_giam', ['percent', 'fixed']);
+            $table->integer('gia_tri');
             $table->date('ngay_bat_dau');
             $table->date('ngay_ket_thuc');
             $table->timestamps();
         });
+        
     }
 
 
