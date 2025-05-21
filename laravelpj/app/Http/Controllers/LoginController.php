@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-
+    
     public function login(Request $request)
     {
             $request->validate([
@@ -28,6 +28,7 @@ class LoginController extends Controller
             session(['khach_hang' => $khach]);
 
             // Kiểm tra nếu là admin thì chuyển hướng sang CRUD Order
+            //admin loginlogin
             if ($khach->Email === 'admin@gmail.com') {
                 return redirect()->route('users.index'); // route đến trang CRUD đơn hàng
             }
