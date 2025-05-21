@@ -184,7 +184,6 @@ body {
                 <th>#</th>
                 <th>Tên đơn hàng</th>
                 <th>Khách hàng</th>
-                <th>Số lượng</th>
                 <th>Tổng tiền</th>
                 <th>Thanh toán</th>
                 <th>Chi tiết</th>
@@ -199,7 +198,6 @@ body {
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $donHang->ten_don_hang }}</td>
                 <td>{{ $donHang->ten_khach_hang }}</td>
-                <td>{{ $donHang->so_luong }}</td>
                 <td><strong>{{ number_format($donHang->tong_tien, 0, ',', '.') }} <span
                             style="color:#ff69b4;">VNĐ</span></strong></td>
                 <td>{{ $donHang->phuong_thuc_thanh_toan }}</td>

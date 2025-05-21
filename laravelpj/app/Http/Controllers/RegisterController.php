@@ -32,9 +32,6 @@ class RegisterController extends Controller
             'DiaChi'      => $request->address,
         ]);
 
-        // Nếu bạn có guard tên 'khach' thì dùng dòng dưới, không thì bỏ cũng được
-        // Auth::guard('khach')->login($khachHang);
-
-        return redirect()->route('home')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+        return redirect()->route('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
 }
