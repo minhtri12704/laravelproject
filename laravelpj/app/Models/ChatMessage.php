@@ -8,8 +8,8 @@ class ChatMessage extends Model
 {
     // Nếu bạn dùng Laravel 8+ và chưa bật fillable toàn cục, nên khai báo fillable
     protected $fillable = [
-        'user_id',        // admin trả lời
-        'customer_id',    // khách gửi
+        'user_id',        
+        'customer_id',    
         'message',
         'is_bot'
     ];

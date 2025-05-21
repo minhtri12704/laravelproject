@@ -23,12 +23,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserRoleSeeder::class,
             RoleSeeder::class,
+            KhachHangSeeder::class,
             UserSeeder::class,
             OrderSeeder::class,
             CategorySeeder::class,
             BaiVietSeeder::class,
             CrudProductSeeder::class,
-            KhachHangSeeder::class,
             KhuyenMaiSeeder::class,
         ]);
     }

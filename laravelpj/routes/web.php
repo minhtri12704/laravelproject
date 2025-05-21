@@ -165,3 +165,7 @@ Route::post('/lien-he', [GuestChatController::class, 'sendMessage'])->name('gues
 Route::get('/tin-nhan', [GuestChatController::class, 'viewMessages'])->name('guest.chat.view');
 // routes/api.php
 Route::get('/chat/messages', [GuestChatController::class, 'getMessages']);
+//Đơn hàng bên khách hàng
+Route::get('/don-hang/khach/{id}', [OrderController::class, 'indexGuest'])->name('orders.byKhach');
+
+
