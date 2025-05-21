@@ -5,95 +5,109 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-    body {
-        background-color: #007bff;
-        color: #f5f5f5;
-    }
+        body {
+            background-color: #007bff;
+            color: #f5f5f5;
+        }
 
-    .navbar {
-        background-color: #007bff;
-    }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .navbar .nav-link,
-    .navbar .navbar-brand {
-        color: #ffffff;
-    }
+        .content {
+            flex: 1;
+        }
 
-    .navbar .nav-link:hover {
-        color: #cce6ff;
-    }
+        .navbar {
+            background-color: #007bff;
+        }
 
-    .content {
-        padding: 20px;
-    }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: #ffffff;
+        }
 
-<<<<<<< HEAD
+        .navbar .nav-link:hover {
+            color: #cce6ff;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
         .search-form .form-control {
             background-color: #fff;
             color: #000;
         }
 
-        #chat-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            cursor: pointer;
+        .search-form .form-control {
+            background-color: #fff;
+            color: #000;
         }
 
-        #chat-popup {
+
+        #chat-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            padding: 15px 18px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #chat-box {
             display: none;
             position: fixed;
             bottom: 90px;
-            right: 20px;
+            right: 30px;
             width: 300px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow: hidden;
-        }
-
-        #chat-messages {
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-        }
-
-        #chat-input {
-            display: flex;
-            border-top: 1px solid #ccc;
-        }
-
-        #chat-input input {
-            flex: 1;
-            border: none;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
             padding: 10px;
+            z-index: 1000;
+            font-size: 14px;
         }
 
-        #chat-input button {
-            background: #0d6efd;
+        .chat-messages {
+            max-height: 260px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .chat-bubble {
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            display: inline-block;
+        }
+
+        .admin-message {
+            background-color: #e6e6e6;
+            color: #333;
+            border-radius: 15px 15px 15px 0;
+        }
+
+        .user-message {
+            background-color: #0d6efd;
             color: white;
-            border: none;
-            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
         }
-
-    .search-form .form-control {
-        background-color: #fff;
-        color: #000;
-    }
     </style>
 </head>
 
@@ -165,25 +179,91 @@
             </div>
         </div>
     </nav>
-    
+
 
 
 
     <div class="content">
         @yield('content')
     </div>
-    <!-- Icon mở chatbot -->
-    <button id="chat-icon"><i class="bi bi-chat-dots"></i></button>
+    <!-- Nút mở chat -->
+    <button id="chat-toggle-btn"><i class="fa fa-comments"></i></button>
 
-    <!-- Popup chatbot -->
-    <div id="chat-popup">
-        <div class="bg-primary text-white p-2">🤖 Chatbot Điện máy</div>
-        <div id="chat-messages"></div>
-        <div id="chat-input">
-            <input type="text" id="user-message" placeholder="Nhập nội dung..." />
-            <button id="send-btn">Gửi</button>
+    <!-- Chat box -->
+    <div id="chat-box">
+        <div id="chat-history" class="chat-messages">
+            <p class="text-muted">💬 Đang tải hội thoại...</p>
         </div>
+        <form id="chatForm" method="POST" action="{{ route('guest.chat.send') }}" class="d-flex align-items-center mt-2">
+            @csrf
+            <input type="hidden" name="customer_id" id="customer_id_hidden" value="{{ session('khach_hang')->idKhach ?? '' }}">
+            <input type="text" name="message" id="chatMessage" class="form-control form-control-sm me-2 rounded-pill" placeholder="Aa..." required>
+            <button type="submit" class="btn btn-sm btn-primary rounded-circle"><i class="fas fa-paper-plane"></i></button>
+        </form>
     </div>
+
+
+
+    <script>
+        const toggleBtn = document.getElementById('chat-toggle-btn');
+        const chatBox = document.getElementById('chat-box');
+        const customerId = document.getElementById('customer_id_hidden').value;
+
+        toggleBtn.addEventListener('click', () => {
+            chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'block' : 'none';
+            if (chatBox.style.display === 'block') {
+                loadMessages(customerId);
+            }
+        });
+
+        function loadMessages(customerId) {
+            fetch(`/api/chat/messages?customer_id=${customerId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const history = document.getElementById('chat-history');
+                    history.innerHTML = '';
+
+                    if (data.length === 0) {
+                        history.innerHTML = '<p class="text-muted">Chưa có hội thoại nào.</p>';
+                        return;
+                    }
+
+                    data.forEach(msg => {
+                        const isAdmin = msg.user_id !== null;
+
+                        const bubble = document.createElement('div');
+                        bubble.className = 'chat-bubble ' + (isAdmin ? 'admin-message' : 'user-message');
+                        bubble.innerHTML = msg.message;
+
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'd-flex mb-1';
+                        wrapper.style.justifyContent = isAdmin ? 'flex-start' : 'flex-end';
+
+
+                        wrapper.appendChild(bubble);
+
+                        history.appendChild(wrapper);
+                    });
+
+                    history.scrollTop = history.scrollHeight;
+                });
+        }
+
+
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(() => {
+                    document.getElementById('chatMessage').value = '';
+                    loadMessages(customerId);
+                });
+        });
+    </script>
+
 
 
 
@@ -220,43 +300,6 @@
             </div>
         </div>
     </footer>
-    <script>
-        const chatIcon = document.getElementById('chat-icon');
-        const chatPopup = document.getElementById('chat-popup');
-        const sendBtn = document.getElementById('send-btn');
-        const userInput = document.getElementById('user-message');
-        const chatMessages = document.getElementById('chat-messages');
-
-        // Toggle mở/tắt chatbot
-        chatIcon.onclick = () => {
-            chatPopup.style.display = chatPopup.style.display === 'none' ? 'block' : 'none';
-        };
-
-        // Gửi tin nhắn
-        sendBtn.onclick = () => {
-            const msg = userInput.value.trim();
-            if (!msg) return;
-            chatMessages.innerHTML += `<div><strong>Bạn:</strong> ${msg}</div>`;
-            userInput.value = '';
-
-            fetch("{{ route('simplebot.ask') }}", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        message: msg
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    chatMessages.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                });
-        };
-    </script>
-
 
 
 
