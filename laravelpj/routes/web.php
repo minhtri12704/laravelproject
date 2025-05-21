@@ -24,6 +24,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatBotController;
 
 use App\Http\Controllers\KhuyenMaiController;
+use App\Http\Controllers\SimpleBotController;
 
 /*
 |--------------------------------------------------------------------------
