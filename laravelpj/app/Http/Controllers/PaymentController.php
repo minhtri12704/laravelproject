@@ -39,12 +39,10 @@ class PaymentController extends Controller
 
         $cart = session()->get('cart', []);
         $selected = session('selected_items', []);
-        $totalQty = 0;
-
-        foreach ($selected as $id) {
-            if (isset($cart[$id])) {
-                $totalQty += $cart[$id]['quantity'];
-            }
+        // Kiểm tra đăng nhập khách hàng
+        $khach = Auth::guard('khach')->user();
+        if (!$khach) {
+            return redirect('/login')->with('error', 'Vui lòng đăng nhập trước khi thanh toán.');
         }
 
         $khach = Auth::guard('khach')->user();
