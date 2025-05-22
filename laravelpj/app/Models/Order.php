@@ -14,6 +14,7 @@ class Order extends Model
         'phuong_thuc_thanh_toan',
         'trang_thai',
         'ghi_chu',
+        'hinh_anh',
     ];
 
     public function khachHang()

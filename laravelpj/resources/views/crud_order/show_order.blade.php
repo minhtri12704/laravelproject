@@ -62,6 +62,10 @@
 
   <h2 style="text-align: center; margin-bottom: 30px;">Chi tiết Đơn hàng</h2>
 
+   @if ($order->hinh_anh)
+    <img src="{{ asset('images/' . $order->hinh_anh) }}" alt="Hình đơn hàng" class="order-image">
+  @endif
+
   <ul>
     <li><strong>Tên đơn hàng:</strong> {{ $order->ten_don_hang }}</li>
     <li><strong>Khách hàng:</strong> {{ $order->ten_khach_hang }}</li>
