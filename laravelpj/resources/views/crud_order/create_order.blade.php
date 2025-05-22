@@ -82,9 +82,6 @@
     <label for="ten_khach_hang">Tên khách hàng</label>
     <input type="text" name="ten_khach_hang" placeholder="Nhập tên khách hàng..." required>
 
-    <label for="so_luong">Số lượng</label>
-    <input type="number" name="so_luong" min="1" placeholder="VD: 5" required>
-
     <label for="tong_tien">Tổng tiền (VNĐ)</label>
     <input type="number" name="tong_tien" min="0" placeholder="VD: 500000">
 
