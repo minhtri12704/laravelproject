@@ -65,14 +65,13 @@
     <div class="d-flex">
         <div class="sidebar p-3" style="width: 250px;">
 
-            <!-- ni hao -->
-            @if(session()->has('khach_hang'))
+            @if (Auth::guard('web')->check())
             <h4>Quản trị</h4>
             <div class="me-3 d-flex align-items-center text-white fw-bold">
-                [ {{ session('khach_hang')->Ten }} ]
+                [ {{ Auth::guard('web')->user()->name }} ]
             </div>
-            <br>
             @endif
+
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Người dùng</a></li>
                 <li class="nav-item"><a href="{{ route('khachhang') }}" class="nav-link">Quản lý khách hàng</a></li>

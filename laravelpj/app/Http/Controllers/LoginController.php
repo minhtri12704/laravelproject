@@ -12,14 +12,13 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+    return view('auth.login');
     }
     
     public function login(Request $request)
-{
-    $request->validate([
-        'email'    => 'required|email',
-        'password' => 'required'
+    {
+    $request->validate([ 'email' => 'required|email',
+    'password' => 'required'
     ]);
 
     // Đăng nhập ADMIN (bảng users)
@@ -29,7 +28,7 @@ class LoginController extends Controller
         return redirect('/users')->with('success', 'Chào mừng quản trị viên!');
     }
 
-    // Đăng nhập KHÁCH (guard: khach)
+   // Đăng nhập KHÁCH (guard: khach)
     if (Auth::guard('khach')->attempt([
         'Email' => $request->email,
         'password' => $request->password
@@ -37,13 +36,13 @@ class LoginController extends Controller
         $khach = Auth::guard('khach')->user();
 
         // Gán thủ công session nếu cần
-        session(['khach_hang' => $khach]);
+ session(['khach_hang' => $khach]);
 
-        if ($khach->Email === 'admin@gmail.com') {
-            return redirect()->route('users.index'); // nếu trùng email đặc biệt
-        }
+ if ($khach->Email === 'admin@gmail.com') {
+return redirect()->route('users.index'); // nếu trùng email đặc biệt
+ }
 
-        return redirect('/home')->with('success', 'Đăng nhập thành công!');
+ return redirect('/home')->with('success', 'Đăng nhập thành công!');
     }
 
     return back()->with('error', 'Email hoặc mật khẩu không đúng')->withInput();

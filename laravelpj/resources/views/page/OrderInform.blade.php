@@ -81,7 +81,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>#</th>
+                <th>ID Đơn Hàng</th>
                 <th>Tổng tiền</th>
                 <th>Trạng thái</th>
                 <th>Ngày</th>

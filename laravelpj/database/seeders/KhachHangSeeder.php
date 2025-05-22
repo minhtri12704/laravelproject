@@ -11,9 +11,9 @@ class KhachHangSeeder extends Seeder
     public function run(): void
     {
         KhachHang::create([
-            'Ten' => 'Admin',
+            'Ten' => 'Guest',
             'SoDienThoai' => '0123456789',
-            'Email' => 'admin@gmail.com',
+            'Email' => 'guest@gmail.com',
             'DiaChi' => 'TP.HCM',
             'MatKhau' => Hash::make('123456') 
         ]);

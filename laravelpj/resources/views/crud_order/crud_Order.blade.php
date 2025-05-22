@@ -194,7 +194,7 @@
         <tbody>
             @forelse ($orders as $donHang)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ $donHang->id }}</td>
                 <td>{{ $donHang->khachHang->idKhach ?? '[Không có]' }}</td>
                 <td><strong>{{ number_format($donHang->tong_tien, 0, ',', '.') }} <span
                             style="color:#ff69b4;">VNĐ</span></strong></td>

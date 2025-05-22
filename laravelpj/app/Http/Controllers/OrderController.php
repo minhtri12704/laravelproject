@@ -11,7 +11,7 @@ class OrderController extends Controller
     // Hiển thị danh sách đơn hàng admin
     public function index()
     {
-        $orders = Order::with('khachHang')->orderBy('created_at', 'desc')->paginate(10);
+        $orders = Order::with('khachHang')->orderBy('id')->paginate(10);
         return view('crud_order.crud_Order', compact('orders'));
     }
 
