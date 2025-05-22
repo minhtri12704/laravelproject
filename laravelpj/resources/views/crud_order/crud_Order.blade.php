@@ -216,9 +216,6 @@
                 </td>
                 <td>{{ $donHang->ghi_chu }}</td>
                 <td>
-                    <a href="{{ route('orders.edit', $donHang->id) }}">
-                        <button class="btn-edit">Sửa</button>
-                    </a>
                     <form action="{{ route('orders.destroy', $donHang->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
