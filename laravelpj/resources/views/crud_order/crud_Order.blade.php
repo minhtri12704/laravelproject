@@ -170,7 +170,7 @@ body {
 
 <div class="order-list">
     <h2 class="header-title">Danh sách Đơn hàng</h2>
-
+    <!-- thay doi -->
     @if (session('success'))
     <div class="alert alert-success text-center">{{ session('success') }}</div>
     @elseif (session('error'))
