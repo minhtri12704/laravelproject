@@ -97,22 +97,28 @@ button:hover {
                     @csrf
 
                     <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control mb-3" required>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control mb-3"
+                        required>
 
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control mb-3" required>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control mb-3"
+                        required>
 
                     <label for="address">Địa chỉ giao hàng</label>
-                    <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control mb-3" required>
+                    <input type="text" id="address" name="address" value="{{ old('address') }}"
+                        class="form-control mb-3" required>
 
                     <label for="payment_method">Phương thức thanh toán</label>
                     <select id="payment_method" name="payment_method" class="form-select mb-3" required>
                         <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Tiền mặt</option>
-                        <option value="bank" {{ old('payment_method') == 'bank' ? 'selected' : '' }}>Chuyển khoản</option>
+                        <option value="bank" {{ old('payment_method') == 'bank' ? 'selected' : '' }}>Chuyển khoản
+                        </option>
                     </select>
 
                     <label for="amount">Số tiền (VNĐ)</label>
-                    <input type="text" id="amount" name="amount" value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control mb-4" readonly required>
+                    <input type="text" id="amount" name="amount"
+                        value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control mb-4"
+                        readonly required>
 
                     <button type="submit" class="btn btn-primary w-100">Thanh Toán</button>
                 </form>
