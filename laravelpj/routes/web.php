@@ -173,4 +173,5 @@ Route::get('/don-hang/khach/{id}', [OrderController::class, 'indexGuest'])->name
 //route review 
 Route::post('/review/{productId}', [ReviewController::class, 'storeReview'])->name('review.store');
 Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
 
