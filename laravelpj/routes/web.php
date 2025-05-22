@@ -26,6 +26,7 @@ use App\Http\Controllers\KhuyenMaiController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GuestChatController;
 use App\Models\ChatMessage;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,4 +170,5 @@ Route::get('/chat/messages', [GuestChatController::class, 'getMessages']);
 //Đơn hàng bên khách hàng
 Route::get('/don-hang/khach/{id}', [OrderController::class, 'indexGuest'])->name('orders.byKhach');
 
-
+//route review 
+Route::post('/review/{productId}', [ReviewController::class, 'storeReview'])->name('review.store');

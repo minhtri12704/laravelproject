@@ -10,7 +10,7 @@ class ChiTietSanPhamController extends Controller
     public function show($id)
     {
         // Lấy sản phẩm chi tiết
-        $chiTietSanPham = CrudProduct::findOrFail($id);
+        $chiTietSanPham = CrudProduct::with('reviews.khachHang')->findOrFail($id);
 
         // Từ khóa liên quan
         $tuKhoa = $this->layTuKhoaLienQuan($chiTietSanPham->name);
