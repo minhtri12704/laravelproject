@@ -28,7 +28,6 @@ class OrderSeeder extends Seeder
             Order::create([
                 'ten_don_hang' => 'Đơn hàng #' . $i,
                 'khach_hang_id' => $khachHangs[array_rand($khachHangs)],
-                'ten_khach_hang' => 'Nguyễn Văn ' . chr(64 + $i), // A, B, C...
                 'tong_tien' => rand(200000, 2000000),
                 'phuong_thuc_thanh_toan' => $paymentMethods[array_rand($paymentMethods)],
                 'trang_thai' => $statuses[array_rand($statuses)],
