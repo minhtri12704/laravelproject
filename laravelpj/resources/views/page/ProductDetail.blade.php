@@ -115,15 +115,43 @@ h2 {
 
     <!-- Danh sách đánh giá -->
     @forelse ($chiTietSanPham->reviews as $review)
-    <div class="mb-3 border p-3 rounded shadow-sm">
-        <strong>{{ $review->khachHang->Ten ?? 'Ẩn danh' }}</strong> -
-        <small class="text-muted">{{ $review->created_at->format('d/m/Y H:i') }}</small>
-        <br>
-        @for ($i = 1; $i <= 5; $i++) <i
-            class="bi {{ $i <= $review->rating ? 'bi-star-fill text-warning' : 'bi-star text-muted' }}"></i>
-            @endfor
-            <p class="mt-2">{{ $review->noi_dung }}</p>
+    <div class="mb-3 border p-3 rounded shadow-sm position-relative">
+
+    <!-- Header: tên, thời gian, nút 3 chấm -->
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <strong>{{ $review->khachHang->Ten ?? 'Ẩn danh' }}</strong> - 
+            <small class="text-muted">{{ $review->created_at->format('d/m/Y H:i') }}</small>
+        </div>
+
+        @if(session('khach_hang') && $review->khach_hang_id == session('khach_hang')->idKhach)
+        <div class="dropdown">
+            <button class="btn btn-sm btn-light border-0" type="button" id="dropdownMenuButton{{ $review->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $review->id }}">
+                <li>
+                    <form action="{{ route('review.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Xác nhận xóa đánh giá?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="dropdown-item text-danger">Xóa</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        @endif
     </div>
+
+    <!-- Rating + nội dung -->
+    <div class="mt-2">
+        @for ($i = 1; $i <= 5; $i++)
+            <i class="bi {{ $i <= $review->rating ? 'bi-star-fill text-warning' : 'bi-star text-muted' }}"></i>
+        @endfor
+        <p class="mt-2">{{ $review->noi_dung }}</p>
+    </div>
+</div>
+
+
     @empty
     <p>Chưa có đánh giá nào cho sản phẩm này.</p>
     @endforelse
