@@ -79,13 +79,8 @@
     <label for="ten_don_hang">Tên đơn hàng</label>
     <input type="text" name="ten_don_hang" placeholder="Nhập tên đơn hàng..." required>
 
-    <label for="khach_hang_id">Khách hàng</label>
-    <select name="khach_hang_id" required>
-      <option value="">-- Chọn khách hàng --</option>
-      @foreach($khachHangs as $khach)
-        <option value="{{ $khach->id }}">{{ $khach->name }}</option>
-      @endforeach
-    </select>
+    <label for="ten_khach_hang">Tên khách hàng</label>
+    <input type="text" name="ten_khach_hang" placeholder="Nhập tên khách hàng..." required>
 
     <label for="tong_tien">Tổng tiền (VNĐ)</label>
     <input type="number" name="tong_tien" min="0" placeholder="VD: 500000">

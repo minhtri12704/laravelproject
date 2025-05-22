@@ -172,8 +172,6 @@
 <div class="order-list">
     <h2 class="header-title">Danh sách Đơn hàng</h2>
 
-    <a href="{{ route('orders.create') }}" class="btn-add">+ Thêm đơn hàng</a>
-
     @if (session('success'))
     <div class="alert alert-success text-center">{{ session('success') }}</div>
     @elseif (session('error'))
