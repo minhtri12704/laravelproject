@@ -117,39 +117,94 @@ h2 {
     @forelse ($chiTietSanPham->reviews as $review)
     <div class="mb-3 border p-3 rounded shadow-sm position-relative">
 
-    <!-- Header: tên, thời gian, nút 3 chấm -->
-    <div class="d-flex justify-content-between align-items-start">
-        <div>
-            <strong>{{ $review->khachHang->Ten ?? 'Ẩn danh' }}</strong> - 
-            <small class="text-muted">{{ $review->created_at->format('d/m/Y H:i') }}</small>
+        <!-- Header: Tên + thời gian + menu -->
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <strong>{{ $review->khachHang->Ten ?? 'Ẩn danh' }}</strong> -
+                <small class="text-muted">{{ $review->created_at->format('d/m/Y H:i') }}</small>
+            </div>
+
+            @if(session('khach_hang') && $review->khach_hang_id == session('khach_hang')->idKhach)
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light border-0" type="button" id="dropdownMenu{{ $review->id }}"
+                    data-bs-toggle="dropdown">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $review->id }}">
+                    <li>
+                        <button class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#editReviewModal{{ $review->id }}">Chỉnh sửa</button>
+                    </li>
+                    <li>
+                        <form action="{{ route('review.destroy', $review->id) }}" method="POST"
+                            onsubmit="return confirm('Xác nhận xóa?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="dropdown-item text-danger" type="submit">Xóa</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            @endif
         </div>
 
-        @if(session('khach_hang') && $review->khach_hang_id == session('khach_hang')->idKhach)
-        <div class="dropdown">
-            <button class="btn btn-sm btn-light border-0" type="button" id="dropdownMenuButton{{ $review->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-three-dots"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $review->id }}">
-                <li>
-                    <form action="{{ route('review.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Xác nhận xóa đánh giá?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="dropdown-item text-danger">Xóa</button>
-                    </form>
-                </li>
-            </ul>
+        <!-- Nội dung bình luận -->
+        <div class="mt-2">
+            @for ($i = 1; $i <= 5; $i++) <i
+                class="bi {{ $i <= $review->rating ? 'bi-star-fill text-warning' : 'bi-star text-muted' }}"></i>
+                @endfor
+                <p class="mt-2">{{ $review->noi_dung }}</p>
         </div>
-        @endif
     </div>
 
-    <!-- Rating + nội dung -->
-    <div class="mt-2">
-        @for ($i = 1; $i <= 5; $i++)
-            <i class="bi {{ $i <= $review->rating ? 'bi-star-fill text-warning' : 'bi-star text-muted' }}"></i>
-        @endfor
-        <p class="mt-2">{{ $review->noi_dung }}</p>
+    <!-- Modal chỉnh sửa -->
+    <div class="modal fade" id="editReviewModal{{ $review->id }}" tabindex="-1"
+        aria-labelledby="editReviewModalLabel{{ $review->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('review.update', $review->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editReviewModalLabel{{ $review->id }}">Chỉnh sửa đánh giá</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Rating -->
+                        <div class="mb-3">
+                            <label>Số sao:</label>
+                            <select name="rating" class="form-select @error('rating') is-invalid @enderror">
+                                @for ($i = 5; $i >= 1; $i--)
+                                <option value="{{ $i }}" {{ old('rating', $review->rating) == $i ? 'selected' : '' }}>
+                                    {{ $i }} sao
+                                </option>
+                                @endfor
+                            </select>
+                            @error('rating')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Nội dung -->
+                        <div class="mb-3">
+                            <label>Nội dung:</label>
+                            <textarea name="noi_dung" class="form-control @error('noi_dung') is-invalid @enderror"
+                                rows="3" required maxlength="1000">{{ old('noi_dung', $review->noi_dung) }}</textarea>
+                            @error('noi_dung')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+
 
 
     @empty

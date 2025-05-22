@@ -47,4 +47,29 @@ class ReviewController extends Controller
         $review->delete();
         return redirect()->back()->with('success', 'Đánh giá đã được xóa.');
     }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'noi_dung' => 'required|string|max:1000',
+        ], [
+            'noi_dung.required' => 'Bình luận không được để trống.',
+            'noi_dung.max' => 'Bình luận không được vượt quá 1000 ký tự.',
+        ]);
+
+        $review = Review::findOrFail($id);
+
+        if (session()->has('khach_hang') && $review->khach_hang_id != session('khach_hang')->idKhach) {
+            return redirect()->back()->with('error', 'Bạn không có quyền chỉnh sửa đánh giá này.');
+        }
+
+        $review->update([
+            'rating' => $request->rating,
+            'noi_dung' => $request->noi_dung,
+        ]);
+
+        return redirect()->back()->with('success', 'Đánh giá đã được cập nhật.');
+    }
+
+
 }
