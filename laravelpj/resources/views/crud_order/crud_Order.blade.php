@@ -216,7 +216,7 @@
                 </td>
                 <td>{{ $donHang->ghi_chu }}</td>
                 <td>
-                    <form action="{{ route('orders.destroy', $donHang->id) }}" method="POST" style="display:inline;">
+                    <form action="#" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-delete"
