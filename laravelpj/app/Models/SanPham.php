@@ -12,4 +12,6 @@ class SanPham extends Model
     protected $table = 'san_phams';
 
     protected $fillable = ['ten_san_pham', 'gia', 'hinh_anh'];
+
+
 }
