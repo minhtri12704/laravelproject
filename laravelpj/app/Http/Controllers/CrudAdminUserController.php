@@ -9,19 +9,18 @@ use Illuminate\Support\Facades\Hash;
 
 class CrudAdminUserController extends Controller
 {
-    //hàm hiển thị
     public function index()
     {
-        $users = User::with('roles')->paginate(10); // phân trang 3 người mỗi trang
+        $users = User::with('roles')->paginate(10);
         return view('crud_user.CrudAdminUser', compact('users'));
     }
-    //hàm chuyển sang trang thêm người dùng tại crud_user
+
     public function create()
     {
-        $roles = Role::all(); // lấy danh sách từ bảng roles
+        $roles = Role::all();
         return view('crud_user.CrudAdminUserCreate', compact('roles'));
     }
-    //hàm store giúp xử lí thêm người dùng tại trang thêm
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,7 +40,6 @@ class CrudAdminUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Thêm role vào bảng user_role
         $user->roles()->attach($request->role);
 
         return redirect()->route('users.index')->with('success', 'Đã thêm người dùng!');
@@ -49,14 +47,25 @@ class CrudAdminUserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('users.index')
+                             ->with('error', 'Người dùng không tồn tại hoặc đã bị xoá. Vui lòng tải lại trang.');
+        }
+
         $roles = Role::all();
         return view('crud_user.CrudAdminUserEdit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('users.index')
+                             ->with('error', 'Người dùng không còn tồn tại. Vui lòng tải lại trang.');
+        }
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -75,17 +84,20 @@ class CrudAdminUserController extends Controller
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
         ]);
 
-        // Cập nhật lại role
         $user->roles()->sync([$request->role]);
-
 
         return redirect()->route('users.index')->with('success', 'Đã cập nhật người dùng!');
     }
 
-    //hàm xóa
     public function delete($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('users.index')
+                             ->with('error', 'Không tìm thấy người dùng cần xoá.');
+        }
+
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Đã xóa người dùng!');
     }

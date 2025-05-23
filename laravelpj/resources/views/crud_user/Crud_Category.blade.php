@@ -12,7 +12,18 @@
 <div class="tab">
 
 <h2 style="text-align: center; color: #ffb6c1;">Quản lý Danh mục</h2>
+<!-- Thông báo -->
+@if(session('success'))
+  <div style="text-align:center; color: green; font-weight: bold; margin-bottom: 15px;">
+    {{ session('success') }}
+  </div>
+@endif
 
+@if(session('error'))
+  <div style="text-align:center; color: red; font-weight: bold; margin-bottom: 15px;">
+    {{ session('error') }}
+  </div>
+@endif
 <!-- Nút chuyển sang trang thêm danh mục -->
 <div style="text-align: right; margin-bottom: 20px;">
   <a href="{{ route('categories.create') }}" 

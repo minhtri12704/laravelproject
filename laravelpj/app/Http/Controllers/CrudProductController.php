@@ -47,39 +47,63 @@ class CrudProductController extends Controller
 
 
     //hàm eidt và update
-    public function edit(CrudProduct $product)
-    {
-        $categories = Category::all();
-        return view('Crud_user.CrudProductEdit', compact('product', 'categories'));
+    public function edit($id)
+{
+    $product = CrudProduct::find($id);
+
+    if (!$product) {
+        return redirect()->route('products.index')
+                         ->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa. Vui lòng tải lại trang.');
     }
 
-    public function update(Request $request, CrudProduct $product)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-        ]);
+    $categories = Category::all();
+    return view('Crud_user.CrudProductEdit', compact('product', 'categories'));
+}
 
-        $data = $request->all();
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
-            $data['image'] = $filename;
-        }
+public function update(Request $request, $id)
+{
+    $product = CrudProduct::find($id);
 
-        $product->update($data);
-
-        return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
+    if (!$product) {
+        return redirect()->route('products.index')
+                         ->with('error', 'Sản phẩm không còn tồn tại. Vui lòng tải lại trang.');
     }
-    public function delete(CrudProduct $product)
-    {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Xóa thành công');
+
+    $request->validate([
+        'name' => 'required',
+        'category_id' => 'required|exists:categories,id',
+        'price' => 'required|numeric',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
+
+    $data = $request->all();
+
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('images'), $filename);
+        $data['image'] = $filename;
     }
+
+    $product->update($data);
+
+    return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
+}
+
+public function delete($id)
+{
+    $product = CrudProduct::find($id);
+
+    if (!$product) {
+        return redirect()->route('products.index')
+                         ->with('error', 'Sản phẩm không tồn tại. Có thể đã bị xóa.');
+    }
+
+    $product->delete();
+
+    return redirect()->route('products.index')->with('success', 'Xóa thành công');
+}
 
 
 }

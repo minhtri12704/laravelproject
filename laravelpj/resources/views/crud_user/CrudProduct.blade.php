@@ -97,11 +97,13 @@
 </script>
 @endif
 
-{{-- Thông báo thành công --}}
+<!--Thông báo thành công-->
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
-
+@if(session('error'))
+    <div class="alert alert-danger text-center">{{ session('error') }}</div>
+@endif
 <div class="text-end mb-3">
     <a href="{{ route('products.create') }}" class="btn btn-dark">+ Thêm sản phẩm</a>
 </div>
