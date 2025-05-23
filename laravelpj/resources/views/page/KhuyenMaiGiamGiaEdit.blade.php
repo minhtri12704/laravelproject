@@ -130,3 +130,16 @@ label {
 
 </div>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const startDate = document.getElementById('ngay_bat_dau');
+        const endDate = document.getElementById('ngay_ket_thuc');
+
+        endDate.addEventListener('change', function () {
+            if (new Date(endDate.value) < new Date(startDate.value)) {
+                alert("Ngày kết thúc phải sau hoặc bằng ngày bắt đầu!");
+                endDate.value = '';
+            }
+        });
+    });
+</script>
