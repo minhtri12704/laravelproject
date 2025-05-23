@@ -4,58 +4,58 @@
 
 @section('content')
 <style>
-    body {
-        background-color:rgb(255, 255, 255);
-        color:rgb(0, 0, 0);
-    }
+body {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
 
-    h2 {
-        color:pink;
-    }
+h2 {
+    color: pink;
+}
 
-    .table {
-        background-color: #1a1a1a;
-        color: #ffffff;
-    }
+.table {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
 
-    .table-bordered th,
-    .table-bordered td {
-        background-color: #1a1a1a;
-        border: 1px solid #d3d3d3;
-        color: #ffccdd;
-    }
+.table-bordered th,
+.table-bordered td {
+    background-color: #1a1a1a;
+    border: 1px solid #d3d3d3;
+    color: #ffccdd;
+}
 
-    .table-dark {
-        background-color: #3a3a3a;
-        color: #ffccdd;
-    }
+.table-dark {
+    background-color: #3a3a3a;
+    color: #ffccdd;
+}
 
-    .btn-dark {
-        background-color: #ff69b4;
-        color: #ffffff;
-        border: none;
-    }
+.btn-dark {
+    background-color: #ff69b4;
+    color: #ffffff;
+    border: none;
+}
 
-    .btn-dark:hover {
-        background-color: #ff85c0;
-    }
+.btn-dark:hover {
+    background-color: #ff85c0;
+}
 
-    .pagination .page-link {
-        background-color:rgb(255, 255, 255);
-        color:rgb(0, 0, 0);
-        border: 1px solid #d3d3d3;
-    }
+.pagination .page-link {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid #d3d3d3;
+}
 
-    .pagination .page-item.active .page-link {
-        background-color: #ff69b4;
-        color: #ffffff;
-        border: 1px solid #d3d3d3;
-    }
+.pagination .page-item.active .page-link {
+    background-color: #ff69b4;
+    color: #ffffff;
+    border: 1px solid #d3d3d3;
+}
 
-    .pagination .page-link:hover {
-        background-color: #ff85c0;
-        color: #ffffff;
-    }
+.pagination .page-link:hover {
+    background-color: #ff85c0;
+    color: #ffffff;
+}
 </style>
 
 <div class="container mt-5">
@@ -70,12 +70,17 @@
 
     <!-- Hiển thị thông báo -->
     @if(session('success'))
-        <div class="alert alert-success text-center">{{ session('success') }}</div>
+    <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger text-center">{{ session('error') }}</div>
+    @endif
+
 
     <!-- Danh sách -->
     @if($ds->isEmpty())
-        <div class="alert alert-warning text-center">Chưa có khuyến mãi nào.</div>
+    <div class="alert alert-warning text-center">Chưa có khuyến mãi nào.</div>
     @else
     <table class="table table-bordered table-hover text-center align-middle">
         <thead class="table-dark">
@@ -109,7 +114,7 @@
                         ✏️ Sửa
                     </a>
                     <form action="{{ route('khuyenmai.destroy', $km->id) }}" method="POST" style="display:inline-block"
-                          onsubmit="return confirm('Bạn có chắc muốn xóa?')">
+                        onsubmit="return confirm('Bạn có chắc muốn xóa?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">🗑️ Xóa</button>
