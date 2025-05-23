@@ -35,26 +35,57 @@ class KhuyenMaiController extends Controller
     }
 
     public function edit($id)
-    {
-        $km = KhuyenMai::findOrFail($id);
-        return view('page.KhuyenMaiGiamGiaEdit', compact('km'));
+{
+    $km = KhuyenMai::find($id);
+
+    if (!$km) {
+        return redirect()->route('khuyenmai.index')
+                         ->with('error', 'Phiếu giảm giá không tồn tại hoặc đã bị xóa. Vui lòng tải lại trang.');
     }
+
+    return view('page.KhuyenMaiGiamGiaEdit', compact('km'));
+}
+
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'ten_phieu' => 'required',
-            'loai_giam' => 'required|in:percent,fixed',
-            'gia_tri' => 'required|integer|min:1',
-            'ngay_bat_dau' => 'required|date',
-            'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
-        ]);
+{
+    $km = KhuyenMai::find($id);
 
-        $km = KhuyenMai::findOrFail($id);
-        $km->update($request->all());
-
-        return redirect()->route('khuyenmai.index')->with('success', 'Cập nhật thành công!');
+    if (!$km) {
+        return redirect()->route('khuyenmai.index')
+                         ->with('error', 'Phiếu giảm giá không tồn tại hoặc đã bị xóa. Vui lòng tải lại trang.');
     }
+
+    // Kiểm tra version cập nhật
+    $formUpdatedAt = $request->input('updated_at');
+    if ($formUpdatedAt && $formUpdatedAt != $km->updated_at->toDateTimeString()) {
+        return redirect()->route('khuyenmai.index')
+                         ->with('error', 'Dữ liệu đã bị thay đổi bởi người khác. Vui lòng tải lại trang.');
+    }
+
+    $request->validate([
+        'ten_phieu' => 'required',
+        'loai_giam' => 'required|in:percent,fixed',
+        'gia_tri' => [
+            'required',
+            'integer',
+            'min:1',
+            function ($attribute, $value, $fail) use ($request) {
+                if ($request->loai_giam === 'percent' && $value > 100) {
+                    $fail('Phần trăm giảm không được vượt quá 100%.');
+                }
+            }
+        ],
+        'ngay_bat_dau' => 'required|date',
+        'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
+    ]);
+
+    $km->update($request->except('updated_at')); // Không cập nhật updated_at gửi lên
+
+    return redirect()->route('khuyenmai.index')->with('success', 'Cập nhật thành công!');
+}
+
+
 
     public function destroy($id)
     {
