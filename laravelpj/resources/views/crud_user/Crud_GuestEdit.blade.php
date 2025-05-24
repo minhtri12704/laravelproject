@@ -62,7 +62,7 @@
 
     <div class="mb-3">
       <label class="form-label">Tên</label>
-      <input type="text" name="Ten" class="form-control" value="{{ old('Ten', $khach->Ten) }}" required>
+      <input type="text" name="Ten" class="form-control" value="{{ old('Ten', $khach->Ten) }}" maxlength="75" required>
       @error('Ten')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror

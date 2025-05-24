@@ -25,7 +25,7 @@ class KhachHangController extends Controller
             'Ten' => [
                 'required',
                 'string',
-                'max:100',
+                'max:75',
                 'regex:/^[\p{L}\s]+$/u', // chỉ cho chữ và khoảng trắng
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {
@@ -73,7 +73,7 @@ class KhachHangController extends Controller
             'Ten' => [
                 'required',
                 'string',
-                'max:100',
+                'max:75',
                 'regex:/^[\p{L}\s]+$/u',
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {

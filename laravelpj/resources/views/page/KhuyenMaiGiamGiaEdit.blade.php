@@ -58,7 +58,7 @@
 
         <div class="mb-3">
             <label for="ten_phieu">Tên phiếu</label>
-            <input type="text" name="ten_phieu" class="form-control" value="{{ old('ten_phieu', $km->ten_phieu) }}" required>
+            <input type="text" name="ten_phieu" class="form-control" value="{{ old('ten_phieu', $km->ten_phieu) }}"maxlength="75" required>
             @error('ten_phieu') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 

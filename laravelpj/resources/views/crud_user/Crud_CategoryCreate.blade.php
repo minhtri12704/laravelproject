@@ -66,7 +66,7 @@
     @csrf
     <div class="form-group mb-3">
       <label for="name">Tên danh mục:</label>
-      <input type="text" id="name" name="name" class="form-control" placeholder="Nhập tên danh mục" required>
+      <input type="text" id="name" name="name" class="form-control" placeholder="Nhập tên danh mục"maxlength="75" required>
     </div>
     <button type="submit" class="btn-submit">Thêm</button>
   </form>
