@@ -26,7 +26,7 @@ class CrudCategoryController extends Controller
             'required',
             'string',
             'max:75',
-            'regex:/^[a-zA-Z0-9\s]+$/u', // Chỉ chữ cái, số và khoảng trắng
+            'regex:/^[\p{L}0-9\s\.\'\-]+$/u', // Chỉ chữ cái, số và khoảng trắng
             function ($attribute, $value, $fail) {
                 if (preg_match('/\s{2,}/', $value)) {
                     $fail('Tên danh mục không được chứa nhiều khoảng trắng liền nhau.');
@@ -87,7 +87,7 @@ public function update(Request $request, $id)
             'required',
             'string',
             'max:75',
-            'regex:/^[a-zA-Z0-9\s]+$/u',
+            'regex:/^[\p{L}0-9\s\.\'\-]+$/u',
             function ($attribute, $value, $fail) {
                 if (preg_match('/\s{2,}/', $value)) {
                     $fail('Tên danh mục không được chứa nhiều khoảng trắng liền nhau.');

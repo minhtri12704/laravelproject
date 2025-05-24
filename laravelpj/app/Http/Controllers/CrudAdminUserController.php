@@ -25,15 +25,18 @@ class CrudAdminUserController extends Controller
     {
         $request->validate([
             'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
-            'phone'    => ['nullable', 'regex:/^0\d{9,10}$/'],
+            'phone'    => ['required', 'regex:/^0\d{9}$/'],
             'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email'],
             'address'  => 'nullable|string|max:255',
             'role'     => 'required|exists:role,id',
-            'password' => 'required|string|min:6',
+            'password' => ['required', 'string', 'min:6', 'regex:/^\S+$/'], // không chứa khoảng trắng
         ], [
-            'name.regex'  => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
-            'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 đến 11 chữ số.',
-            'email.regex' => 'Email phải là địa chỉ Gmail hợp lệ (@gmail.com).'
+            'name.regex'         => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
+            'phone.required'     => 'Số điện thoại là bắt buộc.',
+            'phone.regex'        => 'Số điện thoại phải đúng định dạng (bắt đầu bằng 0 và đủ 10 chữ số).',
+            'email.regex'        => 'Email phải là địa chỉ Gmail hợp lệ.',
+            'password.required'  => 'Mật khẩu không được để trống.',
+            'password.regex'     => 'Mật khẩu không được chứa khoảng trắng.',
         ]);
 
         $user = User::create([
@@ -48,6 +51,7 @@ class CrudAdminUserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Đã thêm người dùng!');
     }
+
 
     public function edit($id)
     {
@@ -73,15 +77,18 @@ class CrudAdminUserController extends Controller
 
         $request->validate([
             'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
-            'phone'    => ['nullable', 'regex:/^0\d{9,10}$/'],
+            'phone'    => ['required', 'regex:/^0\d{9}$/'],
             'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email,' . $id],
             'address'  => 'nullable|string|max:255',
             'role'     => 'required|exists:role,id',
-            'password' => 'nullable|string|min:6',
+            'password' => ['required', 'string', 'min:6', 'regex:/^\S+$/'], // bắt buộc nhập lại và không có khoảng trắng
         ], [
-            'name.regex'  => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
-            'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 đến 11 chữ số.',
-            'email.regex' => 'Email phải là địa chỉ Gmail hợp lệ (@gmail.com).'
+            'name.regex'        => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
+            'phone.required'    => 'Số điện thoại là bắt buộc.',
+            'phone.regex'       => 'Số điện thoại phải đúng định dạng (bắt đầu bằng 0 và đủ 10 chữ số).',
+            'email.regex'       => 'Email phải là địa chỉ Gmail hợp lệ.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.regex'    => 'Mật khẩu không được chứa khoảng trắng.',
         ]);
 
         $user->update([
@@ -89,13 +96,14 @@ class CrudAdminUserController extends Controller
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+            'password' => Hash::make($request->password),
         ]);
 
         $user->roles()->sync([$request->role]);
 
         return redirect()->route('users.index')->with('success', 'Đã cập nhật người dùng!');
     }
+
 
     public function delete($id)
     {
