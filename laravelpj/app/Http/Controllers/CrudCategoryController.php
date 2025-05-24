@@ -25,7 +25,7 @@ class CrudCategoryController extends Controller
         'name' => [
             'required',
             'string',
-            'max:255',
+            'max:75',
             'regex:/^[a-zA-Z0-9\s]+$/u', // Chỉ chữ cái, số và khoảng trắng
             function ($attribute, $value, $fail) {
                 if (preg_match('/\s{2,}/', $value)) {
@@ -86,7 +86,7 @@ public function update(Request $request, $id)
         'name' => [
             'required',
             'string',
-            'max:255',
+            'max:75',
             'regex:/^[a-zA-Z0-9\s]+$/u',
             function ($attribute, $value, $fail) {
                 if (preg_match('/\s{2,}/', $value)) {

@@ -67,7 +67,7 @@
     @method('PUT')
     <div class="form-group mb-3">
       <label for="name">Tên danh mục:</label>
-      <input type="text" id="name" name="name" class="form-control" value="{{ $categories->name }}" required>
+      <input type="text" id="name" name="name" class="form-control" value="{{ $categories->name }}" maxlength="75" required>
     </div>
     <button type="submit" class="btn-submit">Cập nhật</button>
   </form>
