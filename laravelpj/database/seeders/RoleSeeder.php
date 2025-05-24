@@ -24,20 +24,6 @@ class RoleSeeder extends Seeder
 
         DB::table('role')->insert([
             [
-                'name' => 'manager',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-        DB::table('role')->insert([
-            [
-                'name' => 'leader',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-        DB::table('role')->insert([
-            [
                 'name' => 'member',
                 'created_at' => now(),
                 'updated_at' => now(),

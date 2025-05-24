@@ -26,29 +26,57 @@ class KhachHangController extends Controller
                 'required',
                 'string',
                 'max:75',
-                'regex:/^[\p{L}\s]+$/u', // chỉ cho chữ và khoảng trắng
+                'regex:/^[\p{L}\s]+$/u', // chỉ chữ và khoảng trắng
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {
                         $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');
                     }
+                    if (preg_match('/^\s|\s$/', $value)) {
+                        $fail('Tên không được bắt đầu hoặc kết thúc bằng khoảng trắng.');
+                    }
                 }
             ],
-            'SoDienThoai' => ['required', 'regex:/^0\d{8,10}$/'],
-            'Email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i', 'unique:khach_hangs'],
+            'SoDienThoai' => [
+                'required',
+                'regex:/^0\d{8,10}$/',
+                'regex:/^\S+$/'
+            ],
+            'Email' => [
+                'required',
+                'email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+                'unique:khach_hangs'
+            ],
             'DiaChi' => 'nullable|string|max:255',
-            'MatKhau' => 'required|min:6',
+            'MatKhau' => [
+                'required',
+                'string',
+                'min:6',
+                'regex:/^\S+$/'
+            ],
+        ], [
+            'Ten.required'         => 'Vui lòng nhập tên khách hàng.',
+            'Ten.regex'            => 'Tên chỉ được chứa chữ cái và khoảng trắng.',
+            'SoDienThoai.required' => 'Vui lòng nhập số điện thoại.',
+            'SoDienThoai.regex'    => 'Số điện thoại phải bắt đầu bằng 0 và có 9–11 chữ số.',
+            'Email.required'       => 'Vui lòng nhập email.',
+            'Email.regex'          => 'Email phải là Gmail hợp lệ.',
+            'Email.unique'         => 'Email đã tồn tại.',
+            'MatKhau.required'     => 'Mật khẩu không được để trống.',
+            'MatKhau.regex'        => 'Mật khẩu không được chứa khoảng trắng.',
         ]);
 
         KhachHang::create([
-            'Ten' => $request->Ten,
+            'Ten'         => trim($request->Ten),
             'SoDienThoai' => $request->SoDienThoai,
-            'Email' => $request->Email,
-            'DiaChi' => $request->DiaChi,
-            'MatKhau' => Hash::make($request->MatKhau),
+            'Email'       => $request->Email,
+            'DiaChi'      => $request->DiaChi,
+            'MatKhau'     => Hash::make($request->MatKhau),
         ]);
 
         return redirect()->route('khachhang')->with('success', 'Thêm khách hàng thành công');
     }
+
 
     public function edit($id)
     {
@@ -74,29 +102,54 @@ class KhachHangController extends Controller
                 'required',
                 'string',
                 'max:75',
-                'regex:/^[\p{L}\s]+$/u',
+                'regex:/^[\p{L}\s]+$/u',        // Chỉ chữ cái và khoảng trắng
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {
                         $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');
                     }
+                    if (preg_match('/^\s|\s$/', $value)) {
+                        $fail('Tên không được bắt đầu hoặc kết thúc bằng khoảng trắng.');
+                    }
                 }
             ],
-            'SoDienThoai' => ['required', 'regex:/^0\d{8,10}$/'],
-            'Email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i', 'unique:khach_hangs,Email,' . $id . ',idKhach'],
+            'SoDienThoai' => [
+                'required',
+                'regex:/^0\d{8,10}$/',
+                'regex:/^\S+$/'
+            ],
+            'Email' => [
+                'required',
+                'email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i',
+                'unique:khach_hangs,Email,' . $id . ',idKhach'
+            ],
             'DiaChi' => 'nullable|string|max:255',
-            'MatKhau' => 'nullable|min:6',
+            'MatKhau' => [
+                'required',
+                'string',
+                'min:6',
+                'regex:/^\S+$/'
+            ],
+        ], [
+            'Ten.required'         => 'Vui lòng nhập tên khách hàng.',
+            'Ten.regex'            => 'Tên chỉ được chứa chữ cái và khoảng trắng.',
+            'SoDienThoai.required' => 'Vui lòng nhập số điện thoại.',
+            'SoDienThoai.regex'    => 'Số điện thoại phải bắt đầu bằng 0 và có 9–11 chữ số.',
+            'Email.required'       => 'Vui lòng nhập email.',
+            'Email.regex'          => 'Email phải là Gmail hợp lệ.',
+            'Email.unique'         => 'Email đã tồn tại.',
+            'MatKhau.required'     => 'Mật khẩu là bắt buộc.',
+            'MatKhau.regex'        => 'Mật khẩu không được chứa khoảng trắng.',
         ]);
 
         $data = $request->only(['Ten', 'SoDienThoai', 'Email', 'DiaChi']);
-
-        if ($request->filled('MatKhau')) {
-            $data['MatKhau'] = Hash::make($request->MatKhau);
-        }
+        $data['MatKhau'] = Hash::make($request->MatKhau);
 
         $khach->update($data);
 
         return redirect()->route('khachhang')->with('success', 'Cập nhật khách hàng thành công');
     }
+
 
     public function destroy($id)
     {
