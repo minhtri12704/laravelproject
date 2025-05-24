@@ -136,9 +136,12 @@ h2 {
                     </p>
 
                     <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-dark btn-sm">Mua ngay</a>
-                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm">Xem
-                            chi tiết</a>
+                        <form method="POST" action="{{ route('cart.addById') }}">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $sp->id }}">
+                            <button type="submit" class="btn btn-dark btn-sm w-100">Mua ngay</button>
+                        </form>
+                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm w-100">Xem chi tiết</a>
                     </div>
 
 
