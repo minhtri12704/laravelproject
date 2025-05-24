@@ -80,7 +80,7 @@
 
             <p class="mt-4">Mô tả sản phẩm:</p>
             <p class="text-muted">
-                {{ $chiTietSanPham->mo_ta ?? 'Chưa có mô tả.' }}
+                {{ $chiTietSanPham->descript ?? 'Chưa có mô tả.' }}
             </p>
 
             <a href="{{ route('cart.add', $chiTietSanPham->id) }}" class="btn btn-success mt-2">
