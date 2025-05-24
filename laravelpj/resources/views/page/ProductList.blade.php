@@ -132,6 +132,7 @@
                     </p>
 
                     <div class="d-grid gap-2">
+                        {{-- abc --}}
                         <form method="POST" action="{{ route('cart.addById') }}">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $sp->id }}">
