@@ -126,59 +126,60 @@
     @endif
 
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    @csrf
 
-        <div>
-            <label>Tên sản phẩm</label>
-            <input type="text" name="name" class="form-control" placeholder="Tên sản phẩm" required>
+    <div>
+        <label>Tên sản phẩm</label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" maxlength="75" required>
+        <small id="name-count" style="color:#ccc">75 ký tự còn lại</small>
+    </div>
+
+    <div>
+        <label>Danh mục</label>
+        <select name="category_id" class="form-control" required>
+            <option value="">-- Chọn danh mục --</option>
+            @foreach($categories as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div>
+        <label>Mô tả</label>
+        <textarea name="descript" id="descript" class="form-control" placeholder="Mô tả sản phẩm" maxlength="100"></textarea>
+        <small id="descript-count" style="color:#ccc">100 ký tự còn lại</small>
+    </div>
+
+    <div>
+        <label>Số lượng</label>
+        <input type="number" name="quantity" class="form-control" placeholder="Số lượng" value="0">
+    </div>
+
+    <div>
+        <label>Giá</label>
+        <input type="text" name="price" class="form-control" placeholder="Giá sản phẩm" required>
+    </div>
+
+    <div>
+        <label>Hình ảnh sản phẩm</label>
+        <div class="image-preview" id="preview-area">
+            <span style="color:#999;">Chưa chọn ảnh</span>
         </div>
+        <label for="imageInput" class="image-upload">
+            <i class="bi bi-cloud-upload"></i>
+            <span>Nhấn để chọn ảnh từ máy</span>
+        </label>
+        <input type="file" name="image" id="imageInput" class="d-none" accept="image/*">
+    </div>
 
-        <div>
-            <label>Danh mục</label>
-            <select name="category_id" class="form-control" required>
-                <option value="">-- Chọn danh mục --</option>
-                @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div>
-            <label>Mô tả</label>
-            <textarea name="descript" class="form-control" placeholder="Mô tả sản phẩm"></textarea>
-        </div>
-
-        <div>
-            <label>Số lượng</label>
-            <input type="number" name="quantity" class="form-control" placeholder="Số lượng" value="0">
-        </div>
-
-        <div>
-            <label>Giá</label>
-            <input type="text" name="price" class="form-control" placeholder="Giá sản phẩm" required>
-        </div>
-
-        <div>
-            <label>Hình ảnh sản phẩm</label>
-
-            <div class="image-preview" id="preview-area">
-                <span style="color:#999;">Chưa chọn ảnh</span>
-            </div>
-
-            <label for="imageInput" class="image-upload">
-                <i class="bi bi-cloud-upload"></i>
-                <span>Nhấn để chọn ảnh từ máy</span>
-            </label>
-
-            <input type="file" name="image" id="imageInput" class="d-none" accept="image/*">
-        </div>
-
-        <button type="submit" class="btn btn-dark">Thêm sản phẩm</button>
-        <a href="{{ route('products.index') }}" class="btn btn-reset">Quay lại</a>
-    </form>
+    <button type="submit" class="btn btn-dark">Thêm sản phẩm</button>
+    <a href="{{ route('products.index') }}" class="btn btn-reset">Quay lại</a>
+</form>
 </div>
 
+@endsection
 <script>
+    // Preview ảnh
     const input = document.getElementById('imageInput');
     const preview = document.getElementById('preview-area');
 
@@ -194,6 +195,18 @@
             preview.innerHTML = '<span style="color:#999;">Chưa chọn ảnh</span>';
         }
     });
-</script>
 
-@endsection
+    // Đếm ký tự còn lại
+    const nameInput = document.getElementById('name');
+    const descriptInput = document.getElementById('descript');
+    const nameCount = document.getElementById('name-count');
+    const descriptCount = document.getElementById('descript-count');
+
+    nameInput.addEventListener('input', () => {
+        nameCount.textContent = `${75 - nameInput.value.length} ký tự còn lại`;
+    });
+
+    descriptInput.addEventListener('input', () => {
+        descriptCount.textContent = `${100 - descriptInput.value.length} ký tự còn lại`;
+    });
+</script>

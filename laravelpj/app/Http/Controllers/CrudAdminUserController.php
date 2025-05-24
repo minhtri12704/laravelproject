@@ -24,19 +24,23 @@ class CrudAdminUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'required|email|unique:users,email',
-            'address' => 'nullable|string|max:255',
-            'role' => 'required|exists:role,id',
+            'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
+            'phone'    => ['nullable', 'regex:/^0\d{9,10}$/'],
+            'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email'],
+            'address'  => 'nullable|string|max:255',
+            'role'     => 'required|exists:role,id',
             'password' => 'required|string|min:6',
+        ], [
+            'name.regex'  => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
+            'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 đến 11 chữ số.',
+            'email.regex' => 'Email phải là địa chỉ Gmail hợp lệ (@gmail.com).'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address,
+            'name'     => $request->name,
+            'phone'    => $request->phone,
+            'email'    => $request->email,
+            'address'  => $request->address,
             'password' => Hash::make($request->password),
         ]);
 
@@ -51,7 +55,7 @@ class CrudAdminUserController extends Controller
 
         if (!$user) {
             return redirect()->route('users.index')
-                             ->with('error', 'Người dùng không tồn tại hoặc đã bị xoá. Vui lòng tải lại trang.');
+                ->with('error', 'Người dùng không tồn tại hoặc đã bị xoá. Vui lòng tải lại trang.');
         }
 
         $roles = Role::all();
@@ -64,23 +68,27 @@ class CrudAdminUserController extends Controller
 
         if (!$user) {
             return redirect()->route('users.index')
-                             ->with('error', 'Người dùng không còn tồn tại. Vui lòng tải lại trang.');
+                ->with('error', 'Người dùng không còn tồn tại. Vui lòng tải lại trang.');
         }
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'address' => 'nullable|string|max:255',
-            'role' => 'required|exists:role,id',
+            'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
+            'phone'    => ['nullable', 'regex:/^0\d{9,10}$/'],
+            'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email,' . $id],
+            'address'  => 'nullable|string|max:255',
+            'role'     => 'required|exists:role,id',
             'password' => 'nullable|string|min:6',
+        ], [
+            'name.regex'  => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
+            'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 đến 11 chữ số.',
+            'email.regex' => 'Email phải là địa chỉ Gmail hợp lệ (@gmail.com).'
         ]);
 
         $user->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address,
+            'name'     => $request->name,
+            'phone'    => $request->phone,
+            'email'    => $request->email,
+            'address'  => $request->address,
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
         ]);
 
@@ -95,7 +103,7 @@ class CrudAdminUserController extends Controller
 
         if (!$user) {
             return redirect()->route('users.index')
-                             ->with('error', 'Không tìm thấy người dùng cần xoá.');
+                ->with('error', 'Không tìm thấy người dùng cần xoá.');
         }
 
         $user->delete();

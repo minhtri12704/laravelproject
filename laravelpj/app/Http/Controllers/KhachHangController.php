@@ -22,19 +22,29 @@ class KhachHangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Ten'          => 'required|string|max:100',
-            'SoDienThoai'  => 'required|digits_between:9,11',
-            'Email'        => 'required|email|unique:khach_hangs',
-            'DiaChi'       => 'nullable|string|max:255',
-            'MatKhau'      => 'required|min:6',
+            'Ten' => [
+                'required',
+                'string',
+                'max:100',
+                'regex:/^[\p{L}\s]+$/u', // chỉ cho chữ và khoảng trắng
+                function ($attribute, $value, $fail) {
+                    if (preg_match('/\s{2,}/', $value)) {
+                        $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');
+                    }
+                }
+            ],
+            'SoDienThoai' => ['required', 'regex:/^0\d{8,10}$/'],
+            'Email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i', 'unique:khach_hangs'],
+            'DiaChi' => 'nullable|string|max:255',
+            'MatKhau' => 'required|min:6',
         ]);
 
         KhachHang::create([
-            'Ten'          => $request->Ten,
-            'SoDienThoai'  => $request->SoDienThoai,
-            'Email'        => $request->Email,
-            'DiaChi'       => $request->DiaChi,
-            'MatKhau'      => Hash::make($request->MatKhau),
+            'Ten' => $request->Ten,
+            'SoDienThoai' => $request->SoDienThoai,
+            'Email' => $request->Email,
+            'DiaChi' => $request->DiaChi,
+            'MatKhau' => Hash::make($request->MatKhau),
         ]);
 
         return redirect()->route('khachhang')->with('success', 'Thêm khách hàng thành công');
@@ -60,11 +70,21 @@ class KhachHangController extends Controller
         }
 
         $request->validate([
-            'Ten'          => 'required|string|max:100',
-            'SoDienThoai'  => 'required|digits_between:9,11',
-            'Email'        => 'required|email|unique:khach_hangs,Email,' . $id . ',idKhach',
-            'DiaChi'       => 'nullable|string|max:255',
-            'MatKhau'      => 'nullable|min:6',
+            'Ten' => [
+                'required',
+                'string',
+                'max:100',
+                'regex:/^[\p{L}\s]+$/u',
+                function ($attribute, $value, $fail) {
+                    if (preg_match('/\s{2,}/', $value)) {
+                        $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');
+                    }
+                }
+            ],
+            'SoDienThoai' => ['required', 'regex:/^0\d{8,10}$/'],
+            'Email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i', 'unique:khach_hangs,Email,' . $id . ',idKhach'],
+            'DiaChi' => 'nullable|string|max:255',
+            'MatKhau' => 'nullable|min:6',
         ]);
 
         $data = $request->only(['Ten', 'SoDienThoai', 'Email', 'DiaChi']);

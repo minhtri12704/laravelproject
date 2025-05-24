@@ -18,6 +18,9 @@
 
     label {
         color: #ffccdd;
+        font-weight: 500;
+        margin-bottom: 4px;
+        display: block;
     }
 
     .form-control {
@@ -51,60 +54,60 @@
         background-color: #ff85c0;
     }
 
-    .btn-reset {
-        background-color: #ffd700;
-        color: #000000;
-        border: none;
-        padding: 12px 24px;
-        font-size: 1.2rem;
-        border-radius: 4px;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .btn-reset:hover {
-        background-color: #ffec3d;
-    }
-
-    .form-container .mb-3:last-child {
-        margin-bottom: 0;
+    .text-danger {
+        font-size: 0.9rem;
     }
 </style>
+
 <div class="form-container">
     <h2>Chỉnh sửa người dùng</h2>
     <form action="{{ route('users.update', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
+
         <div class="mb-3">
-            <label>Tên người dùng</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+            <label for="name">Tên người dùng</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}">
+            @error('name') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
+
         <div class="mb-3">
-            <label>Số điện thoại</label>
-            <input type="text" name="phone" class="form-control" value="{{ $user->phone }}">
+            <label for="phone">Số điện thoại</label>
+            <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
+            @error('phone') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
+
         <div class="mb-3">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}">
+            @error('email') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
+
         <div class="mb-3">
-            <label>Địa chỉ</label>
-            <input type="text" name="address" class="form-control" value="{{ $user->address }}">
+            <label for="address">Địa chỉ</label>
+            <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $user->address) }}">
+            @error('address') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
-        <!-- Role -->
+
         <div class="mb-3">
-            <select class="form-control" name="role" required>
+            <label for="role">Vai trò</label>
+            <select name="role" id="role" class="form-control" required>
                 <option value="">-- Chọn vai trò --</option>
                 @foreach($roles as $role)
-                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    <option value="{{ $role->id }}" {{ (old('role', $user->roles->first()->id ?? '') == $role->id) ? 'selected' : '' }}>
+                        {{ $role->name }}
+                    </option>
                 @endforeach
             </select>
+            @error('role') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
 
-        </div>
         <div class="mb-3">
-            <label>Mật khẩu (để trống nếu không đổi)</label>
-            <input type="password" name="password" class="form-control">
+            <label for="password">Mật khẩu mới (nếu đổi)</label>
+            <input type="password" name="password" id="password" class="form-control">
+            @error('password') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
+
         <button type="submit" class="btn btn-dark">Cập nhật</button>
     </form>
 </div>

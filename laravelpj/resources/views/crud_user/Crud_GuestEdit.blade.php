@@ -20,7 +20,7 @@
     margin-bottom: 25px;
     color: #ffb6c1;
   }
-  .form-group label {
+  .form-label {
     color: #f8e8f9;
   }
   .form-control {
@@ -47,6 +47,10 @@
   .btn-submit:hover {
     background-color: #ffa0bd;
   }
+  .text-danger {
+    color: #ff7070;
+    font-size: 0.9rem;
+  }
 </style>
 
 <div class="container">
@@ -58,23 +62,42 @@
 
     <div class="mb-3">
       <label class="form-label">Tên</label>
-      <input type="text" name="Ten" class="form-control" value="{{ $khach->Ten }}" required>
+      <input type="text" name="Ten" class="form-control" value="{{ old('Ten', $khach->Ten) }}" required>
+      @error('Ten')
+        <div class="text-danger mt-1">{{ $message }}</div>
+      @enderror
     </div>
+
     <div class="mb-3">
       <label class="form-label">Số điện thoại</label>
-      <input type="text" name="SoDienThoai" class="form-control" value="{{ $khach->SoDienThoai }}" required>
+      <input type="text" name="SoDienThoai" class="form-control" value="{{ old('SoDienThoai', $khach->SoDienThoai) }}" required>
+      @error('SoDienThoai')
+        <div class="text-danger mt-1">{{ $message }}</div>
+      @enderror
     </div>
+
     <div class="mb-3">
       <label class="form-label">Email</label>
-      <input type="email" name="Email" class="form-control" value="{{ $khach->Email }}">
+      <input type="email" name="Email" class="form-control" value="{{ old('Email', $khach->Email) }}">
+      @error('Email')
+        <div class="text-danger mt-1">{{ $message }}</div>
+      @enderror
     </div>
+
     <div class="mb-3">
       <label class="form-label">Địa chỉ</label>
-      <input type="text" name="DiaChi" class="form-control" value="{{ $khach->DiaChi }}">
+      <input type="text" name="DiaChi" class="form-control" value="{{ old('DiaChi', $khach->DiaChi) }}">
+      @error('DiaChi')
+        <div class="text-danger mt-1">{{ $message }}</div>
+      @enderror
     </div>
+
     <div class="mb-3">
-      <label class="form-label">Mật khẩu</label>
-      <input type="text" name="MatKhau" class="form-control" value="{{ $khach->MatKhau }}" required>
+      <label class="form-label">Mật khẩu (nếu muốn đổi)</label>
+      <input type="password" name="MatKhau" class="form-control">
+      @error('MatKhau')
+        <div class="text-danger mt-1">{{ $message }}</div>
+      @enderror
     </div>
 
     <button type="submit" class="btn-submit">Lưu</button>

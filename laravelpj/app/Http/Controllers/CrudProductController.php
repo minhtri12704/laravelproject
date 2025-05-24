@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Category;
 use App\Models\CrudProduct;
 use Illuminate\Http\Request;
-use App\Models\ChiTietSanPham;
 
 class CrudProductController extends Controller
 {
@@ -23,45 +21,50 @@ class CrudProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', // validate ảnh
-        ]);
-
-        $data = $request->all();
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
-            $data['image'] = $filename;
-        }
-
-        CrudProduct::create($data);
-
-        return redirect()->route('products.index')->with('success', 'Thêm sản phẩm thành công');
-    }
-
-
-    //hàm eidt và update
-    public function edit($id)
 {
-    $product = CrudProduct::find($id);
+    $request->validate([
+        'name' => [
+            'required',
+            'string',
+            'max:75',
+            'regex:/^[a-zA-Z0-9\sÀ-ỹ]+$/u', // không chứa ký tự đặc biệt
+        ],
+        'category_id' => 'required|exists:categories,id',
+        'price' => 'required|numeric',
+        'descript' => 'nullable|string|max:100',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ], [
+        'name.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
+    ]);
 
-    if (!$product) {
-        return redirect()->route('products.index')
-                         ->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa. Vui lòng tải lại trang.');
+    $data = $request->all();
+
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('images'), $filename);
+        $data['image'] = $filename;
     }
 
-    $categories = Category::all();
-    return view('Crud_user.CrudProductEdit', compact('product', 'categories'));
+    CrudProduct::create($data);
+
+    return redirect()->route('products.index')->with('success', 'Thêm sản phẩm thành công');
 }
 
+    public function edit($id)
+    {
+        $product = CrudProduct::find($id);
 
-public function update(Request $request, $id)
+        if (!$product) {
+            return redirect()->route('products.index')
+                             ->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa. Vui lòng tải lại trang.');
+        }
+
+        $categories = Category::all();
+        return view('Crud_user.CrudProductEdit', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, $id)
 {
     $product = CrudProduct::find($id);
 
@@ -71,10 +74,18 @@ public function update(Request $request, $id)
     }
 
     $request->validate([
-        'name' => 'required',
+        'name' => [
+            'required',
+            'string',
+            'max:75',
+            'regex:/^[a-zA-Z0-9\sÀ-ỹ]+$/u',
+        ],
         'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric',
+        'descript' => 'nullable|string|max:100',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ], [
+        'name.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
     ]);
 
     $data = $request->all();
@@ -91,19 +102,17 @@ public function update(Request $request, $id)
     return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
 }
 
-public function delete($id)
-{
-    $product = CrudProduct::find($id);
+    public function delete($id)
+    {
+        $product = CrudProduct::find($id);
 
-    if (!$product) {
-        return redirect()->route('products.index')
-                         ->with('error', 'Sản phẩm không tồn tại. Có thể đã bị xóa.');
+        if (!$product) {
+            return redirect()->route('products.index')
+                             ->with('error', 'Sản phẩm không tồn tại. Có thể đã bị xóa.');
+        }
+
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Xóa sản phẩm thành công');
     }
-
-    $product->delete();
-
-    return redirect()->route('products.index')->with('success', 'Xóa thành công');
-}
-
-
 }
