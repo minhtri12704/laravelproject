@@ -28,6 +28,16 @@ h2 {
 .btn-dark:hover {
     background-color: #495057;
 }
+
+.star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #cccccc;
+}
+
+.star.active {
+    color: #ff9900 !important;
+}
 </style>
 
 <!-- Nút quay lại -->
@@ -64,14 +74,15 @@ h2 {
             <h2>{{ $chiTietSanPham->name }}</h2>
             <h4 class="text-danger">{{ number_format($chiTietSanPham->price, 0, ',', '.') }} đ</h4>
 
-            <p><strong>Số sao đánh giá:</strong>
-                @for($i = 1; $i <= 5; $i++) @if($i <=$chiTietSanPham->so_sao)
-                    <i class="bi bi-star-fill text-warning"></i>
-                    @else
-                    <i class="bi bi-star text-muted"></i>
-                    @endif
-                    @endfor
-            </p>
+            <p><strong>Đánh giá của bạn:</strong></p>
+            <div class="d-flex align-items-center gap-2">
+                <div class="rating-stars" data-product-id="{{ $chiTietSanPham->id }}">
+                    @for($i = 1; $i <= 5; $i++) <i class="bi bi-star star" data-index="{{ $i }}"></i>
+                        @endfor
+                </div>
+                <span class="sao-da-chon text-dark">(0/5)</span>
+            </div>
+
 
             <p class="mt-4">Mô tả sản phẩm:</p>
             <p class="text-muted">
@@ -236,3 +247,32 @@ h2 {
     </div>
 </div>
 @endsection
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ratingContainers = document.querySelectorAll('.rating-stars');
+
+    ratingContainers.forEach(container => {
+        const stars = container.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+
+                stars.forEach((s, i) => {
+                    if (i < index) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+
+                // Hiển thị số sao đã chọn
+                const textDisplay = container.parentElement.querySelector('.sao-da-chon');
+                if (textDisplay) {
+                    textDisplay.textContent = `(${index}/5)`;
+                }
+            });
+        });
+    });
+});
+</script>

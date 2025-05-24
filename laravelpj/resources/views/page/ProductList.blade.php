@@ -4,68 +4,76 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
-    body {
-        background-color: rgb(255, 255, 255);
-        color: rgb(0, 0, 0);
-    }
+body {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
 
-    h2 {
-        color: rgb(0, 0, 0);
-    }
+h2 {
+    color: rgb(0, 0, 0);
+}
 
-    .table {
-        background-color: #1a1a1a;
-        color: #ffffff;
-    }
+.table {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
 
-    .table-bordered th,
-    .table-bordered td {
-        background-color: #1a1a1a;
-        border: 1px solid #d3d3d3;
-        color: #ffccdd;
-    }
+.table-bordered th,
+.table-bordered td {
+    background-color: #1a1a1a;
+    border: 1px solid #d3d3d3;
+    color: #ffccdd;
+}
 
-    .table-dark {
-        background-color: #3a3a3a;
-        color: #ffccdd;
-    }
+.table-dark {
+    background-color: #3a3a3a;
+    color: #ffccdd;
+}
 
-    .btn-dark {
-        background-color: #ff69b4;
-        color: #ffffff;
-        border: none;
-    }
+.btn-dark {
+    background-color: #ff69b4;
+    color: #ffffff;
+    border: none;
+}
 
-    .btn-dark:hover {
-        background-color: #ff85c0;
-    }
+.btn-dark:hover {
+    background-color: #ff85c0;
+}
 
-    .action-icon {
-        color: #ffccdd;
-        font-size: 1.2rem;
-        margin-right: 10px;
-    }
+.action-icon {
+    color: #ffccdd;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
 
-    .action-icon:hover {
-        color: #ff85c0;
-    }
+.action-icon:hover {
+    color: #ff85c0;
+}
 
-    .pagination .page-link {
-        background-color: rgb(255, 255, 255);
-        color: rgb(0, 0, 0);
-        border: 1px solid #d3d3d3;
-    }
+.pagination .page-link {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid #d3d3d3;
+}
 
-    .pagination .page-item.active .page-link {
-        background-color: #ff69b4;
-        color: #ffffff;
-        border: 1px solid #d3d3d3;
-    }
+.pagination .page-item.active .page-link {
+    background-color: #ff69b4;
+    color: #ffffff;
+    border: 1px solid #d3d3d3;
+}
 
-    .pagination .page-link:hover {
-        background-color: #ff85c0;
-        color: #ffffff;
-    }
+.pagination .page-link:hover {
+    background-color: #ff85c0;
+    color: #ffffff;
+}
+
+.bi-star-fill {
+    color: #ff9900;
+}
+.bi-star {
+    color: #cccccc;
+}
+
 </style>
 {{-- Bộ lọc sản phẩm --}}
 @php
@@ -115,15 +123,11 @@
 
                 <div class="card-body">
                     <h5 class="card-title text-danger" style="min-height: 48px;">{{ $sp->name }}</h5>
-                    <div class="mb-2">
-                        @for($i = 1; $i <= 5; $i++)
-                            @if($i <=$sp->so_sao)
-                            <i class="bi bi-star-fill text-warning"></i>
-                            @else
-                            <i class="bi bi-star text-muted"></i>
-                            @endif
+                    <div class="star-rating" data-id="{{ $sp->id }}">
+                        @for($i = 1; $i <= 5; $i++) <i class="bi bi-star star" data-index="{{ $i }}"></i>
                             @endfor
                     </div>
+
 
                     <p class="card-text">
                         <strong class="text-dark">Giá:</strong>
@@ -132,12 +136,9 @@
                     </p>
 
                     <div class="d-grid gap-2">
-                        <form method="POST" action="{{ route('cart.addById') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $sp->id }}">
-                            <button type="submit" class="btn btn-dark btn-sm w-100">Mua ngay</button>
-                        </form>
-                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm w-100">Xem chi tiết</a>
+                        <a href="#" class="btn btn-dark btn-sm">Mua ngay</a>
+                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm">Xem
+                            chi tiết</a>
                     </div>
 
 
@@ -155,3 +156,30 @@
     </div>
 </div>
 @endsection
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ratings = document.querySelectorAll('.star-rating');
+
+    ratings.forEach(rating => {
+        const stars = rating.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+
+                stars.forEach((s, i) => {
+                    if (i < index) {
+                        s.classList.remove('bi-star');
+                        s.classList.add('bi-star-fill');
+                        s.style.color = '#ff9900';
+                    } else {
+                        s.classList.remove('bi-star-fill');
+                        s.classList.add('bi-star');
+                        s.style.color = '#cccccc';
+                    }
+                });
+            });
+        });
+    });
+});
+</script>
