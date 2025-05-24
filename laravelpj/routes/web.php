@@ -163,5 +163,5 @@ Route::get('/check-discount', [CartController::class, 'checkDiscount'])->name('c
 Route::get('/lien-he', [GuestChatController::class, 'showForm'])->name('guest.chat.form');
 Route::post('/lien-he', [GuestChatController::class, 'sendMessage'])->name('guest.chat.send');
 Route::get('/tin-nhan', [GuestChatController::class, 'viewMessages'])->name('guest.chat.view');
-// routes/api.php
+
 Route::get('/chat/messages', [GuestChatController::class, 'getMessages']);

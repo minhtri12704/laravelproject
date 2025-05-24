@@ -15,7 +15,6 @@ h2 {
 
 label {
     color: white;
-    /* ✅ Màu trắng cho label */
     font-weight: bold;
 }
 
