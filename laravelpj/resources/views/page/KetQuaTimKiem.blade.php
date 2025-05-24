@@ -42,11 +42,9 @@ h3 {
     height: 180px;
     width: 100%;
     object-fit: contain;
-    /* hoặc cover nếu muốn đầy */
     background-color: #f8f9fa;
     padding: 8px;
     image-rendering: auto;
-    /* giúp ảnh nét hơn */
     transition: transform 0.3s ease;
 }
 

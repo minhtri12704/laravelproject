@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::table('san_phams', function (Blueprint $table) {
+    Schema::table('crudProduct', function (Blueprint $table) {
         $table->text('mo_ta')->nullable();
     });
 }
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('san_phams', function (Blueprint $table) {
+        Schema::table('crudProduct', function (Blueprint $table) {
             //
         });
     }
