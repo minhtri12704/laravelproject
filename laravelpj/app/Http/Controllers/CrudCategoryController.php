@@ -20,17 +20,29 @@ class CrudCategoryController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+{
+    $request->validate([
+        'name' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[a-zA-Z0-9\s]+$/u', // Chỉ chữ cái, số và khoảng trắng
+            function ($attribute, $value, $fail) {
+                if (preg_match('/\s{2,}/', $value)) {
+                    $fail('Tên danh mục không được chứa nhiều khoảng trắng liền nhau.');
+                }
+            }
+        ],
+    ], [
+        'name.regex' => 'Tên danh mục không được chứa ký tự đặc biệt.',
+    ]);
 
-        Category::create([
-            'name' => $request->name,
-        ]);
+    Category::create([
+        'name' => $request->name,
+    ]);
 
-        return redirect()->route('categories.index')->with('success', 'Thêm danh mục thành công!');
-    }
+    return redirect()->route('categories.index')->with('success', 'Thêm danh mục thành công!');
+}
 
     public function editCategory($id)
 {
@@ -71,7 +83,19 @@ public function update(Request $request, $id)
     }
 
     $request->validate([
-        'name' => 'required|string|max:255',
+        'name' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[a-zA-Z0-9\s]+$/u',
+            function ($attribute, $value, $fail) {
+                if (preg_match('/\s{2,}/', $value)) {
+                    $fail('Tên danh mục không được chứa nhiều khoảng trắng liền nhau.');
+                }
+            }
+        ],
+    ], [
+        'name.regex' => 'Tên danh mục không được chứa ký tự đặc biệt.',
     ]);
 
     $category->update([

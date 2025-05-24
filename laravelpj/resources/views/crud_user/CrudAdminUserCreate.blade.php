@@ -5,12 +5,31 @@
     .form-container {
         max-width: 400px;
         margin: 0 auto;
+        padding: 20px;
+        background-color: #1a1a1a;
+        border-radius: 8px;
+    }
+
+    h2 {
+        color: #ffccdd;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        color: #ffccdd;
+        font-weight: 500;
+        margin-bottom: 4px;
+        display: block;
     }
 
     .form-control {
         background-color: #2c2c2c;
         color: #ffccdd;
         border: 1px solid #d3d3d3;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 15px;
     }
 
     .form-control:focus {
@@ -20,36 +39,24 @@
         box-shadow: none;
     }
 
-    label {
-        color: #ffccdd;
-    }
-
-    h2 {
-        color: #ffccdd;
-    }
-
     .btn-dark {
         background-color: #ff69b4;
         color: #ffffff;
         border: none;
         padding: 12px 24px;
         font-size: 1.2rem;
+        border-radius: 4px;
+        width: 100%;
+        cursor: pointer;
     }
 
     .btn-dark:hover {
         background-color: #ff85c0;
     }
 
-    .btn-reset {
-        background-color: #ffd700;
-        color: #000000;
-        border: none;
-        padding: 12px 24px;
-        font-size: 1.2rem;
-    }
-
-    .btn-reset:hover {
-        background-color: #ffec3d;
+    .text-danger {
+        color: #ff7276;
+        font-size: 0.9rem;
     }
 </style>
 
@@ -58,63 +65,60 @@
     <form action="{{ route('users.store') }}" method="POST">
         @csrf
 
-        <!-- Name -->
         <div class="form-group mb-3">
-            <input type="text" placeholder="Name" id="name" class="form-control" name="name" required autofocus>
-            @if ($errors->has('name'))
-            <span class="text-danger">{{ $errors->first('name') }}</span>
-            @endif
+            <label for="name">Tên người dùng</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
+            @error('name')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Phone -->
         <div class="form-group mb-3">
-            <input type="text" placeholder="Phone" id="phone" class="form-control" name="phone" required>
-            @if ($errors->has('phone'))
-            <span class="text-danger">{{ $errors->first('phone') }}</span>
-            @endif
+            <label for="phone">Số điện thoại</label>
+            <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}" required>
+            @error('phone')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Email -->
         <div class="form-group mb-3">
-            <input type="text" placeholder="Email" id="email_address" class="form-control" name="email" required>
-            @if ($errors->has('email'))
-            <span class="text-danger">{{ $errors->first('email') }}</span>
-            @endif
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+            @error('email')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Address -->
         <div class="form-group mb-3">
-            <input type="text" placeholder="Address" id="address" class="form-control" name="address" required>
-            @if ($errors->has('address'))
-            <span class="text-danger">{{ $errors->first('address') }}</span>
-            @endif
+            <label for="address">Địa chỉ</label>
+            <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}" required>
+            @error('address')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        
 
-        <!-- Role -->
         <div class="form-group mb-3">
-            <select class="form-control" name="role" required>
+            <label for="role">Vai trò</label>
+            <select class="form-control" name="role" id="role" required>
                 <option value="">-- Chọn vai trò --</option>
                 @foreach($roles as $role)
                 <option value="{{ $role->id }}">{{ $role->name }}</option>
                 @endforeach
             </select>
-
+            @error('role')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-
-        <!-- Password -->
         <div class="form-group mb-3">
-            <input type="password" placeholder="Password" id="password" class="form-control" name="password" required>
-            @if ($errors->has('password'))
-            <span class="text-danger">{{ $errors->first('password') }}</span>
-            @endif
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+            @error('password')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Submit Button -->
-        <div class="d-grid mx-auto">
-            <button type="submit" class="btn btn-dark btn-block">Submit</button>
-        </div>
+        <button type="submit" class="btn btn-dark">Thêm</button>
     </form>
 </div>
 @endsection
