@@ -152,10 +152,11 @@
         <small id="descript-count" style="color:#ccc">{{ 100 - strlen($product->descript) }} ký tự còn lại</small>
     </div>
 
-    <div>
-        <label>Số lượng</label>
-        <input type="number" name="quantity" class="form-control" value="{{ $product->quantity }}">
-    </div>
+    <div class="mb-3">
+    <label for="quantity" class="form-label">Số lượng tồn kho</label>
+    <input type="number" name="quantity" class="form-control" min="0" value="{{ old('quantity', $product->quantity ?? 0) }}" required>
+</div>
+
 
     <div>
         <label>Giá</label>

@@ -6,56 +6,74 @@ use Illuminate\Http\Request;
 use App\Models\CrudProduct;
 use App\Models\KhuyenMai;
 
-
 class CartController extends Controller
 {
-    // Hàm thêm sản phẩm vào giỏ hàng
+    // ===== Thêm sản phẩm vào giỏ hàng =====
     protected function addProductToCart(CrudProduct $product)
     {
+        if ($product->quantity <= 0) {
+            session()->flash('error', 'Sản phẩm đã hết hàng!');
+            return false;
+        }
+
         $cart = session()->get('cart', []);
         $id = $product->id;
 
         if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+            if ($cart[$id]['quantity'] < $product->quantity) {
+                $cart[$id]['quantity']++;
+            } else {
+                session()->flash('error', 'Không thể thêm vượt quá số lượng tồn kho!');
+                return false;
+            }
         } else {
             $cart[$id] = [
                 'id' => $id,
                 'name' => $product->name,
-                'price' => $product->price,
+                'price' => $product->gia_km ?? $product->price,
                 'image' => $product->image,
                 'quantity' => 1,
+                'max_quantity' => $product->quantity,
             ];
         }
 
         session()->put('cart', $cart);
+        return true;
     }
 
-    // Thêm sản phẩm bằng product_id
+    // ===== Thêm sản phẩm bằng product_id =====
     public function addToCart(Request $request)
     {
         $productId = $request->input('product_id');
         $product = CrudProduct::findOrFail($productId);
-        $this->addProductToCart($product);
 
-        return redirect()->route('cart.view')->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
-    }
+        if (!$this->addProductToCart($product)) {
+            return redirect()->back()->with('error', session('error'));
+        }
 
-    // Gọi theo id (không cần qua form)
-    public function addProductById($id)
-    {
-        $product = CrudProduct::findOrFail($id);
-        $this->addProductToCart($product);
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
     }
 
-    // Hiển thị giỏ hàng
+    // ===== Thêm sản phẩm theo ID (không cần form) =====
+    public function addProductById($id)
+    {
+        $product = CrudProduct::findOrFail($id);
+
+        if (!$this->addProductToCart($product)) {
+            return redirect()->back()->with('error', session('error'));
+        }
+
+        return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
+    }
+
+    // ===== Hiển thị giỏ hàng =====
     public function viewCart()
     {
         $cart = session()->get('cart', []);
         return view('page.CartProduct', compact('cart'));
     }
 
-    // Xóa sản phẩm khỏi giỏ
+    // ===== Xóa sản phẩm khỏi giỏ =====
     public function removeItem($id)
     {
         $cart = session()->get('cart', []);
@@ -63,21 +81,29 @@ class CartController extends Controller
             unset($cart[$id]);
             session()->put('cart', $cart);
         }
+
         return redirect()->route('cart.view')->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng');
     }
 
-    // Cập nhật giỏ hàng (tăng/giảm)
+    // ===== Cập nhật giỏ hàng (tăng / giảm / thanh toán) =====
     public function updateCart(Request $request)
     {
         $cart = session()->get('cart', []);
 
+        // Tăng số lượng
         if ($request->has('increase')) {
             $id = $request->input('increase');
             if (isset($cart[$id])) {
-                $cart[$id]['quantity']++;
+                $product = CrudProduct::find($id);
+                if ($product && $cart[$id]['quantity'] < $product->quantity) {
+                    $cart[$id]['quantity']++;
+                } else {
+                    return redirect()->route('cart.view')->with('error', 'Không thể tăng vượt quá tồn kho!');
+                }
             }
         }
 
+        // Giảm số lượng
         if ($request->has('decrease')) {
             $id = $request->input('decrease');
             if (isset($cart[$id]) && $cart[$id]['quantity'] > 1) {
@@ -85,15 +111,11 @@ class CartController extends Controller
             }
         }
 
-        // Giả sử bạn xử lý thanh toán ở đây luôn (sau khi nhấn "Mua hàng")
+        // Thanh toán
         if ($request->has('checkout')) {
-            // session()->forget('cart');       
-            // return redirect()->route('cart.view')->with('success', 'Thanh toán thành công!');
-
             $selected = $request->input('selected', []);
             session(['selected_items' => $selected]);
 
-            $cart = session()->get('cart', []);
             $total = 0;
             foreach ($selected as $id) {
                 if (isset($cart[$id])) {
@@ -111,23 +133,23 @@ class CartController extends Controller
         return redirect()->route('cart.view');
     }
 
+    // ===== Kiểm tra mã giảm giá =====
     public function checkDiscount(Request $request)
-{
-    $code = $request->query('code');
+    {
+        $code = $request->query('code');
 
-    $phieu = \App\Models\KhuyenMai::where('ma_phieu', $code)
-        ->where('ngay_ket_thuc', '>=', now())
-        ->first();
+        $phieu = KhuyenMai::where('ma_phieu', $code)
+            ->where('ngay_ket_thuc', '>=', now())
+            ->first();
 
-    if ($phieu) {
-        return response()->json([
-            'valid' => true,
-            'type' => $phieu->loai_giam, // 'percent' hoặc 'fixed'
-            'amount' => $phieu->gia_tri
-        ]);
+        if ($phieu) {
+            return response()->json([
+                'valid' => true,
+                'type' => $phieu->loai_giam,
+                'amount' => $phieu->gia_tri
+            ]);
+        }
+
+        return response()->json(['valid' => false]);
     }
-
-    return response()->json(['valid' => false]);
-}
-
 }

@@ -1,6 +1,18 @@
 @extends('dashboardHomePage')
 
 @section('content')
+@if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success text-center">
+        {{ session('success') }}
+    </div>
+@endif
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
@@ -70,26 +82,27 @@ h2 {
 .bi-star-fill {
     color: #ff9900;
 }
+
 .bi-star {
     color: #cccccc;
 }
-
 </style>
 {{-- Bộ lọc sản phẩm --}}
 @php
-    use App\Models\Category;
-    $categories = Category::all();
-    @endphp
+use App\Models\Category;
+$categories = Category::all();
+@endphp
 <div class="container py-3">
-    <form method="GET" action="{{ route('sanpham.index') }}" class="row g-3 align-items-end" style="background: #fff; padding: 20px; border-radius: 10px;">
+    <form method="GET" action="{{ route('sanpham.index') }}" class="row g-3 align-items-end"
+        style="background: #fff; padding: 20px; border-radius: 10px;">
         <div class="col-md-4">
             <label for="category_id" class="form-label">Danh mục</label>
             <select name="category_id" id="category_id" class="form-select">
                 <option value="">-- Tất cả danh mục --</option>
                 @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
-                        {{ $cat->name }}
-                    </option>
+                <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->name }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -116,9 +129,7 @@ h2 {
         @forelse($sanPhams as $sp)
         <div class="col">
             <div class="card h-100 shadow-sm">
-                <img src="{{ asset( 'images/' . $sp->image) }}"
-                    alt="{{ $sp->name }}"
-                    class="card-img-top img-fluid"
+                <img src="{{ asset( 'images/' . $sp->image) }}" alt="{{ $sp->name }}" class="card-img-top img-fluid"
                     style="height: 250px; width:100%; object-fit: cover;">
 
                 <div class="card-body">
@@ -139,9 +150,15 @@ h2 {
                         <form method="POST" action="{{ route('cart.addById') }}">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $sp->id }}">
+                            @if($sp->quantity > 0)
                             <button type="submit" class="btn btn-dark btn-sm w-100">Mua ngay</button>
+                            @else
+                            <button type="button" class="btn btn-secondary btn-sm w-100" disabled>Hết hàng</button>
+                            @endif
                         </form>
-                        <a href="{{ route('chitietsanpham.show', $sp->id) }}" class="btn btn-outline-dark btn-sm w-100">Xem chi tiết</a>
+
+                        <a href="{{ route('chitietsanpham.show', $sp->id) }}"
+                            class="btn btn-outline-dark btn-sm w-100">Xem chi tiết</a>
                     </div>
 
 
