@@ -109,6 +109,10 @@ $khach = Auth::guard('khach')->user();
 
 
 <hr>
+<!-- Nút quay lại -->
+<a href="{{ route('sanpham.index') }}" class="come" style="font-size: 1.8rem;" title="Quay lại">
+    <i class="bi bi-arrow-left-circle-fill"></i>
+</a>
 <div class="cart-container w-100 px-4 py-5">
     <h3 class="mb-4">🛒 Giỏ hàng của bạn</h3>
     <div class="d-flex align-items-center mb-3 ps-1">
@@ -122,6 +126,13 @@ $khach = Auth::guard('khach')->user();
         {{ session('success') }}
     </div>
     @endif
+    @if(session('error'))
+    <div id="error-alert"
+        style="position:fixed; top:28%; left:50%; transform:translateX(-50%); z-index:9999; background:#ffe6e6; color:#d32f2f; padding:15px 25px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); font-weight:600;">
+        {{ session('error') }}
+    </div>
+    @endif
+
 
     @if(!empty($cart))
     @php $total = 0; @endphp
@@ -185,7 +196,7 @@ $khach = Auth::guard('khach')->user();
 <script>
     let appliedDiscount = 0;
     let discountType = null;
-    let isDiscountApplied = false; // ✅ Chỉ cho phép áp dụng 1 lần
+    let isDiscountApplied = false;
 
     const checkboxes = document.querySelectorAll('input[name="selected[]"]');
     const selectAll = document.getElementById('select-all');
@@ -246,9 +257,14 @@ $khach = Auth::guard('khach')->user();
             successAlert.style.display = 'none';
         }, 3000);
     }
+    const errorAlert = document.getElementById('error-alert');
+    if (errorAlert) {
+        setTimeout(() => {
+            errorAlert.style.display = 'none';
+        }, 3000);
+    }
 
-    // ✅ Xử lý áp dụng mã giảm giá chỉ 1 lần
-    document.getElementById('apply-discount').addEventListener('click', function () {
+    document.getElementById('apply-discount').addEventListener('click', function() {
         if (isDiscountApplied) {
             alert('Bạn đã áp dụng mã giảm giá rồi.');
             return;
@@ -279,7 +295,7 @@ $khach = Auth::guard('khach')->user();
             });
     });
 
-    // ✅ Load lần đầu
+
     updateBuyButton();
     updateTotalPrice();
 </script>
