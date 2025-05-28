@@ -46,7 +46,7 @@ h2 {
 </a>
 
 @if (!$chiTietSanPham)
-    <div class="alert alert-danger text-center">Không tìm thấy sản phẩm.</div>
+<div class="alert alert-danger text-center">Không tìm thấy sản phẩm.</div>
 @else
 <div class="container mt-5">
     @if(session('success'))
@@ -64,6 +64,11 @@ h2 {
     }, 3000);
     </script>
     @endif
+    @if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
 
     <div class="row">
         <!-- Hình ảnh -->
@@ -92,9 +97,16 @@ h2 {
                 {{ $chiTietSanPham->descript ?? 'Chưa có mô tả.' }}
             </p>
 
+            @if($chiTietSanPham->quantity > 0)
             <a href="{{ route('cart.add', $chiTietSanPham->id) }}" class="btn btn-success mt-2">
                 <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
             </a>
+            @else
+            <button class="btn btn-secondary mt-2" disabled>
+                <i class="bi bi-cart-x"></i> Sản phẩm đã hết hàng
+            </button>
+            @endif
+
         </div>
     </div>
 
@@ -273,7 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // Hiển thị số sao đã chọn
-                const textDisplay = container.parentElement.querySelector('.sao-da-chon');
+                const textDisplay = container.parentElement.querySelector(
+                    '.sao-da-chon');
                 if (textDisplay) {
                     textDisplay.textContent = `(${index}/5)`;
                 }

@@ -27,12 +27,13 @@ class CrudProductController extends Controller
             'required',
             'string',
             'max:75',
-            'regex:/^[a-zA-Z0-9\sÀ-ỹ]+$/u', // không chứa ký tự đặc biệt
+            'regex:/^[a-zA-Z0-9\sÀ-ỹ]+$/u',
         ],
         'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric',
         'descript' => 'nullable|string|max:100',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'quantity' => 'required|integer|min:0',
     ], [
         'name.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
     ]);
@@ -50,6 +51,7 @@ class CrudProductController extends Controller
 
     return redirect()->route('products.index')->with('success', 'Thêm sản phẩm thành công');
 }
+
 
     public function edit($id)
     {
@@ -84,6 +86,7 @@ class CrudProductController extends Controller
         'price' => 'required|numeric',
         'descript' => 'nullable|string|max:100',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'quantity' => 'required|integer|min:0',
     ], [
         'name.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
     ]);
@@ -101,6 +104,7 @@ class CrudProductController extends Controller
 
     return redirect()->route('products.index')->with('success', 'Cập nhật thành công');
 }
+
 
     public function delete($id)
     {

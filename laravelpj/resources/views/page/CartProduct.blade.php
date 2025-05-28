@@ -185,11 +185,11 @@ $khach = Auth::guard('khach')->user();
 <script>
     let appliedDiscount = 0;
     let discountType = null;
+    let isDiscountApplied = false; // ✅ Chỉ cho phép áp dụng 1 lần
 
     const checkboxes = document.querySelectorAll('input[name="selected[]"]');
     const selectAll = document.getElementById('select-all');
     const buyBtn = document.getElementById('buy-button');
-
 
     buyBtn.addEventListener('click', function(e) {
         const checked = document.querySelectorAll('input[name="selected[]"]:checked').length;
@@ -247,8 +247,13 @@ $khach = Auth::guard('khach')->user();
         }, 3000);
     }
 
-    // Xử lý áp dụng mã giảm giá
-    document.getElementById('apply-discount').addEventListener('click', function() {
+    // ✅ Xử lý áp dụng mã giảm giá chỉ 1 lần
+    document.getElementById('apply-discount').addEventListener('click', function () {
+        if (isDiscountApplied) {
+            alert('Bạn đã áp dụng mã giảm giá rồi.');
+            return;
+        }
+
         const code = document.getElementById('discount-code').value.trim();
         if (!code) return;
 
@@ -257,20 +262,26 @@ $khach = Auth::guard('khach')->user();
             .then(data => {
                 if (data.valid) {
                     appliedDiscount = data.amount;
-                    discountType = data.type; // thêm dòng này
+                    discountType = data.type;
+                    isDiscountApplied = true;
+
                     updateTotalPrice();
+
+                    // Disable sau khi áp dụng
+                    document.getElementById('discount-code').disabled = true;
+                    document.getElementById('apply-discount').disabled = true;
                 } else {
                     appliedDiscount = 0;
-                    discountType = null; // reset lại
+                    discountType = null;
                     updateTotalPrice();
                     alert('Mã giảm giá không hợp lệ hoặc đã hết hạn!');
                 }
             });
-
     });
 
-    // Gọi khi load trang
+    // ✅ Load lần đầu
     updateBuyButton();
     updateTotalPrice();
 </script>
+
 @endsection
