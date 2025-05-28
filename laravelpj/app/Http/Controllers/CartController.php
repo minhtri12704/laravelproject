@@ -45,7 +45,11 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $productId = $request->input('product_id');
-        $product = CrudProduct::findOrFail($productId);
+        $product = CrudProduct::find($productId); // dùng find() thay vì findOrFail()
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa.');
+        }
 
         if (!$this->addProductToCart($product)) {
             return redirect()->back()->with('error', session('error'));
@@ -53,11 +57,16 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
     }
+
 
     // ===== Thêm sản phẩm theo ID (không cần form) =====
     public function addProductById($id)
     {
-        $product = CrudProduct::findOrFail($id);
+        $product = CrudProduct::find($id); // dùng find()
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa.');
+        }
 
         if (!$this->addProductToCart($product)) {
             return redirect()->back()->with('error', session('error'));
@@ -65,6 +74,7 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
     }
+
 
     // ===== Hiển thị giỏ hàng =====
     public function viewCart()
@@ -95,7 +105,11 @@ class CartController extends Controller
             $id = $request->input('increase');
             if (isset($cart[$id])) {
                 $product = CrudProduct::find($id);
-                if ($product && $cart[$id]['quantity'] < $product->quantity) {
+                if (!$product) {
+                    return redirect()->route('cart.view')->with('error', 'Sản phẩm không còn tồn tại trong kho.');
+                }
+
+                if ($cart[$id]['quantity'] < $product->quantity) {
                     $cart[$id]['quantity']++;
                 } else {
                     return redirect()->route('cart.view')->with('error', 'Không thể tăng vượt quá tồn kho!');
@@ -106,8 +120,15 @@ class CartController extends Controller
         // Giảm số lượng
         if ($request->has('decrease')) {
             $id = $request->input('decrease');
-            if (isset($cart[$id]) && $cart[$id]['quantity'] > 1) {
-                $cart[$id]['quantity']--;
+            if (isset($cart[$id])) {
+                $product = CrudProduct::find($id);
+                if (!$product) {
+                    return redirect()->route('cart.view')->with('error', 'Sản phẩm không còn tồn tại trong kho.');
+                }
+
+                if ($cart[$id]['quantity'] > 1) {
+                    $cart[$id]['quantity']--;
+                }
             }
         }
 
@@ -132,6 +153,7 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->route('cart.view');
     }
+
 
     // ===== Kiểm tra mã giảm giá =====
     public function checkDiscount(Request $request)

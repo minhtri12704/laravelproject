@@ -152,13 +152,13 @@
 
     <div class="mb-3">
     <label for="quantity" class="form-label">Số lượng tồn kho</label>
-    <input type="number" name="quantity" class="form-control" min="0" value="{{ old('quantity', $product->quantity ?? 0) }}" required>
+    <input type="number" name="quantity" class="form-control" min="1" value="{{ old('quantity', $product->quantity ?? 1) }}" required>
 </div>
 
 
     <div>
         <label>Giá</label>
-        <input type="text" name="price" class="form-control" placeholder="Giá sản phẩm" required>
+        <input type="number" name="price" class="form-control" min="0" step="any" required>
     </div>
 
     <div>
