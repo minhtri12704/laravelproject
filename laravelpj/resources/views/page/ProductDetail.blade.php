@@ -45,6 +45,9 @@ h2 {
     <i class="bi bi-arrow-left-circle-fill"></i>
 </a>
 
+@if (!$chiTietSanPham)
+    <div class="alert alert-danger text-center">Không tìm thấy sản phẩm.</div>
+@else
 <div class="container mt-5">
     @if(session('success'))
     <div id="success-alert" class="position-fixed top-50 start-50 translate-middle text-center p-4 rounded"
@@ -246,6 +249,9 @@ h2 {
         @endforelse
     </div>
 </div>
+
+@endif
+
 @endsection
 <script>
 document.addEventListener('DOMContentLoaded', function() {
