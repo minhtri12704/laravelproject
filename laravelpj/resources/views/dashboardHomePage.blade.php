@@ -108,6 +108,10 @@
             color: white;
             border-radius: 15px 15px 0 15px;
         }
+            .dropdown-menu-scrollable {
+        max-height: 300px; /* Chiều cao tối đa, bạn có thể chỉnh lại */
+        overflow-y: auto;  /* Tạo thanh cuộn dọc */
+    }
     </style>
 </head>
 
@@ -135,7 +139,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Danh mục
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu dropdown-menu-scrollable" aria-labelledby="navbarDropdown">
                             {{-- vòng lặp foreach để chạy vòng lặp trên @php...@endphp --}}
                             @foreach($categories as $category)
                             <li>
