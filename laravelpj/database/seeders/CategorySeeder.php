@@ -15,12 +15,12 @@ class CategorySeeder extends Seeder
     {
         $danhMuc = ['Máy giặt', 'Máy lạnh', 'Tủ lạnh', 'Điều Hòa'];
 
-        for ($i = 1; $i <= 100; $i++) {
+        //for ($i = 1; $i <= 100; $i++) {
             foreach ($danhMuc as $ten) {
                 Category::create([
                     'name' => $ten,
                 ]);
             }
-        }
+       // }
     }
 }
