@@ -35,9 +35,10 @@ class KhuyenMaiController extends Controller
                         return $fail('Tên phiếu không được chứa nhiều khoảng trắng liên tiếp.');
                     }
 
-                    if (!preg_match('/^[\p{L}\p{N} ]+$/u', $value)) {
-                        return $fail('Tên phiếu chỉ được chứa chữ cái (có dấu), số và khoảng trắng.');
-                    }
+                    if (!preg_match('/^[\p{L}\p{N}% ]+$/u', $value)) {
+    return $fail('Tên phiếu chỉ được chứa chữ cái (có dấu), số, khoảng trắng và dấu %.');
+}
+
                 },
             ],
 
@@ -106,9 +107,9 @@ class KhuyenMaiController extends Controller
                         return $fail('Tên phiếu không được chứa nhiều khoảng trắng liên tiếp.');
                     }
 
-                    if (!preg_match('/^[\p{L}\p{N} ]+$/u', $value)) {
-                        return $fail('Tên phiếu chỉ được chứa chữ cái (có dấu), số và khoảng trắng.');
-                    }
+                    if (!preg_match('/^[\p{L}\p{N}% ]+$/u', $value)) {
+    return $fail('Tên phiếu chỉ được chứa chữ cái (có dấu), số, khoảng trắng và dấu %.');
+}
                 },
             ],
 

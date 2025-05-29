@@ -62,7 +62,7 @@
 
     <div class="mb-3">
       <label class="form-label">Tên</label>
-      <input type="text" name="Ten" class="form-control" value="{{ old('Ten', $khach->Ten) }}" maxlength="75" required>
+      <input type="text" name="Ten" class="form-control" value="{{ old('Ten', $khach->Ten) }}" maxlength="35" required>
       @error('Ten')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -70,7 +70,7 @@
 
     <div class="mb-3">
       <label class="form-label">Số điện thoại</label>
-      <input type="text" name="SoDienThoai" class="form-control" value="{{ old('SoDienThoai', $khach->SoDienThoai) }}" required>
+      <input type="text" name="SoDienThoai" class="form-control" value="{{ old('SoDienThoai', $khach->SoDienThoai) }}" maxlength="20"  required>
       @error('SoDienThoai')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -78,7 +78,7 @@
 
     <div class="mb-3">
       <label class="form-label">Email</label>
-      <input type="email" name="Email" class="form-control" value="{{ old('Email', $khach->Email) }}">
+      <input type="email" name="Email" class="form-control" value="{{ old('Email', $khach->Email) }}" maxlength="35" require>
       @error('Email')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -86,7 +86,7 @@
 
     <div class="mb-3">
       <label class="form-label">Địa chỉ</label>
-      <input type="text" name="DiaChi" class="form-control" value="{{ old('DiaChi', $khach->DiaChi) }}">
+      <input type="text" name="DiaChi" class="form-control" value="{{ old('DiaChi', $khach->DiaChi) }}" maxlength="35" require>
       @error('DiaChi')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -94,7 +94,7 @@
 
     <div class="mb-3">
       <label class="form-label">Mật khẩu (nếu muốn đổi)</label>
-      <input type="password" name="MatKhau" class="form-control">
+      <input type="password" name="MatKhau" class="form-control" require>
       @error('MatKhau')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror

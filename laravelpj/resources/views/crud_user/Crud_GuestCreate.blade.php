@@ -69,7 +69,7 @@
 
     <div class="mb-3">
       <label class="form-label">Tên</label>
-      <input type="text" name="Ten" class="form-control" value="{{ old('Ten') }}"maxlength="75"  required>
+      <input type="text" name="Ten" class="form-control" value="{{ old('Ten') }}"maxlength="35"  required>
       @error('Ten')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -85,7 +85,7 @@
 
     <div class="mb-3">
       <label class="form-label">Email</label>
-      <input type="email" name="Email" class="form-control" value="{{ old('Email') }}">
+      <input type="email" name="Email" class="form-control" value="{{ old('Email') }}" maxlength="35" require>
       @error('Email')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
@@ -93,7 +93,7 @@
 
     <div class="mb-3">
       <label class="form-label">Địa chỉ</label>
-      <input type="text" name="DiaChi" class="form-control" value="{{ old('DiaChi') }}">
+      <input type="text" name="DiaChi" class="form-control" value="{{ old('DiaChi') }}" maxlength="35" require>
       @error('DiaChi')
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror

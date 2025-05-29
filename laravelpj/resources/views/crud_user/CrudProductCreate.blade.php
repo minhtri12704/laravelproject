@@ -130,7 +130,7 @@
 
     <div>
         <label>Tên sản phẩm</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" maxlength="75" required>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Tên sản phẩm" maxlength="35" required>
         <small id="name-count" style="color:#ccc">75 ký tự còn lại</small>
     </div>
 
@@ -158,7 +158,7 @@
 
     <div>
         <label>Giá</label>
-        <input type="number" name="price" class="form-control" min="0" step="any" required>
+        <input type="number" name="price" class="form-control" min="0" step="any" maxlength="35" required>
     </div>
 
     <div>
