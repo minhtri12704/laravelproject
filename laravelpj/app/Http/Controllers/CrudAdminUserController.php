@@ -24,20 +24,24 @@ class CrudAdminUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
-            'phone'    => ['required', 'regex:/^0\d{9}$/'],
-            'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email'],
-            'address'  => 'nullable|string|max:255',
-            'role'     => 'required|exists:role,id',
-            'password' => ['required', 'string', 'min:6', 'regex:/^\S+$/'], // không chứa khoảng trắng
-        ], [
-            'name.regex'         => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
-            'phone.required'     => 'Số điện thoại là bắt buộc.',
-            'phone.regex'        => 'Số điện thoại phải đúng định dạng (bắt đầu bằng 0 và đủ 10 chữ số).',
-            'email.regex'        => 'Email phải là địa chỉ Gmail hợp lệ.',
-            'password.required'  => 'Mật khẩu không được để trống.',
-            'password.regex'     => 'Mật khẩu không được chứa khoảng trắng.',
-        ]);
+    'name' => 'required|string|max:35|regex:/^(?!.*  )(?! )[A-Za-zÀ-ỹà-ỹ0-9\s]+(?<! )$/u',
+    'phone' => [
+        'required',
+        'regex:/^(0|\+84)[0-9]{9}$/', // Chuẩn VN
+        'max:20',
+    ],
+    'email' => [
+        'required',
+        'email:rfc,dns', // kiểm tra định dạng hợp lệ và tên miền có thật
+        'max:35',
+        'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', // chỉ chấp nhận Gmail
+        'unique:users,email', // không trùng
+    ],
+    'address' => 'required|string|max:35',
+    'role' => 'required|exists:roles,id',
+    'password' => 'required|string|min:6|max:10',
+]);
+
 
         $user = User::create([
             'name'     => $request->name,
@@ -76,20 +80,24 @@ class CrudAdminUserController extends Controller
         }
 
         $request->validate([
-            'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL]+(?:\s[\pL]+)*$/u'],
-            'phone'    => ['required', 'regex:/^0\d{9}$/'],
-            'email'    => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', 'unique:users,email,' . $id],
-            'address'  => 'nullable|string|max:255',
-            'role'     => 'required|exists:role,id',
-            'password' => ['required', 'string', 'min:6', 'regex:/^\S+$/'], // bắt buộc nhập lại và không có khoảng trắng
-        ], [
-            'name.regex'        => 'Tên không được chứa ký tự đặc biệt, số hoặc nhiều khoảng trắng liên tiếp.',
-            'phone.required'    => 'Số điện thoại là bắt buộc.',
-            'phone.regex'       => 'Số điện thoại phải đúng định dạng (bắt đầu bằng 0 và đủ 10 chữ số).',
-            'email.regex'       => 'Email phải là địa chỉ Gmail hợp lệ.',
-            'password.required' => 'Mật khẩu không được để trống.',
-            'password.regex'    => 'Mật khẩu không được chứa khoảng trắng.',
-        ]);
+    'name' => 'required|string|max:35|regex:/^(?!.*  )(?! )[A-Za-zÀ-ỹà-ỹ0-9\s]+(?<! )$/u',
+    'phone' => [
+        'required',
+        'regex:/^(0|\+84)[0-9]{9}$/', // Chuẩn VN
+        'max:20',
+    ],
+    'email' => [
+        'required',
+        'email:rfc,dns', // kiểm tra định dạng hợp lệ và tên miền có thật
+        'max:35',
+        'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', // chỉ chấp nhận Gmail
+        'unique:users,email', // không trùng
+    ],
+    'address' => 'required|string|max:35',
+    'role' => 'required|exists:roles,id',
+    'password' => 'required|string|min:6|max:10',
+]);
+
 
         $user->update([
             'name'     => $request->name,
