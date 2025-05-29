@@ -4,70 +4,73 @@
 
 @section('content')
 <style>
-    body {
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', sans-serif;
-    }
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-    .checkout-container {
-        max-width: 1140px;
-        margin: 40px auto;
-    }
+.checkout-container {
+    max-width: 1140px;
+    margin: 40px auto;
+}
 
-    .form-box, .product-box {
-        color: black;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        padding: 30px;
-    }
+.form-box,
+.product-box {
+    color: black;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+}
 
-    h2, h4 {
-        font-weight: bold;
-        color: #333;
-    }
+h2,
+h4 {
+    font-weight: bold;
+    color: #333;
+}
 
-    label {
-        font-weight: 600;
-        margin-top: 10px;
-    }
+label {
+    font-weight: 600;
+    margin-top: 10px;
+}
 
-    input, select {
-        margin-bottom: 15px;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-    }
+input,
+select {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
 
-    button {
-        padding: 14px;
-        font-size: 18px;
-        background-color: #007bff;
-        border: none;
-        border-radius: 10px;
-        color: white;
-        transition: background-color 0.3s;
-    }
+button {
+    padding: 14px;
+    font-size: 18px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    transition: background-color 0.3s;
+}
 
-    button:hover {
-        background-color: #0056b3;
-    }
+button:hover {
+    background-color: #0056b3;
+}
 
-    .note {
-        text-align: center;
-        font-size: 14px;
-        color: #666;
-        margin-top: 20px;
-    }
+.note {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+}
 
-    .table thead th {
-        background-color: #f0f0f0;
-    }
+.table thead th {
+    background-color: #f0f0f0;
+}
 
-    .table img {
-        border-radius: 8px;
-    }
+.table img {
+    border-radius: 8px;
+}
 </style>
 
 <div class="container checkout-container">
@@ -87,8 +90,11 @@
                     @csrf
 
                     <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control mb-3"
-                        required>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}"
+                        class="form-control mb-3 @error('name') is-invalid @enderror" required>
+                    @error('name')
+                    <div class="text-danger" style="margin-top: -10px; margin-bottom: 10px;">{{ $message }}</div>
+                    @enderror
 
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control mb-3"
@@ -106,7 +112,9 @@
                     </select>
 
                     <label for="amount">Số tiền (VNĐ)</label>
-                    <input type="text" id="amount" name="amount" value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control" readonly required>
+                    <input type="text" id="amount" name="amount"
+                        value="{{ session('success') ? '' : old('amount', $total ?? '') }}" class="form-control"
+                        readonly required>
 
                     <button type="submit" class="w-100 mt-3">💳 Thanh Toán</button>
                 </form>
@@ -137,7 +145,8 @@
                         @foreach($selectedItems as $item)
                         <tr>
                             <td>
-                                <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" width="60" height="60" style="object-fit:cover;">
+                                <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" width="60"
+                                    height="60" style="object-fit:cover;">
                             </td>
                             <td>{{ $item['id'] }}</td>
                             <td>{{ $item['name'] }}</td>

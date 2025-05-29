@@ -65,11 +65,11 @@ h2 {
     </script>
     @endif
     @if(session('error'))
-    <div class="alert alert-danger text-center">
-        {{ session('error') }}
-    </div>
+<div id="error-alert" class="position-fixed top-50 start-50 translate-middle text-center p-4 rounded"
+    style="z-index: 9999; background-color: #dc3545; color: white; font-size: 18px;">
+    {{ session('error') }}
+</div>
 @endif
-
     <div class="row">
         <!-- Hình ảnh -->
         <div class="col-md-6 text-center">
@@ -219,6 +219,7 @@ h2 {
                             @error('noi_dung')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            
                         </div>
                     </div>
 
