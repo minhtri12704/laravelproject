@@ -47,15 +47,19 @@ class KhuyenMaiController extends Controller
 
             'loai_giam' => 'required|in:percent,fixed',
             'gia_tri' => [
-                'required',
-                'integer',
-                'min:1',
-                function ($attribute, $value, $fail) use ($request) {
-                    if ($request->loai_giam === 'percent' && $value > 100) {
-                        $fail('Phần trăm giảm không được vượt quá 100%.');
-                    }
-                }
-            ],
+    'required',
+    'integer',
+    'min:1',
+    function ($attribute, $value, $fail) use ($request) {
+        if ($request->loai_giam === 'percent' && $value > 100) {
+            return $fail('Phần trăm giảm không được vượt quá 100%.');
+        }
+        if ($request->loai_giam === 'fixed' && $value > 5000000) {
+            return $fail('Giá trị giảm cố định không được vượt quá 5,000,000 VNĐ.');
+        }
+    }
+],
+
             'ngay_bat_dau' => 'required|date',
             'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
         ]);
@@ -118,15 +122,19 @@ class KhuyenMaiController extends Controller
 
             'loai_giam' => 'required|in:percent,fixed',
             'gia_tri' => [
-                'required',
-                'integer',
-                'min:1',
-                function ($attribute, $value, $fail) use ($request) {
-                    if ($request->loai_giam === 'percent' && $value > 100) {
-                        $fail('Phần trăm giảm không được vượt quá 100%.');
-                    }
-                }
-            ],
+    'required',
+    'integer',
+    'min:1',
+    function ($attribute, $value, $fail) use ($request) {
+        if ($request->loai_giam === 'percent' && $value > 100) {
+            return $fail('Phần trăm giảm không được vượt quá 100%.');
+        }
+        if ($request->loai_giam === 'fixed' && $value > 5000000) {
+            return $fail('Giá trị giảm cố định không được vượt quá 5,000,000 VNĐ.');
+        }
+    }
+],
+
             'ngay_bat_dau' => 'required|date',
             'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
         ]);

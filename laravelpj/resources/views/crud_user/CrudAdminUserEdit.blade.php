@@ -70,6 +70,8 @@
             <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}"maxlength="35" require>
             @error('name') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
+        <input type="hidden" name="updated_at" value="{{ $user->updated_at }}">
+
 
         <div class="mb-3">
             <label for="phone">Số điện thoại</label>
