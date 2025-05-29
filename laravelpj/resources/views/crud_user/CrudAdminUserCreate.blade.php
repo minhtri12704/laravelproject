@@ -83,7 +83,7 @@
 
         <div class="form-group mb-3">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"maxlength="35" required>
+            <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"maxlength="35" required>
             @error('email')
             <div class="text-danger">{{ $message }}</div>
             @enderror
