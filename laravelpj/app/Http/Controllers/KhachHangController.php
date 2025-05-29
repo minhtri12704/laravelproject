@@ -86,7 +86,7 @@ class KhachHangController extends Controller
         try {
             $khach = KhachHang::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('khachhang')->with('error', 'Không tìm thấy khach hangt cần sửa.');
+            return redirect()->route('khachhang')->with('error', 'Không tìm thấy khách hàng cần sửa.');
         }
 
         return view('crud_user.Crud_GuestEdit', compact('khach'));
