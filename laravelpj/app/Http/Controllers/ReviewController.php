@@ -49,19 +49,20 @@ class ReviewController extends Controller
     }
     public function update(Request $request, $id)
     {
+        $review = Review::withTrashed()->findOrFail($id);
+
+        if ($review->trashed()) {
+            return redirect()->back()->with('error', 'Không thể chỉnh sửa đánh giá đã bị xóa.');
+        }
+
+        if (session('khach_hang')->idKhach != $review->khach_hang_id) {
+            abort(403, 'Bạn không có quyền cập nhật đánh giá này.');
+        }
+
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'noi_dung' => 'required|string|max:1000',
-        ], [
-            'noi_dung.required' => 'Bình luận không được để trống.',
-            'noi_dung.max' => 'Bình luận không được vượt quá 1000 ký tự.',
         ]);
-
-        $review = Review::findOrFail($id);
-
-        if (session()->has('khach_hang') && $review->khach_hang_id != session('khach_hang')->idKhach) {
-            return redirect()->back()->with('error', 'Bạn không có quyền chỉnh sửa đánh giá này.');
-        }
 
         $review->update([
             'rating' => $request->rating,
@@ -70,6 +71,4 @@ class ReviewController extends Controller
 
         return redirect()->back()->with('success', 'Đánh giá đã được cập nhật.');
     }
-
-
 }
