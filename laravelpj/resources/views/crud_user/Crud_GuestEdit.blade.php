@@ -99,9 +99,10 @@
         <div class="text-danger mt-1">{{ $message }}</div>
       @enderror
     </div>
-
     <button type="submit" class="btn-submit">Lưu</button>
     <a href="{{ route('khachhang') }}" class="btn btn-secondary">Quay lại</a>
+    <input type="hidden" name="updated_at" value="{{ $khach->updated_at }}">
+
   </form>
 </div>
 @endsection
