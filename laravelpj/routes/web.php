@@ -27,6 +27,8 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GuestChatController;
 use App\Models\ChatMessage;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TrangChuBlogController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +72,25 @@ Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.upd
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 //route tintuc
+// Danh sách bài viết
 Route::get('/blog', [BaiVietController::class, 'index'])->name('baiviet.index');
-Route::get('/blog/{id}', [BaiVietController::class, 'show'])->name('baiviet.show');
+
+// Form thêm mới
+Route::get('/blog/create', [BaiVietController::class, 'create'])->name('baiviet.create');
+
+// Xử lý thêm mới
+Route::post('/blog', [BaiVietController::class, 'store'])->name('baiviet.store');
+
+// Form sửa
+Route::get('/blog/{id}/edit', [BaiVietController::class, 'edit'])->name('baiviet.edit');
+
+// Xử lý cập nhật
+Route::put('/blog/{id}', [BaiVietController::class, 'update'])->name('baiviet.update');
+
+// Xóa bài viết
+Route::delete('/blog/{id}', [BaiVietController::class, 'destroy'])->name('baiviet.destroy');
+Route::get('/tin-tuc', [TrangChuBlogController::class, 'index'])->name('baiviet.front');
+Route::get('/tin-tuc/{id}', [TrangChuBlogController::class, 'show'])->name('baiviet.show');
 //route productCrud
 //route hiển thị danh sách sản phẩm
 Route::get('/products', [CrudProductController::class, 'index'])->name('products.index');

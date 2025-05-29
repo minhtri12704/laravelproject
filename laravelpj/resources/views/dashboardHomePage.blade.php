@@ -149,7 +149,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('baiviet.index') }}">Blog tin tức</a>
+                        <a class="nav-link" href="{{ route('baiviet.front') }}">Blog tin tức</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Về chúng tôi</a>
