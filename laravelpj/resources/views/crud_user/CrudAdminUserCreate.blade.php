@@ -67,7 +67,7 @@
 
         <div class="form-group mb-3">
             <label for="name">Tên người dùng</label>
-            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
+            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" maxlength="35" required>
             @error('name')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -75,7 +75,7 @@
 
         <div class="form-group mb-3">
             <label for="phone">Số điện thoại</label>
-            <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}" required>
+            <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}"maxlength="20" required>
             @error('phone')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -83,7 +83,7 @@
 
         <div class="form-group mb-3">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"maxlength="35" required>
             @error('email')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -91,7 +91,7 @@
 
         <div class="form-group mb-3">
             <label for="address">Địa chỉ</label>
-            <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}" required>
+            <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}"maxlength="35" required>
             @error('address')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -112,7 +112,7 @@
 
         <div class="form-group mb-3">
             <label for="password">Mật khẩu</label>
-            <input type="password" id="password" name="password" class="form-control" required>
+            <input type="password" id="password" name="password" class="form-control"maxlength="10" required>
             @error('password')
             <div class="text-danger">{{ $message }}</div>
             @enderror

@@ -131,7 +131,7 @@
 
     <div>
         <label>Tên sản phẩm</label>
-        <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}" maxlength="75" required>
+        <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}" maxlength="35" required>
         <small id="name-count" style="color:#ccc">{{ 75 - strlen($product->name) }} ký tự còn lại</small>
     </div>
 
@@ -160,7 +160,7 @@
 
     <div>
         <label>Giá</label>
-        <input type="text" name="price" class="form-control" value="{{ $product->price }}" required>
+        <input type="text" name="price" class="form-control" value="{{ $product->price }}"maxlength="35" required>
     </div>
 
     <div>

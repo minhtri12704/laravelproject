@@ -26,7 +26,7 @@ class KhachHangController extends Controller
                 'required',
                 'string',
                 'max:75',
-                'regex:/^[\p{L}\s]+$/u', // chỉ chữ và khoảng trắng
+                'regex:/^[\p{L}\d\s]+$/u', // chỉ chữ và khoảng trắng
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {
                         $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');
@@ -102,7 +102,7 @@ class KhachHangController extends Controller
                 'required',
                 'string',
                 'max:75',
-                'regex:/^[\p{L}\s]+$/u',        // Chỉ chữ cái và khoảng trắng
+                'regex:/^[\p{L}\d\s]+$/u',        // Chỉ chữ cái và khoảng trắng
                 function ($attribute, $value, $fail) {
                     if (preg_match('/\s{2,}/', $value)) {
                         $fail('Tên không được chứa nhiều khoảng trắng liên tiếp.');

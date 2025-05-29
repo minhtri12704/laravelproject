@@ -67,25 +67,25 @@
 
         <div class="mb-3">
             <label for="name">Tên người dùng</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}">
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}"maxlength="35" require>
             @error('name') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
             <label for="phone">Số điện thoại</label>
-            <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
+            <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone) }}"maxlength="20" require>
             @error('phone') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}">
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}"maxlength="35" require>
             @error('email') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
             <label for="address">Địa chỉ</label>
-            <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $user->address) }}">
+            <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $user->address) }}"maxlength="20" require>
             @error('address') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 
@@ -104,7 +104,7 @@
 
         <div class="mb-3">
             <label for="password">Mật khẩu mới (nếu đổi)</label>
-            <input type="password" name="password" id="password" class="form-control">
+            <input type="password" name="password" id="password" class="form-control" maxlength="15" require>
             @error('password') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
 
